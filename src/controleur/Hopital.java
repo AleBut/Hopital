@@ -5,9 +5,7 @@
  */
 package controleur;
 
-import connexionBDD.Connexion;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 /**
  *
@@ -24,15 +22,13 @@ public class Hopital {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         // TODO code application logic here
         
-        ArrayList<String> array;
-        System.out.println("Connexion à la base de donnée...");
-        Connexion c = new Connexion("Hopital", "root", "");
+        GestionBase bdd = new GestionBase();
         
-        array = c.remplirChampsRequete("SELECT nom, prenom FROM employe WHERE numero < 10");
+        bdd.rechercheInformation("SELECT nom, prenom FROM employe WHERE numero < 10");
         
-        System.out.println("Employe dont le numero de rue < 10: ");
-        for(int i=0; i<array.size(); i++)
-            System.out.print(array.get(i));
+        System.out.println("Employe dont le numero < 10: ");
+        
+        bdd.afficherInformations();
     }
     
 }

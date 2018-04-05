@@ -1,4 +1,4 @@
-package connexionBDD;
+package controleur;
 
 import com.jcraft.jsch.*;
 
