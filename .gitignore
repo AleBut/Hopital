@@ -1,11 +1,21 @@
-project-root-directory/
-+ build/
-+ dist/
-+ nbproject/
-  build-impl.xml
-  + private/
-  + project.properties
-  + project.xml
-+ src/
-+ test/
-+ build.xml
+#ant specific
+dist/
+build/
+
+#netbeans specific
+core
+nbproject/*
+!nbproject/project.properties
+!nbproject/project.xml
+
+#java specific
+*.class
+
+#general swap/backup files
+*.so
+*.log
+*.out
+*~
+*.swp
+*.DS_Store
+*.lock
