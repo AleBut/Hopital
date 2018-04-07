@@ -3,8 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/GitHub/Hopital/src/controleur/GestionBase.java</file>
-            <file>file:/D:/GitHub/Hopital/src/controleur/Hopital.java</file>
+            <file>file:/C:/Users/solene/Desktop/Hopital-master/src/controleur/Hopital.java</file>
+            <file>file:/C:/Users/solene/Desktop/Hopital-master/src/modele/Chambre.java</file>
+            <file>file:/C:/Users/solene/Desktop/Hopital-master/src/controleur/GestionBase.java</file>
+            <file>file:/C:/Users/solene/Desktop/Hopital-master/src/modele/Docteur.java</file>
+            <file>file:/C:/Users/solene/Desktop/Hopital-master/src/vue/PageConnexion.java</file>
+            <file>file:/C:/Users/solene/Desktop/Hopital-master/src/controleur/SSHTunnel.java</file>
+            <file>file:/C:/Users/solene/Desktop/Hopital-master/src/controleur/Connexion.java</file>
         </group>
     </open-files>
 </project-private>
