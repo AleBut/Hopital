@@ -56,13 +56,12 @@ public class GestionBase {
 
     }
 
-    public void testConnexionDistance() throws InterruptedException, SQLException {
+    public void testConnexionDistance(String mdpSQL) throws InterruptedException, SQLException {
         System.out.println("Connexion à la base de donnée via le serveur Gandalf...");
-
-        String login_BDD = login + "-rw";
-
+        
+         String logSQL=login+"-rw";
         try {
-            co = new Connexion(login, mdp, login_BDD, "lykxPmIU");
+            co = new Connexion(login, mdp, logSQL, mdpSQL);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(GestionBase.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -25,18 +25,27 @@ import java.util.logging.Logger;
 public class PageConnexion extends JFrame implements ActionListener {
 
     private JPanel container; // panneau
-    private JButton boutonLocale = new JButton("Connexion locale");
-    private JButton boutonGandalf = new JButton("Connexion à distance");
+    private JButton bouton = new JButton("Connexion");
+    //private JButton boutonGandalf = new JButton("Connexion à distance");
     Font font = new Font("Arial", Font.BOLD, 24);
 
     private JLabel titre = new JLabel("Bienvenue !");
     private JLabel espace1 = new JLabel("");
-    
+
     private JLabel label = new JLabel("Login :      ");
     private JTextField login = new JTextField("");
- 
+
     private JLabel label2 = new JLabel("Mot de passe : ");
     private JPasswordField mdp = new JPasswordField("");
+
+  
+
+    private JLabel label4 = new JLabel("Mot de passe SQL-ECE : ");
+    private JPasswordField mdp2 = new JPasswordField("");
+
+    private ButtonGroup bg = new ButtonGroup();
+    private JRadioButton locale = new JRadioButton("Connexion locale", true);
+    private JRadioButton distance = new JRadioButton("Connexion à distance", false);
 
     private JLabel image = new JLabel(new ImageIcon("C:\\Users\\solene\\Desktop\\Hopital-master\\images\\Cad.png"));
 
@@ -66,9 +75,21 @@ public class PageConnexion extends JFrame implements ActionListener {
         m.add(mdp);
         mdp.setPreferredSize(new Dimension(170, 24));
 
-        boutonLocale.addActionListener(this);
-        boutonGandalf.addActionListener(this);
         
+        
+        JPanel m2 = new JPanel();
+        m2.setBackground(Color.white);
+        m2.add(label4);
+        m2.add(mdp2);
+        mdp2.setPreferredSize(new Dimension(117, 24));
+
+        bouton.addActionListener(this);
+        // boutonGandalf.addActionListener(this);
+        locale.setBackground(Color.white);
+        distance.setBackground(Color.white);
+        bg.add(locale);
+        bg.add(distance);
+
         Box v = Box.createVerticalBox();
 
         v.add(titre);
@@ -77,10 +98,13 @@ public class PageConnexion extends JFrame implements ActionListener {
         v.add(m);
         v.add(espace1);
         
-        v.add(boutonLocale);
-        v.add(boutonGandalf);
+        v.add(m2);
+        v.add(locale);
+        v.add(distance);
+        v.add(bouton);
 
-        GestionBase bdd = new GestionBase(login.getText(), mdp.getText());
+        // v.add(boutonGandalf);
+        //  GestionBase bdd = new GestionBase(login.getText(), mdp.getText());
         container.add(v);
         container.add(image);
         getContentPane().add(container);
@@ -91,22 +115,24 @@ public class PageConnexion extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
-        if (source == boutonLocale) {
-            GestionBase bdd = new GestionBase(login.getText(), mdp.getText());
+        if ((source == bouton) && (locale.isSelected() == true)) {
+            
+
+                GestionBase bdd = new GestionBase(login.getText(), mdp.getText());
+            
             try {
                 bdd.testConnexionLocale();
             } catch (InterruptedException ex) {
                 Logger.getLogger(PageConnexion.class.getName()).log(Level.SEVERE, null, ex);
             }
             this.dispose();
-        }
-        
-        /**ne fonctionne pas, Serveur Gandalf saturé*/
-        if (source==boutonGandalf)
-        {
+            
+            
+        } else if ((source == bouton) && (distance.isSelected() == true)) {
+            
             GestionBase bdd = new GestionBase(login.getText(), mdp.getText());
             try {
-                bdd.testConnexionDistance();
+                bdd.testConnexionDistance(mdp2.getText());
             } catch (InterruptedException ex) {
                 Logger.getLogger(PageConnexion.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
@@ -114,6 +140,7 @@ public class PageConnexion extends JFrame implements ActionListener {
             }
             this.dispose();
         }
+
     }
 
 }
