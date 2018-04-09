@@ -18,26 +18,42 @@ import java.util.logging.Logger;
  * @author A
  */
 public class GestionBase {
-
+    // Réponse du serveur sous forme d'un tableau de string
     private ArrayList<String> array = new ArrayList<>();
-    private static SSHTunnel ssh;
+    
+    // Objets utilisés pour la connexion locale et distante
     private Connexion co;
+    private static SSHTunnel ssh;
+    
+    // Variables sur la connexion
     private String login;
     private String mdp;
-
-    private static MenuPrincipal menu = new MenuPrincipal();
+    private String mdpSQL;
+    
+    // Booléen utilisé pour empêcher l'utilisateur d'effectuer une connexion distance/locale s'il n'est pas autorisé
+    private boolean localOnly;
+    
     private static Erreur err = new Erreur();
 
     /**
      *
      */
-    public GestionBase(String log, String psswd) {
-        login = log;
-        mdp = psswd;
-
+    public GestionBase(String _login, String _mdp) {
+        login = _login;
+        mdp = _mdp;
+        
+        localOnly = true;
+    }
+    
+    public GestionBase(String _login, String _mdp, String _mdpSQL) {
+        login = _login;
+        mdp = _mdp;
+        mdpSQL = _mdpSQL;
+        
+        localOnly = false;
     }
 
-    public void testConnexionLocale() throws InterruptedException {
+    public boolean connexionLocale() throws InterruptedException {
 
         System.out.println("Connexion à la base de donnée locale...");
 
@@ -52,20 +68,17 @@ public class GestionBase {
             System.exit(1);
         }
         System.out.println("Connecté!");
-        menu.setVisible(true);
-
+        return true;
     }
 
-    public void testConnexionDistance(String mdpSQL) throws InterruptedException, SQLException {
+    public void connexionDistance() throws InterruptedException {
         System.out.println("Connexion à la base de donnée via le serveur Gandalf...");
-        
-         String logSQL=login+"-rw";
+
         try {
-            co = new Connexion(login, mdp, logSQL, mdpSQL);
-        } catch (ClassNotFoundException ex) {
+            co = new Connexion(login, mdp, (login + "-rw"), mdpSQL);
+        } catch (SQLException |ClassNotFoundException ex) {
             Logger.getLogger(GestionBase.class.getName()).log(Level.SEVERE, null, ex);
         }
-        menu.setVisible(true);
     }
 
 
