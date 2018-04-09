@@ -47,7 +47,7 @@ public class PageConnexion extends JFrame implements ActionListener {
     private JRadioButton locale = new JRadioButton("Connexion locale", true);
     private JRadioButton distance = new JRadioButton("Connexion à distance", false);
 
-    private JLabel image = new JLabel(new ImageIcon("C:\\Users\\solene\\Desktop\\Hopital-master\\images\\Cad.png"));
+    private JLabel image = new JLabel(new ImageIcon("images\\Cad.png"));
 
     public PageConnexion() { // constructeur
         setTitle("Hopital");
