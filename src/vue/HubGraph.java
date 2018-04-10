@@ -5,9 +5,7 @@
  */
 package vue;
 
-import java.awt.BorderLayout;
-import vue.navigation.*;
-
+import controleur.GestionBase;
 import javax.swing.*;
 
 /**
@@ -16,52 +14,54 @@ import javax.swing.*;
  */
 public class HubGraph extends JFrame {
     private PageConnexion PConnexion;
-    private PageInterrogation PInterrogation;
     private PageMenu PMenu;
-    private PageMàj PMàj;
-    private PageReporting PReporting;
+    
+    private PageRecherche PRecherche;
+    private PageAjout PAjout;
+    private PageStatistique PStatistique;
+    
+    private GestionBase BDD;
     
     public HubGraph()
     {
-        PConnexion = new PageConnexion(this);
+        PConnexion = new PageConnexion(this, BDD);
         launchWindows(PConnexion);
     }
     
     public void launchWindows(JPanel panneau)
     {
-        setTitle("Hopital"); 
-        
-        this.setLayout(new BorderLayout()); // Aggrandit la fenetre en fonction de la taille des éléments à l'intérieur
-        this.add(panneau, BorderLayout.CENTER);
-        this.pack();
-        
+        this.setTitle("Hopital");
+        this.setSize(500, 500);
+        this.setContentPane(panneau);
+   
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Ferme la fenetre automatiquement
         this.setLocationRelativeTo(null); // Met la fenetre au milieu
-        this.setVisible(true); // Rend la fenetre visible
+        this.setVisible(true); // Rend la fenetre visible 
     }
     
     public void launchPageConnexion()
     {
-        PConnexion = new PageConnexion(this);
+        PConnexion = new PageConnexion(this, BDD);
         launchWindows(PConnexion);
     }
     
-    public void launchPageInterrogation()
+    public void launchPageMenu()
+    {
+        PMenu = new PageMenu(this, BDD);
+        launchWindows(PMenu);
+    }
+    
+    public void launchPageRecherche()
     {
         
     }
     
-    public void launchMenu()
+    public void launchPageAjout()
     {
         
     }
     
-    public void launchMàj()
-    {
-        
-    }
-    
-    public void launchPageReporting()
+    public void launchPageStatistique()
     {
         
     }

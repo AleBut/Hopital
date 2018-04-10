@@ -5,9 +5,8 @@
  */
 package controleur;
 
-import vue.navigation.PageConnexion;
-import java.sql.SQLException;
 import vue.HubGraph;
+import java.sql.SQLException;
 
 /**
  *

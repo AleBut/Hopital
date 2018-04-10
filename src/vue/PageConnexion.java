@@ -3,12 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vue.navigation;
+package vue;
 
-/**
- *
- * @author solene
- */
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,7 +12,6 @@ import java.awt.event.ActionListener;
 import controleur.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import vue.HubGraph;
 
 /**
  *
@@ -50,9 +45,12 @@ public class PageConnexion extends JPanel implements ActionListener {
     // Image en bas du panneau de connexion
     private JLabel image;
 
-    public PageConnexion(HubGraph _hub) { // constructeur
+    public PageConnexion(HubGraph _hub, GestionBase _BDD) { // constructeur
         // Hub graphique
         hub = _hub;
+        
+        // Base de donnée
+        BDD = _BDD;
         
         // container
         container = new JPanel();
@@ -79,7 +77,10 @@ public class PageConnexion extends JPanel implements ActionListener {
         constructionGraphique();
         
         // PageConnexion renvoit ici le container à HubGraph
+        this.setSize(500, 500);
+        this.setBackground(Color.white); // Définir la couleur de l'arrière plan
         this.add(container);
+        this.add(image); // Insertion d'une image
     }
     
     private void constructionGraphique()
@@ -123,7 +124,8 @@ public class PageConnexion extends JPanel implements ActionListener {
         
         // Ajout du listener sur le bouton
         bouton.addActionListener(this);
- 
+        
+        // Box de mise en forme
         Box miseEnForme = Box.createVerticalBox();
         miseEnForme.add(titre); // Ajout d'un titre de bienvenue
         miseEnForme.add(P_login); // Ajout du pannel login
@@ -132,8 +134,6 @@ public class PageConnexion extends JPanel implements ActionListener {
         miseEnForme.add(locale); // Ajout du checkbox locale
         miseEnForme.add(distance); // Ajout du checkbox distance
         miseEnForme.add(bouton); // Ajout du bouton de connexion
-        //miseEnForme.add(image); // Insertion d'une image */
-        
         
         container.setBackground(Color.white); // Définir la couleur de l'arrière plan
         container.add(miseEnForme); // Ajout des boutons/interfaces mises en forme
@@ -152,7 +152,8 @@ public class PageConnexion extends JPanel implements ActionListener {
             } catch (InterruptedException ex) {
                 Logger.getLogger(PageConnexion.class.getName()).log(Level.SEVERE, null, ex);
             }
-            // LANCER MENU  
+            // LANCER MENU
+            hub.launchPageMenu();
         }
         else if ((source == bouton) && (distance.isSelected() == true))
         {
@@ -162,7 +163,8 @@ public class PageConnexion extends JPanel implements ActionListener {
             } catch (InterruptedException ex) {
                 Logger.getLogger(PageConnexion.class.getName()).log(Level.SEVERE, null, ex);
             }
-            // LANCER MENU
+            // LANCER MENU 
+            hub.launchPageMenu();
         }
     }
 }
