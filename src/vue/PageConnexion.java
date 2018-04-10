@@ -5,16 +5,11 @@
  */
 package vue;
 
-/**
- *
- * @author solene
- */
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import controleur.*;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,125 +17,154 @@ import java.util.logging.Logger;
  *
  * @author solene
  */
-public class PageConnexion extends JFrame implements ActionListener {
+public class PageConnexion extends JPanel implements ActionListener {
+    // Lien vers le panneau gérant l'interface graphique
+    private HubGraph hub;
+    
+    // Connexion vers la base de donnée
+    private GestionBase BDD;
+    
+    // container
+    private JPanel container;
+    
+    // Zones de texte: login, mot de passe, et mot de passe MySQL
+    private JTextField login;
+    private JPasswordField mdp;
+    private JPasswordField mdpSQL;
+   
+    // Boutons radios
+    private JRadioButton locale;
+    private JRadioButton distance;
+    
+    // ButtonGroup utilisé pour gérer les boutons radios
+    private ButtonGroup boutonsGroupe;
+    
+    // Bouton de connexion
+    private JButton bouton;
+    
+    // Image en bas du panneau de connexion
+    private JLabel image;
 
-    private JPanel container; // panneau
-    private JButton bouton = new JButton("Connexion");
-    //private JButton boutonGandalf = new JButton("Connexion à distance");
-    Font font = new Font("Arial", Font.BOLD, 24);
-
-    private JLabel titre = new JLabel("Bienvenue !");
-    private JLabel espace1 = new JLabel("");
-
-    private JLabel label = new JLabel("Login :      ");
-    private JTextField login = new JTextField("");
-
-    private JLabel label2 = new JLabel("Mot de passe : ");
-    private JPasswordField mdp = new JPasswordField("");
-
-  
-
-    private JLabel label4 = new JLabel("Mot de passe SQL-ECE : ");
-    private JPasswordField mdp2 = new JPasswordField("");
-
-    private ButtonGroup bg = new ButtonGroup();
-    private JRadioButton locale = new JRadioButton("Connexion locale", true);
-    private JRadioButton distance = new JRadioButton("Connexion à distance", false);
-
-    private JLabel image = new JLabel(new ImageIcon("images\\Cad.png"));
-
-    public PageConnexion() { // constructeur
-        setTitle("Hopital");
-        setSize(500, 500);
-        container = new JPanel(); // instancier le panneau
-
-        titre.setFont(font);
-
-        container.setBackground(Color.white);
-
-        JPanel t = new JPanel();
-        t.setLayout(new BoxLayout(t, BoxLayout.LINE_AXIS));
-
-        t.add(titre);
-
-        JPanel log = new JPanel();
-        log.setBackground(Color.white);
-        log.add(label);
-        log.add(login);
+    public PageConnexion(HubGraph _hub, GestionBase _BDD) { // constructeur
+        // Hub graphique
+        hub = _hub;
+        
+        // Base de donnée
+        BDD = _BDD;
+        
+        // container
+        container = new JPanel();
+         
+        // Création des zones de texte pour les mots de passes
+        login = new JTextField("");
+        mdp = new JPasswordField("");
+        mdpSQL = new JPasswordField("");
+        
+        // Création des checkbox
+        locale = new JRadioButton("Connexion locale", true);
+        distance = new JRadioButton("Connexion à distance", false);
+        
+        // Création d'un groupe de bouttons
+        boutonsGroupe = new ButtonGroup();
+        
+        // Création du bouton
+        bouton = new JButton("Connexion");
+       
+        // Chargement de l'image
+        image = new JLabel(new ImageIcon("images\\Cad.png"));
+        
+        // Construction graphique de la fenetre dans le Jpanel container.
+        constructionGraphique();
+        
+        // PageConnexion renvoit ici le container à HubGraph
+        this.setSize(500, 500);
+        this.setBackground(Color.white); // Définir la couleur de l'arrière plan
+        this.add(container);
+        this.add(image); // Insertion d'une image
+    }
+    
+    private void constructionGraphique()
+    {
+        // Titre de bienvenue
+        JLabel titre = new JLabel("Bienvenue !");
+        titre.setFont(new Font("Arial", Font.BOLD, 24)); // Attribuer la police au titre
+        
+        
+        // Mise en forme des zones de texte pour les mots de passe
         login.setPreferredSize(new Dimension(200, 24));
-
-        JPanel m = new JPanel();
-        m.setBackground(Color.white);
-        m.add(label2);
-        m.add(mdp);
         mdp.setPreferredSize(new Dimension(170, 24));
-
+        mdpSQL.setPreferredSize(new Dimension(117, 24));
         
         
-        JPanel m2 = new JPanel();
-        m2.setBackground(Color.white);
-        m2.add(label4);
-        m2.add(mdp2);
-        mdp2.setPreferredSize(new Dimension(117, 24));
+        // Création pannel Login
+        JPanel P_login = new JPanel();
+        P_login.setBackground(Color.white);
+        P_login.add(new JLabel("Login :      "));
+        P_login.add(login);
+        
+        // Création pannel Mdp
+        JPanel P_mdp = new JPanel();
+        P_mdp.setBackground(Color.white);
+        P_mdp.add(new JLabel("Mot de passe : "));
+        P_mdp.add(mdp);
+       
+        // Création pannel MDP SQL
+        JPanel P_mdpSQL = new JPanel();
+        P_mdpSQL.setBackground(Color.white);
+        P_mdpSQL.add(new JLabel("Mot de passe SQL-ECE : "));
+        P_mdpSQL.add(mdpSQL);
 
-        bouton.addActionListener(this);
-        // boutonGandalf.addActionListener(this);
+        // Mise en forme des checkbox
         locale.setBackground(Color.white);
         distance.setBackground(Color.white);
-        bg.add(locale);
-        bg.add(distance);
-
-        Box v = Box.createVerticalBox();
-
-        v.add(titre);
-        v.add(espace1);
-        v.add(log);
-        v.add(m);
-        v.add(espace1);
         
-        v.add(m2);
-        v.add(locale);
-        v.add(distance);
-        v.add(bouton);
-
-        // v.add(boutonGandalf);
-        //  GestionBase bdd = new GestionBase(login.getText(), mdp.getText());
-        container.add(v);
-        container.add(image);
-        getContentPane().add(container);
-
+        // Ajout des radios dans le groupement de boutons
+        boutonsGroupe.add(locale);
+        boutonsGroupe.add(distance);
+        
+        // Ajout du listener sur le bouton
+        bouton.addActionListener(this);
+        
+        // Box de mise en forme
+        Box miseEnForme = Box.createVerticalBox();
+        miseEnForme.add(titre); // Ajout d'un titre de bienvenue
+        miseEnForme.add(P_login); // Ajout du pannel login
+        miseEnForme.add(P_mdp); // Ajout du pannel mot de passe
+        miseEnForme.add(P_mdpSQL); // Ajout du pannel mot de passe SQL
+        miseEnForme.add(locale); // Ajout du checkbox locale
+        miseEnForme.add(distance); // Ajout du checkbox distance
+        miseEnForme.add(bouton); // Ajout du bouton de connexion
+        
+        container.setBackground(Color.white); // Définir la couleur de l'arrière plan
+        container.add(miseEnForme); // Ajout des boutons/interfaces mises en forme
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e)
+    {
         Object source = e.getSource();
 
-        if ((source == bouton) && (locale.isSelected() == true)) {
-            
-
-                GestionBase bdd = new GestionBase(login.getText(), mdp.getText());
-            
+        if ( (source == bouton) && locale.isSelected() )
+        {
+            BDD = new GestionBase(login.getText(), mdp.getText());
             try {
-                bdd.testConnexionLocale();
+                BDD.connexionLocale();
             } catch (InterruptedException ex) {
                 Logger.getLogger(PageConnexion.class.getName()).log(Level.SEVERE, null, ex);
             }
-            this.dispose();
-            
-            
-        } else if ((source == bouton) && (distance.isSelected() == true)) {
-            
-            GestionBase bdd = new GestionBase(login.getText(), mdp.getText());
-            try {
-                bdd.testConnexionDistance(mdp2.getText());
-            } catch (InterruptedException ex) {
-                Logger.getLogger(PageConnexion.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(PageConnexion.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            this.dispose();
+            // LANCER MENU
+            hub.launchPageMenu();
         }
-
+        else if ((source == bouton) && (distance.isSelected() == true))
+        {
+            BDD = new GestionBase(login.getText(), mdp.getText(), mdpSQL.getText());
+            try {
+                BDD.connexionDistance();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(PageConnexion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            // LANCER MENU 
+            hub.launchPageMenu();
+        }
     }
-
 }

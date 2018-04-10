@@ -5,9 +5,8 @@
  */
 package controleur;
 
+import vue.HubGraph;
 import java.sql.SQLException;
-import vue.*;
-import javax.swing.*;
 
 /**
  *
@@ -21,20 +20,12 @@ public class Hopital {
      * @throws java.sql.SQLException
      * @throws java.lang.ClassNotFoundException
      */
-    private static PageConnexion fen = new PageConnexion();
+    private static HubGraph hub;
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        // TODO code application logic here
-        fen.setVisible(true);
 
-        /**
-         * bdd.rechercheInformation("SELECT nom, prenom FROM employe WHERE
-         * numero < 10");
-         *
-         * /* System.out.println("Employe dont le numero < 10: ");
-         *
-         * bdd.afficherInformations();
-         */
+        hub = new HubGraph();
+
     }
 
 }
