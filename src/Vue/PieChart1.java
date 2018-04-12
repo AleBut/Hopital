@@ -5,6 +5,7 @@
  */
 package Vue;
 
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,6 +15,7 @@ import java.awt.Point;
 import java.awt.RadialGradientPaint;
 import java.awt.geom.Point2D;
 import javax.swing.JPanel;
+
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -30,9 +32,10 @@ import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 
 
+
 /**
  *
- * @author valentingiot
+ * @author 
  */
 public class PieChart1 extends ApplicationFrame {
 
@@ -49,62 +52,65 @@ public class PieChart1 extends ApplicationFrame {
     /**
      *Creer des valeurs
      * 
-     * @return les valeurs
+     * @return mesValeurs
      */
     private static PieDataset createDataset() {
         DefaultPieDataset mesValeurs = new DefaultPieDataset();
+        
+        //initialisation des valeurs
         mesValeurs.setValue("Dept A", new Double(70));
         mesValeurs.setValue("Dept B", new Double(10));
         mesValeurs.setValue("Dept C", new Double(5));
-        mesValeurs.setValue("Dept D", new Double(15));
+        mesValeurs.setValue("Dept D", new Double(12));
+        mesValeurs.setValue("Dept E", new Double(3));
         return mesValeurs;
     }
 
     /**
      * Cree un diagramme
      *
-     * @param mesValeurs  the dataset.
+     * @param mesValeurs
      *
-     * @return A chart.
+     * @return monDiagramme
      */
     private static JFreeChart createChart(PieDataset mesValeurs) {
 
         JFreeChart monDiagramme = ChartFactory.createPieChart("Nombre de patients par departement",mesValeurs,false,true,false);
 
         // customise the title position and font
-        TextTitle t = monDiagramme.getTitle();
+        TextTitle titre = monDiagramme.getTitle();
 
-        PiePlot plot = (PiePlot) monDiagramme.getPlot();
-        plot.setBackgroundPaint(null);
-        plot.setOutlineVisible(false);
+        PiePlot tracer = (PiePlot) monDiagramme.getPlot();
+        tracer.setBackgroundPaint(null);
+        tracer.setOutlineVisible(false);
 
         // use gradients and white borders for the section colours
-        plot.setSectionPaint("Dept A", 
-                createGradientPaint(new Color(200, 200, 255), Color.BLUE));
-        plot.setSectionPaint("Dept B", 
-                createGradientPaint(new Color(255, 200, 200), Color.RED));
-        plot.setSectionPaint("Dept C", 
-                createGradientPaint(new Color(200, 255, 200), Color.GREEN));
-        plot.setSectionPaint("Dept D", 
-                createGradientPaint(new Color(200, 255, 200), Color.YELLOW));
-        plot.setDefaultSectionOutlinePaint(Color.WHITE);
-        plot.setSectionOutlinesVisible(true);
-        plot.setDefaultSectionOutlineStroke(new BasicStroke(2.0f));
+        tracer.setSectionPaint("Dept A", createGradientPaint(new Color(200, 200, 255), Color.BLUE));
+        tracer.setSectionPaint("Dept B", createGradientPaint(new Color(255, 200, 200), Color.RED));
+        tracer.setSectionPaint("Dept C", createGradientPaint(new Color(200, 255, 200), Color.GREEN));
+        tracer.setSectionPaint("Dept D", createGradientPaint(new Color(200, 255, 200), Color.YELLOW));
+        
+        
+        tracer.setDefaultSectionOutlinePaint(Color.WHITE);
+        tracer.setSectionPaint("Dept E", createGradientPaint(new Color(200,200,255), Color.CYAN));
+        
+        tracer.setSectionOutlinesVisible(true);
+        tracer.setDefaultSectionOutlineStroke(new BasicStroke(2.0f));
 
-        plot.setLabelFont(new Font("Courier New", Font.BOLD, 20));
-        plot.setLabelLinkStroke(new BasicStroke(2.0f));
+        tracer.setLabelFont(new Font("Courier New", Font.BOLD, 20));
+        tracer.setLabelLinkStroke(new BasicStroke(2.0f));
         
         return monDiagramme;
 
     }
 
     /**
-     * A utility method for creating gradient paints.
+     * Methode permettant de creer des gradients de couleur
      * 
-     * @param c1  color 1.
-     * @param c2  color 2.
+     * @param c1  couleur 1
+     * @param c2  couleur 2
      * 
-     * @return A radial gradient paint.
+     * @return gradient radial
      */
     private static RadialGradientPaint createGradientPaint(Color c1, Color c2) {
         Point2D center = new Point2D.Float(0, 0);
@@ -114,38 +120,40 @@ public class PieChart1 extends ApplicationFrame {
                 new Color[] {c1, c2});
     }
 
+    
+    
     /**
-     * Creates a panel for the demo (used by SuperDemo.java).
      *
-     * @return A panel.
+     * @return pan
      */
     public static JPanel createPanel() {
-        JFreeChart chart = createChart(createDataset());
-        chart.setPadding(new RectangleInsets(4, 8, 2, 2));
-        ChartPanel panel = new ChartPanel(chart, false);
-        panel.setMouseWheelEnabled(true);
-        panel.setPreferredSize(new Dimension(600, 300));
-        return panel;
+        JFreeChart diagramme = createChart(createDataset());
+        
+        diagramme.setPadding(new RectangleInsets(6, 12, 4, 4));
+        
+        ChartPanel pan = new ChartPanel(diagramme, false);
+        
+        pan.setMouseWheelEnabled(true);
+        pan.setPreferredSize(new Dimension(800, 500));
+        return pan;
     }
 
+    
     /**
-     * Starting point for the demonstration application.
+     * Ce qu'il faut mettre dans le main
      *
-     * @param args  ignored.
+     * @param args du main
      */
+    
     public static void main(String[] args) {
 
-        // ******************************************************************
-        //  More than 150 demo applications are included with the JFreeChart
-        //  Developer Guide...for more information, see:
-        //
-        //  >   http://www.object-refinery.com/jfreechart/guide.html
-        //
-        // ******************************************************************
 
-        PieChart1 demo = new PieChart1("JFreeChart: Pie Chart Demo 1");
-        demo.pack();
-        UIUtils.centerFrameOnScreen(demo);
-        demo.setVisible(true);
+        PieChart1 leDiag = new PieChart1("Ecrire le titre");
+        
+        leDiag.pack();
+        
+        UIUtils.centerFrameOnScreen(leDiag);
+        
+        leDiag.setVisible(true);
     }
 }
