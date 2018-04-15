@@ -153,7 +153,7 @@ public class PageConnexion extends JPanel implements ActionListener {
                 Logger.getLogger(PageConnexion.class.getName()).log(Level.SEVERE, null, ex);
             }
             // LANCER MENU
-            hub.launchPageMenu();
+            hub.launchPageMenu(BDD);
         }
         else if ((source == bouton) && (distance.isSelected() == true))
         {
@@ -164,7 +164,7 @@ public class PageConnexion extends JPanel implements ActionListener {
                 Logger.getLogger(PageConnexion.class.getName()).log(Level.SEVERE, null, ex);
             }
             // LANCER MENU 
-            hub.launchPageMenu();
+            hub.launchPageMenu(BDD);
         }
     }
 }
