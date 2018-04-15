@@ -16,6 +16,7 @@ import javax.swing.*;
  */
 public class HubGraph extends JFrame implements ActionListener
 {
+    // Différentes pages possible
     private PageConnexion PConnexion;
     private PageMenu PMenu;
     
@@ -23,8 +24,10 @@ public class HubGraph extends JFrame implements ActionListener
     private PageAjout PAjout;
     private PageStatistique PStatistique;
     
+    // Base de donnée
     private GestionBase BDD;
     
+    // Element de la barre du menu
     private JMenuBar menuBar;
     
     private JMenu maj;
@@ -96,7 +99,8 @@ public class HubGraph extends JFrame implements ActionListener
     
     public void launchPageConnexion()
     {
-        PConnexion = new PageConnexion(this, BDD);
+        setJMenuBar(null);
+        PConnexion = new PageConnexion(this);
         launchWindows(PConnexion);
     }
     
@@ -140,6 +144,6 @@ public class HubGraph extends JFrame implements ActionListener
         if(source == statistique)
              System.out.println("Statistique");
         if(source == deconnexion)
-             System.out.println("Deconnexion");
+             launchPageConnexion();
     }
 }
