@@ -81,7 +81,7 @@ public class GestionBase {
 
 
 
-public boolean rechercheInformation(String command) {
+    public boolean rechercheInformation(String command) {
         try {
             array = co.remplirChampsRequete(command);
         } catch (SQLException ex) {
@@ -97,5 +97,9 @@ public boolean rechercheInformation(String command) {
         }
 
         array.clear();
+    }
+    
+    public String getLogin() {
+        return login;
     }
 }

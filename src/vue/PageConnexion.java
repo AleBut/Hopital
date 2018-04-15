@@ -45,12 +45,9 @@ public class PageConnexion extends JPanel implements ActionListener {
     // Image en bas du panneau de connexion
     private JLabel image;
 
-    public PageConnexion(HubGraph _hub, GestionBase _BDD) { // constructeur
+    public PageConnexion(HubGraph _hub) { // constructeur
         // Hub graphique
         hub = _hub;
-        
-        // Base de donnée
-        BDD = _BDD;
         
         // container
         container = new JPanel();
@@ -153,7 +150,7 @@ public class PageConnexion extends JPanel implements ActionListener {
                 Logger.getLogger(PageConnexion.class.getName()).log(Level.SEVERE, null, ex);
             }
             // LANCER MENU
-            hub.launchPageMenu();
+            hub.launchPageMenu(BDD);
         }
         else if ((source == bouton) && (distance.isSelected() == true))
         {
@@ -164,7 +161,7 @@ public class PageConnexion extends JPanel implements ActionListener {
                 Logger.getLogger(PageConnexion.class.getName()).log(Level.SEVERE, null, ex);
             }
             // LANCER MENU 
-            hub.launchPageMenu();
+            hub.launchPageMenu(BDD);
         }
     }
 }
