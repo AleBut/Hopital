@@ -74,10 +74,8 @@ public class PageConnexion extends JPanel implements ActionListener {
         constructionGraphique();
         
         // PageConnexion renvoit ici le container à HubGraph
-        this.setSize(500, 500);
         this.setBackground(Color.white); // Définir la couleur de l'arrière plan
         this.add(container);
-        this.add(image); // Insertion d'une image
     }
     
     private void constructionGraphique()
@@ -131,6 +129,7 @@ public class PageConnexion extends JPanel implements ActionListener {
         miseEnForme.add(locale); // Ajout du checkbox locale
         miseEnForme.add(distance); // Ajout du checkbox distance
         miseEnForme.add(bouton); // Ajout du bouton de connexion
+        miseEnForme.add(image);
         
         container.setBackground(Color.white); // Définir la couleur de l'arrière plan
         container.add(miseEnForme); // Ajout des boutons/interfaces mises en forme

@@ -31,11 +31,8 @@ public class PageStatistique extends JPanel implements ActionListener {
     
     
     
-    public PageStatistique(HubGraph _hub, GestionBase _BDD)
-    {
-        // Hub graphique
-        hub = _hub;
-        
+    public PageStatistique(GestionBase _BDD)
+    {   
         // Base de donnée
         BDD = _BDD;
         
@@ -50,14 +47,14 @@ public class PageStatistique extends JPanel implements ActionListener {
         constructionGraphique();
         
         // PageConnexion renvoit ici le container à HubGraph
-        this.setSize(500, 500);
         this.setBackground(Color.white); // Définir la couleur de l'arrière plan
         this.add(container);
     }
     
      private void constructionGraphique()
-    {
-        
+    { /*
+        Camembert C = new Camembert("Test");
+        container.add(C); */
     }
 
     @Override

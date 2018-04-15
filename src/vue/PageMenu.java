@@ -39,16 +39,19 @@ public class PageMenu extends JPanel {
         // PageMenu renvoit ici le container à HubGraph
         this.setBackground(Color.white); // Définir la couleur de l'arrière plan
         this.add(container);
-        this.add(image);
     }
     
      private void constructionGraphique()
      {
         JLabel titre = new JLabel("Bienvenue,  " +  BDD.getLogin());
         titre.setFont(new Font("Arial", Font.BOLD, 15)); // Attribuer la police au titre
-         
+        
+        Box miseEnForme = Box.createVerticalBox();
+        miseEnForme.add(titre);
+        miseEnForme.add(image);
+        
         container.setBackground(Color.white);
-        container.add(titre);
+        container.add(miseEnForme);
      }
 }
 

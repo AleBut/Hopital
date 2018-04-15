@@ -6,6 +6,7 @@
 package vue;
 
 import controleur.GestionBase;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -59,6 +60,11 @@ public class HubGraph extends JFrame implements ActionListener
          
          // Construction du menu graphique
          constructionGraphique();
+         
+         this.setTitle("Hopital");
+         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Ferme la fenetre automatiquement
+         this.setLocationRelativeTo(null); // Met la fenetre au milieu
+         this.setVisible(true); // Rend la fenetre visible
         
         // Lance la page de connexion
         launchPageConnexion();
@@ -81,35 +87,33 @@ public class HubGraph extends JFrame implements ActionListener
         modification.addActionListener(this);
         suppression.addActionListener(this);
         
+        menuBar.setLayout(new GridLayout(1,4));
+        
         interrogation.addActionListener(this);
         statistique.addActionListener(this);
         deconnexion.addActionListener(this);
     }
     
-    public void launchWindows(JPanel panneau)
-    {
-        this.setTitle("Hopital");
-        this.setSize(500, 500);
-        this.setContentPane(panneau);
-   
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Ferme la fenetre automatiquement
-        this.setLocationRelativeTo(null); // Met la fenetre au milieu
-        this.setVisible(true); // Rend la fenetre visible 
-    }
-    
     public void launchPageConnexion()
     {
-        setJMenuBar(null);
-        PConnexion = new PageConnexion(this);
-        launchWindows(PConnexion);
+         this.setVisible(false);
+         this.setJMenuBar(null);
+         this.setContentPane(new PageConnexion(this));
+         //this.pack();
+         this.setSize(500, 500);
+         this.setVisible(true);
     }
     
     public void launchPageMenu(GestionBase _BDD)
     {
-        BDD = _BDD;
-        PMenu = new PageMenu(BDD);
-        setJMenuBar(menuBar);
-        launchWindows(PMenu);
+         BDD = _BDD;
+        
+         this.setVisible(false);
+         this.setJMenuBar(menuBar);
+         this.setContentPane(new PageMenu(BDD));
+         //this.pack();
+         this.setSize(1000, 650);
+         this.setVisible(true);
     }
     
     public void launchPageRecherche()
@@ -123,8 +127,12 @@ public class HubGraph extends JFrame implements ActionListener
     }
     
     public void launchPageStatistique()
-    {
-        
+    { /*
+         this.setVisible(false);
+         this.setJMenuBar(menuBar);
+         this.setContentPane(new PageStatistique(BDD));
+         this.setSize(1000, 650);
+         this.setVisible(true); */
     }
     
     @Override
@@ -138,11 +146,10 @@ public class HubGraph extends JFrame implements ActionListener
             System.out.println("Modification");
         if(source == suppression)
             System.out.println("Suppression");
-        
         if(source == interrogation)
             System.out.println("Interrogation");
         if(source == statistique)
-             System.out.println("Statistique");
+             launchPageStatistique();
         if(source == deconnexion)
              launchPageConnexion();
     }
