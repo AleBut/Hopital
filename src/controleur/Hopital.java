@@ -5,7 +5,6 @@
  */
 package controleur;
 
-import vue.HubGraph;
 import java.sql.SQLException;
 
 /**
