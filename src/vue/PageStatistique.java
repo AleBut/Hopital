@@ -7,6 +7,7 @@ package vue;
 
 import controleur.GestionBase;
 import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
@@ -48,13 +49,17 @@ public class PageStatistique extends JPanel implements ActionListener {
         
         // PageConnexion renvoit ici le container à HubGraph
         this.setBackground(Color.white); // Définir la couleur de l'arrière plan
-        this.add(container);
     }
     
      private void constructionGraphique()
-    { /*
-        Camembert C = new Camembert("Test");
-        container.add(C); */
+    {
+        this.setLayout(new GridLayout(2,3));
+        this.add(new Camembert("Test1"));
+        this.add(new Camembert("Test2"));
+        this.add(new Camembert("Test3"));
+        this.add(new Camembert("Test4"));
+        this.add(new Camembert("Test5"));
+        this.add(new Camembert("Test6"));
     }
 
     @Override

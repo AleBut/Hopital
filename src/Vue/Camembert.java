@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Vue;
+package vue;
 
 
 import java.awt.BasicStroke;
@@ -43,12 +43,12 @@ public class Camembert extends JPanel {
     public Camembert(String titre) {
         JFreeChart diagramme = createChart(createDataset());
         
-        //diagramme.setPadding(new RectangleInsets(6, 12, 4, 4));
+        diagramme.setPadding(new RectangleInsets(6, 12, 4, 4)); // Overlay 3D blanc
         
         ChartPanel pan = new ChartPanel(diagramme, false);
         
-        pan.setMouseWheelEnabled(true);
-        pan.setPreferredSize(new Dimension(500, 500));
+        pan.setMouseWheelEnabled(true); // Permet de faire tourner le diagramme
+        pan.setPreferredSize(new Dimension(325, 325)); // Dimension
         this.add(pan);
     }
 

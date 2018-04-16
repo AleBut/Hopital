@@ -16,15 +16,7 @@ import javax.swing.*;
  * @author Alex1
  */
 public class HubGraph extends JFrame implements ActionListener
-{
-    // Différentes pages possible
-    private PageConnexion PConnexion;
-    private PageMenu PMenu;
-    
-    private PageRecherche PRecherche;
-    private PageAjout PAjout;
-    private PageStatistique PStatistique;
-    
+{    
     // Base de donnée
     private GestionBase BDD;
     
@@ -127,12 +119,12 @@ public class HubGraph extends JFrame implements ActionListener
     }
     
     public void launchPageStatistique()
-    { /*
+    {
          this.setVisible(false);
          this.setJMenuBar(menuBar);
          this.setContentPane(new PageStatistique(BDD));
          this.setSize(1000, 650);
-         this.setVisible(true); */
+         this.setVisible(true);
     }
     
     @Override
