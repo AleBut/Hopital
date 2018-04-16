@@ -5,6 +5,7 @@
  */
 package vue;
 
+import controleur.HubGraph;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

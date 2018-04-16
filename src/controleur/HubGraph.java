@@ -3,13 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vue;
+package controleur;
 
 import controleur.GestionBase;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import vue.MenuBar;
+import vue.PageConnexion;
+import vue.PageMenu;
+import vue.PageStatistique;
 
 /**
  *
@@ -20,71 +23,25 @@ public class HubGraph extends JFrame implements ActionListener
     // Base de donnée
     private GestionBase BDD;
     
-    // Element de la barre du menu
-    private JMenuBar menuBar;
-    
-    private JMenu maj;
-    private JMenuItem insertion;
-    private JMenuItem modification;
-    private JMenuItem suppression;
-    
-    private JMenuItem interrogation;
-    
-    private JMenuItem statistique;
-    
-    private JMenuItem deconnexion;
+    private MenuBar menu = new MenuBar(this);
     
     public HubGraph()
-    {
-        // Bar de menu
-         menuBar = new JMenuBar();
-         
-         maj = new JMenu("Màj des données");
-         insertion = new JMenuItem("Insertion");
-         modification = new JMenuItem("Modification");
-         suppression = new JMenuItem("Suppression");
-         
-         interrogation = new JMenuItem("Interrogation");
-        
-         statistique = new JMenuItem("Statistique");
-         
-         deconnexion = new JMenuItem("Deconnexion");
-         
-         // Construction du menu graphique
-         constructionGraphique();
-         
+    {         
          this.setTitle("Hopital");
          this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Ferme la fenetre automatiquement
          this.setLocationRelativeTo(null); // Met la fenetre au milieu
          this.setVisible(true); // Rend la fenetre visible
+         
+        menu.getInsertion().addActionListener(this);
+        menu.getModification().addActionListener(this);
+        menu.getSuppression().addActionListener(this);
+        menu.getInterrogation().addActionListener(this);
+        menu.getStatistique().addActionListener(this);
+        menu.getDeconnexion().addActionListener(this);
         
         // Lance la page de connexion
         launchPageConnexion();
-    }
-    
-    private void constructionGraphique()
-    {
-        maj.add(insertion);
-        maj.addSeparator();
-        maj.add(modification);
-        maj.addSeparator();
-        maj.add(suppression);
-        
-        menuBar.add(maj);
-        menuBar.add(interrogation);
-        menuBar.add(statistique);
-        menuBar.add(deconnexion);
-        
-        insertion.addActionListener((ActionListener) this);
-        modification.addActionListener(this);
-        suppression.addActionListener(this);
-        
-        menuBar.setLayout(new GridLayout(1,4));
-        
-        interrogation.addActionListener(this);
-        statistique.addActionListener(this);
-        deconnexion.addActionListener(this);
-    }
+    } 
     
     public void launchPageConnexion()
     {
@@ -101,7 +58,7 @@ public class HubGraph extends JFrame implements ActionListener
          BDD = _BDD;
         
          this.setVisible(false);
-         this.setJMenuBar(menuBar);
+         this.setJMenuBar(menu);
          this.setContentPane(new PageMenu(BDD));
          //this.pack();
          this.setSize(1000, 650);
@@ -121,7 +78,7 @@ public class HubGraph extends JFrame implements ActionListener
     public void launchPageStatistique()
     {
          this.setVisible(false);
-         this.setJMenuBar(menuBar);
+         this.setJMenuBar(menu);
          this.setContentPane(new PageStatistique(BDD));
          this.setSize(1000, 650);
          this.setVisible(true);
@@ -131,18 +88,18 @@ public class HubGraph extends JFrame implements ActionListener
     public void actionPerformed(ActionEvent e)
     {
         Object  source =e.getSource();
-        
-        if(source == insertion)
+ 
+        if(source == menu.getInsertion())
             System.out.println("Insertion");
-        if(source == modification)
+        if(source == menu.getModification())
             System.out.println("Modification");
-        if(source == suppression)
+        if(source == menu.getSuppression())
             System.out.println("Suppression");
-        if(source == interrogation)
+        if(source == menu.getInterrogation())
             System.out.println("Interrogation");
-        if(source == statistique)
+        if(source == menu.getStatistique())
              launchPageStatistique();
-        if(source == deconnexion)
+        if(source == menu.getDeconnexion())
              launchPageConnexion();
     }
 }
