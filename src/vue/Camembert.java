@@ -41,7 +41,7 @@ public class Camembert extends JPanel {
 
 
     public Camembert(String titre) {
-        JFreeChart diagramme = createChart(createDataset());
+        JFreeChart diagramme = createChart(createDataset(), titre);
         
         diagramme.setPadding(new RectangleInsets(6, 12, 4, 4)); // Overlay 3D blanc
         
@@ -76,9 +76,9 @@ public class Camembert extends JPanel {
      *
      * @return monDiagramme
      */
-    private static JFreeChart createChart(PieDataset mesValeurs) {
+    private static JFreeChart createChart(PieDataset mesValeurs, String nom) {
 
-        JFreeChart monDiagramme = ChartFactory.createPieChart("Nombre de patients par departement",mesValeurs,false,true,false);
+        JFreeChart monDiagramme = ChartFactory.createPieChart(nom, mesValeurs,false,true,false);
 
         // customise the title position and font
         TextTitle titre = monDiagramme.getTitle();
