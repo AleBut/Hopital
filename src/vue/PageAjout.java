@@ -6,12 +6,16 @@
 package vue;
 
 import controleur.GestionBase;
+import controleur.Connexion;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -21,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
+import modele.Malade;
 
 /**
  *
@@ -33,6 +38,9 @@ public class PageAjout extends JPanel implements ActionListener {
 
     // Connexion vers la base de donnée
     private GestionBase BDD;
+    
+    //nouvel objet malade
+    private Malade patient;
 
     // container
     private JPanel container;
@@ -63,6 +71,8 @@ public class PageAjout extends JPanel implements ActionListener {
 
     //bouton ajouter patient
     private JButton bouton;
+    
+    private String requeteajout;
 
     public PageAjout(HubGraph _hub, GestionBase _BDD) throws ParseException {
         // Hub graphique
@@ -123,8 +133,7 @@ public class PageAjout extends JPanel implements ActionListener {
         // Construction graphique de la fenetre dans le Jpanel container.
         constructionGraphique();
 
-        // PageConnexion renvoit ici le container à HubGraph
-        this.setSize(1000, 650);
+        
         this.setBackground(Color.white); // Définir la couleur de l'arrière plan
 
         this.add(container);
@@ -266,7 +275,10 @@ public class PageAjout extends JPanel implements ActionListener {
         Object source = ae.getSource();
 
         if (source == bouton) {
-
+            
+            String chainemutuelle = (String) mutuelle.getSelectedItem();
+            
+            
             //test pour vérifier que tous les champs sont remplis
             if (("".equals(nom.getText())) || ("".equals(prénom.getText())) || ("".equals(tel.getText())) || ("".equals(adresse.getText()))) {
                 
@@ -274,7 +286,21 @@ public class PageAjout extends JPanel implements ActionListener {
 
             }
             
-            
+            else{
+                int num=49;
+                patient=new Malade(num,nom.getText(),prénom.getText(),adresse.getText(),tel.getText(),chainemutuelle);
+                requeteajout="INSERT INTO malade (numero, nom, prenom, adresse, tel, mutuelle) VALUES ('"+patient.getNum()+"', '"+patient.getNom()+"', '"+patient.getPrenom()+"', '"+patient.getAdresse()+"', '"+patient.getTel()+"', '"+patient.getMutuelle()+"');";
+                 System.out.println(requeteajout);
+                try {
+                    BDD.executerRequete(requeteajout);
+                    JOptionPane.showMessageDialog(this,"Le patient a bien été ajouté.","Formulaire valide",JOptionPane.INFORMATION_MESSAGE);
+                    
+                } catch (SQLException ex) {
+                    Logger.getLogger(PageAjout.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                hub.launchPageMenu(BDD);
+                
+            }
 
         }
 
