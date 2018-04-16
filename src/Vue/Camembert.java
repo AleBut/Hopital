@@ -37,16 +37,19 @@ import org.jfree.data.general.PieDataset;
  *
  * @author 
  */
-public class PieChart1 extends ApplicationFrame {
+public class Camembert extends JPanel {
 
-    /**
-     * Constructeur par defaut
-     *
-     * @param titre  du frame
-     */
-    public PieChart1(String titre) {
-        super(titre);
-        setContentPane(createPanel());
+
+    public Camembert(String titre) {
+        JFreeChart diagramme = createChart(createDataset());
+        
+        //diagramme.setPadding(new RectangleInsets(6, 12, 4, 4));
+        
+        ChartPanel pan = new ChartPanel(diagramme, false);
+        
+        pan.setMouseWheelEnabled(true);
+        pan.setPreferredSize(new Dimension(500, 500));
+        this.add(pan);
     }
 
     /**
@@ -118,42 +121,5 @@ public class PieChart1 extends ApplicationFrame {
         float[] dist = {0.0f, 1.0f};
         return new RadialGradientPaint(center, radius, dist,
                 new Color[] {c1, c2});
-    }
-
-    
-    
-    /**
-     *
-     * @return pan
-     */
-    public static JPanel createPanel() {
-        JFreeChart diagramme = createChart(createDataset());
-        
-        diagramme.setPadding(new RectangleInsets(6, 12, 4, 4));
-        
-        ChartPanel pan = new ChartPanel(diagramme, false);
-        
-        pan.setMouseWheelEnabled(true);
-        pan.setPreferredSize(new Dimension(800, 500));
-        return pan;
-    }
-
-    
-    /**
-     * Ce qu'il faut mettre dans le main
-     *
-     * @param args du main
-     */
-    
-    public static void main(String[] args) {
-
-
-        PieChart1 leDiag = new PieChart1("Ecrire le titre");
-        
-        leDiag.pack();
-        
-        UIUtils.centerFrameOnScreen(leDiag);
-        
-        leDiag.setVisible(true);
     }
 }
