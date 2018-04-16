@@ -7,6 +7,7 @@ package controleur;
 
 import vue.HubGraph;
 import java.sql.SQLException;
+import vue.PageAjout;
 
 /**
  *
@@ -21,11 +22,11 @@ public class Hopital {
      * @throws java.lang.ClassNotFoundException
      */
     private static HubGraph hub;
-
+    
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
 
         hub = new HubGraph();
-
+         hub.launchPageAjout();
     }
 
 }

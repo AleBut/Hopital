@@ -3,11 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Alex1/Documents/GitHub/Hopital/src/vue/PageConnexion.java</file>
-            <file>file:/C:/Users/Alex1/Documents/GitHub/Hopital/src/vue/HubGraph.java</file>
-            <file>file:/C:/Users/Alex1/Documents/GitHub/Hopital/src/vue/PageMenu.java</file>
-            <file>file:/C:/Users/Alex1/Documents/GitHub/Hopital/src/controleur/GestionBase.java</file>
-            <file>file:/C:/Users/Alex1/Documents/GitHub/Hopital/src/vue/Erreur.java</file>
+            <file>file:/C:/Users/solene/Desktop/Info%20ING3/Projet%20Java/Hopital-master/src/vue/PageMenu.java</file>
+            <file>file:/C:/Users/solene/Desktop/Info%20ING3/Projet%20Java/Hopital-master/src/vue/HubGraph.java</file>
+            <file>file:/C:/Users/solene/Desktop/Info%20ING3/Projet%20Java/Hopital-master/src/controleur/Hopital.java</file>
+            <file>file:/C:/Users/solene/Desktop/Info%20ING3/Projet%20Java/Hopital-master/src/vue/PageConnexion.java</file>
+            <file>file:/C:/Users/solene/Desktop/Info%20ING3/Projet%20Java/Hopital-master/src/controleur/GestionBase.java</file>
+            <file>file:/C:/Users/solene/Desktop/Info%20ING3/Projet%20Java/Hopital-master/src/vue/PageStatistique.java</file>
+            <file>file:/C:/Users/solene/Desktop/Info%20ING3/Projet%20Java/Hopital-master/src/modele/Infirmier.java</file>
+            <file>file:/C:/Users/solene/Desktop/Info%20ING3/Projet%20Java/Hopital-master/src/modele/Malade.java</file>
+            <file>file:/C:/Users/solene/Desktop/Info%20ING3/Projet%20Java/Hopital-master/src/vue/PageAjout.java</file>
+            <file>file:/C:/Users/solene/Desktop/Info%20ING3/Projet%20Java/Hopital-master/src/vue/PageRecherche.java</file>
+            <file>file:/C:/Users/solene/Desktop/Info%20ING3/Projet%20Java/Hopital-master/src/modele/Service.java</file>
+            <file>file:/C:/Users/solene/Desktop/Info%20ING3/Projet%20Java/Hopital-master/src/controleur/Connexion.java</file>
         </group>
     </open-files>
 </project-private>

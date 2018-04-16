@@ -6,18 +6,16 @@
 package vue;
 
 import controleur.GestionBase;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
  *
  * @author Alex1
  */
-public class HubGraph extends JFrame implements ActionListener
-{
-    // Différentes pages possible
+public class HubGraph extends JFrame {
     private PageConnexion PConnexion;
     private PageMenu PMenu;
     
@@ -25,95 +23,35 @@ public class HubGraph extends JFrame implements ActionListener
     private PageAjout PAjout;
     private PageStatistique PStatistique;
     
-    // Base de donnée
     private GestionBase BDD;
-    
-    // Element de la barre du menu
-    private JMenuBar menuBar;
-    
-    private JMenu maj;
-    private JMenuItem insertion;
-    private JMenuItem modification;
-    private JMenuItem suppression;
-    
-    private JMenuItem interrogation;
-    
-    private JMenuItem statistique;
-    
-    private JMenuItem deconnexion;
     
     public HubGraph()
     {
-        // Bar de menu
-         menuBar = new JMenuBar();
-         
-         maj = new JMenu("Màj des données");
-         insertion = new JMenuItem("Insertion");
-         modification = new JMenuItem("Modification");
-         suppression = new JMenuItem("Suppression");
-         
-         interrogation = new JMenuItem("Interrogation");
-        
-         statistique = new JMenuItem("Statistique");
-         
-         deconnexion = new JMenuItem("Deconnexion");
-         
-         // Construction du menu graphique
-         constructionGraphique();
-         
-         this.setTitle("Hopital");
-         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Ferme la fenetre automatiquement
-         this.setLocationRelativeTo(null); // Met la fenetre au milieu
-         this.setVisible(true); // Rend la fenetre visible
-        
-        // Lance la page de connexion
-        launchPageConnexion();
+        PConnexion = new PageConnexion(this, BDD);
+        launchWindows(PConnexion);
     }
     
-    private void constructionGraphique()
+    public void launchWindows(JPanel panneau)
     {
-        maj.add(insertion);
-        maj.addSeparator();
-        maj.add(modification);
-        maj.addSeparator();
-        maj.add(suppression);
-        
-        menuBar.add(maj);
-        menuBar.add(interrogation);
-        menuBar.add(statistique);
-        menuBar.add(deconnexion);
-        
-        insertion.addActionListener((ActionListener) this);
-        modification.addActionListener(this);
-        suppression.addActionListener(this);
-        
-        menuBar.setLayout(new GridLayout(1,4));
-        
-        interrogation.addActionListener(this);
-        statistique.addActionListener(this);
-        deconnexion.addActionListener(this);
+        this.setTitle("Hopital");
+        this.setSize(1000, 650);
+        this.setContentPane(panneau);
+   
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Ferme la fenetre automatiquement
+        this.setLocationRelativeTo(null); // Met la fenetre au milieu
+        this.setVisible(true); // Rend la fenetre visible 
     }
     
     public void launchPageConnexion()
     {
-         this.setVisible(false);
-         this.setJMenuBar(null);
-         this.setContentPane(new PageConnexion(this));
-         //this.pack();
-         this.setSize(500, 500);
-         this.setVisible(true);
+        PConnexion = new PageConnexion(this, BDD);
+        launchWindows(PConnexion);
     }
     
-    public void launchPageMenu(GestionBase _BDD)
+    public void launchPageMenu()
     {
-         BDD = _BDD;
-        
-         this.setVisible(false);
-         this.setJMenuBar(menuBar);
-         this.setContentPane(new PageMenu(BDD));
-         //this.pack();
-         this.setSize(1000, 650);
-         this.setVisible(true);
+        PMenu = new PageMenu(this, BDD);
+        launchWindows(PMenu);
     }
     
     public void launchPageRecherche()
@@ -123,34 +61,16 @@ public class HubGraph extends JFrame implements ActionListener
     
     public void launchPageAjout()
     {
-        
+        try {
+            PAjout = new PageAjout(this, BDD);
+            launchWindows(PAjout);
+        } catch (ParseException ex) {
+            Logger.getLogger(HubGraph.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void launchPageStatistique()
-    { /*
-         this.setVisible(false);
-         this.setJMenuBar(menuBar);
-         this.setContentPane(new PageStatistique(BDD));
-         this.setSize(1000, 650);
-         this.setVisible(true); */
-    }
-    
-    @Override
-    public void actionPerformed(ActionEvent e)
     {
-        Object  source =e.getSource();
         
-        if(source == insertion)
-            System.out.println("Insertion");
-        if(source == modification)
-            System.out.println("Modification");
-        if(source == suppression)
-            System.out.println("Suppression");
-        if(source == interrogation)
-            System.out.println("Interrogation");
-        if(source == statistique)
-             launchPageStatistique();
-        if(source == deconnexion)
-             launchPageConnexion();
     }
 }
