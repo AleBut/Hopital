@@ -5,7 +5,6 @@
  */
 package controleur;
 
-import controleur.GestionBase;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -23,7 +22,7 @@ public class HubGraph extends JFrame implements ActionListener
     // Base de donnée
     private GestionBase BDD;
     
-    private MenuBar menu = new MenuBar(this);
+    private MenuBar menu;
     
     public HubGraph()
     {         
@@ -31,6 +30,8 @@ public class HubGraph extends JFrame implements ActionListener
          this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Ferme la fenetre automatiquement
          this.setLocationRelativeTo(null); // Met la fenetre au milieu
          this.setVisible(true); // Rend la fenetre visible
+         
+         menu = new MenuBar();
          
         menu.getInsertion().addActionListener(this);
         menu.getModification().addActionListener(this);

@@ -7,8 +7,6 @@ package vue;
 
 import controleur.HubGraph;
 import java.awt.GridLayout;
-import java.awt.event.ActionListener;
-import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -17,9 +15,8 @@ import javax.swing.JMenuItem;
  *
  * @author Alex1
  */
-public class MenuBar extends JMenuBar {
-    private HubGraph hub;
-    
+public class MenuBar extends JMenuBar
+{
     private JMenu maj;
     private JMenuItem insertion;
     private JMenuItem modification;
@@ -31,10 +28,8 @@ public class MenuBar extends JMenuBar {
     
     private JMenuItem deconnexion;
     
-    public MenuBar(HubGraph _hub)
-    {
-        hub = _hub;
-        
+    public MenuBar()
+    {   
          maj = new JMenu("Màj des données");
          insertion = new JMenuItem("Insertion");
          modification = new JMenuItem("Modification");
