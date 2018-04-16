@@ -273,6 +273,8 @@ public class PageAjout extends JPanel implements ActionListener {
                 JOptionPane.showMessageDialog(this,"Un champ est vide.","Erreur",JOptionPane.WARNING_MESSAGE);
 
             }
+            
+            
 
         }
 

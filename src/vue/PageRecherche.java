@@ -50,7 +50,7 @@ public class PageRecherche extends JPanel implements ActionListener {
         constructionGraphique();
         
         // PageConnexion renvoit ici le container à HubGraph
-        this.setSize(1000, 650);
+        this.setSize(500, 500);
         this.setBackground(Color.white); // Définir la couleur de l'arrière plan
         this.add(container);
     }
