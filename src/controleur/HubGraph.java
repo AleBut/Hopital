@@ -28,8 +28,6 @@ public class HubGraph extends JFrame implements ActionListener
     {         
          this.setTitle("Hopital");
          this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Ferme la fenetre automatiquement
-         this.setLocationRelativeTo(null); // Met la fenetre au milieu
-         this.setVisible(true); // Rend la fenetre visible
          
          menu = new MenuBar();
          
@@ -51,6 +49,7 @@ public class HubGraph extends JFrame implements ActionListener
          this.setContentPane(new PageConnexion(this));
          //this.pack();
          this.setSize(500, 500);
+         this.setLocationRelativeTo(null);
          this.setVisible(true);
     }
     
@@ -63,6 +62,7 @@ public class HubGraph extends JFrame implements ActionListener
          this.setContentPane(new PageMenu(BDD));
          //this.pack();
          this.setSize(1000, 650);
+         this.setLocationRelativeTo(null);
          this.setVisible(true);
     }
     
@@ -82,6 +82,7 @@ public class HubGraph extends JFrame implements ActionListener
          this.setJMenuBar(menu);
          this.setContentPane(new PageStatistique(BDD));
          this.setSize(1000, 650);
+         this.setLocationRelativeTo(null);
          this.setVisible(true);
     }
     
