@@ -81,7 +81,7 @@ public class HubGraph extends JFrame implements ActionListener
         
         tabArgument[0]="Nom";
         tabArgument[1]="Prenom";
-        tabArgument[2]="NumÃ©ro_Employe";
+        tabArgument[2]="Numéro_Employe";
         tabArgument[3]="Telephone";
         tabArgument[4]="Adresse"; 
         
@@ -113,7 +113,7 @@ public class HubGraph extends JFrame implements ActionListener
         
         tabArgument[0]="Nom";
         tabArgument[1]="Prenom";
-        tabArgument[2]="NumÃ©ro_Employe";
+        tabArgument[2]="Numéro_Employe";
         tabArgument[3]="Telephone";
         tabArgument[4]="Adresse"; 
         tabArgument[5]="Specialite"; 
@@ -147,7 +147,7 @@ public class HubGraph extends JFrame implements ActionListener
         
         tabArgument[0]="Nom";
         tabArgument[1]="Prenom";
-        tabArgument[2]="NumÃ©ro_Employe";
+        tabArgument[2]="Numéro_Employe";
         tabArgument[3]="Telephone";
         tabArgument[4]="Adresse"; 
         tabArgument[5]="Rotation"; 

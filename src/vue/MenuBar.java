@@ -5,7 +5,6 @@
  */
 package vue;
 
-import controleur.HubGraph;
 import java.awt.GridLayout;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -36,16 +35,16 @@ public class MenuBar extends JMenuBar
     
     public MenuBar()
     {   
-         maj = new JMenu("MÃ j des donnÃ©es");
+         maj = new JMenu("Màj des données");
             insertion = new JMenuItem("Insertion");
             modification = new JMenuItem("Modification");
             suppression = new JMenuItem("Suppression");
          
          recherche = new JMenu("Recherche");
             personnel = new JMenu("Personnel");
-                employe = new JMenuItem("EmployÃ©");
+                employe = new JMenuItem("Employée");
                 docteur = new JMenuItem("Docteur");
-                infirmiere = new JMenuItem("InfirmiÃ¨re");
+                infirmiere = new JMenuItem("Infirmière");
             patient = new JMenuItem("Patient");
             service = new JMenuItem("Service");
         

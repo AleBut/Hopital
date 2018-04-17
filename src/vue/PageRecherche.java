@@ -22,16 +22,16 @@ import javax.swing.JTextField;
  * @author Alex1
  */
 public class PageRecherche extends JPanel {
-    // Connexion vers la base de donnÃ©e
+    // Connexion vers la base de donnée
     private GestionBase BDD;
     
-    // Cocher les Ã©lÃ©ments souhaitÃ©s
+    // Cocher les éléments souhaités
     private JCheckBox personnel[];
 
     // Recherche texte
     private JTextField rechercheTexte;
     
-    // Aide Ã  la recherche
+    // Aide é la recherche
     private JComboBox volet;
     
     // Bouton de validation de la recherche
@@ -49,7 +49,7 @@ public class PageRecherche extends JPanel {
     
 
     public PageRecherche(GestionBase _BDD, String tabArgument [], String s [], String f, String w) {
-        // Base de donnÃ©e
+        // Base de donnée
         BDD = _BDD;
         tailleTab = tabArgument.length;
         
@@ -99,7 +99,7 @@ public class PageRecherche extends JPanel {
         p1.add(volet);
         p1.add(valider);
         
-        this.setBackground(Color.white); // DÃ©finir la couleur de l'arriÃ¨re plan
+        this.setBackground(Color.white); // Définir la couleur de l'arriére plan
         this.add(miseEnForme);
         this.add(p1);
         
@@ -108,7 +108,7 @@ public class PageRecherche extends JPanel {
     }
      
      class ValiderRecherche implements ActionListener{
-    //RedÃ©finition de la mÃ©thode actionPerformed()
+    //Redéfinition de la méthode actionPerformed()
         
     @Override
     public void actionPerformed(ActionEvent arg0) {
