@@ -5,6 +5,7 @@
  */
 package vue;
 
+import controleur.GestionBase;
 import java.awt.Dimension;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
@@ -20,7 +21,13 @@ import org.jfree.data.category.DefaultCategoryDataset;
  * @author Alex1
  */
 public class DiagrammeBaton extends JPanel {
-    public DiagrammeBaton(String titre) {
+	
+	// Base de donnée
+	GestionBase BDD;
+	
+    public DiagrammeBaton(String titre, GestionBase _BDD) {
+		
+		BDD = _BDD;
         
         PlotOrientation orientation = PlotOrientation.VERTICAL; 
         boolean montrerLegendes = true; 
@@ -50,18 +57,28 @@ public class DiagrammeBaton extends JPanel {
       
       DefaultCategoryDataset dataset = new DefaultCategoryDataset();  
 
-      dataset.addValue( 1.0 , REA , malade );        
-      dataset.addValue( 3.0 , REA , chambre );        
-      dataset.addValue( 5.0 , REA , infirmier );          
+      dataset.addValue( nombreSQL("hospitalisation", "REA"), REA , malade );        
+      dataset.addValue( nombreSQL("chambre", "REA"), REA , chambre );        
+      dataset.addValue( nombreSQL("infirmier", "REA"), REA , infirmier );          
 
-      dataset.addValue( 5.0 , CHG , malade );        
-      dataset.addValue( 6.0 , CHG , chambre );       
-      dataset.addValue( 10.0 , CHG , infirmier );        
+      dataset.addValue( nombreSQL("hospitalisation", "CHG"), CHG , malade );        
+      dataset.addValue(nombreSQL("chambre", "CHG"), CHG , chambre );       
+      dataset.addValue( nombreSQL("infirmier", "CHG"), CHG , infirmier );        
 
-      dataset.addValue( 4.0 , CAR , malade );        
-      dataset.addValue( 2.0 , CAR , chambre );        
-      dataset.addValue( 3.0 , CAR , infirmier );                      
+      dataset.addValue( nombreSQL("hospitalisation", "CAR") , CAR , malade );        
+      dataset.addValue( nombreSQL("chambre", "CHG"), CAR , chambre );        
+      dataset.addValue( nombreSQL("infirmier", "CHG"), CAR , infirmier );                      
 
       return dataset; 
     }
+	
+	private int nombreSQL(String table, String service)
+	{
+		BDD.rechercheInformation("SELECT * FROM " + table + " WHERE code_service = '" + service + "'");
+		
+		int result = (BDD.getArray()).size();
+		BDD.effacerResultat();
+		
+		return result;
+	}
 }

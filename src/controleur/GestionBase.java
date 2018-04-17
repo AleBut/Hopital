@@ -96,8 +96,18 @@ public class GestionBase {
             System.out.print(array.get(i));
         }
 
-        array.clear();
-    }
+		effacerResultat();
+	}
+	
+	public void effacerResultat()
+	{
+		array.clear();
+	}
+	
+	public ArrayList<String> getArray()
+	{
+		return array;
+	}
     
     public String getLogin() {
         return login;
