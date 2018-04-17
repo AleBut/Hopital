@@ -8,10 +8,8 @@ package controleur;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import vue.MenuBar;
-import vue.PageConnexion;
-import vue.PageMenu;
-import vue.PageStatistique;
+
+import vue.*;
 
 /**
  *
@@ -19,7 +17,7 @@ import vue.PageStatistique;
  */
 public class HubGraph extends JFrame implements ActionListener
 {    
-    // Base de donnée
+    // Base de donnÃ©e
     private GestionBase BDD;
     
     private MenuBar menu;
@@ -31,15 +29,22 @@ public class HubGraph extends JFrame implements ActionListener
          
          menu = new MenuBar();
          
-        menu.getInsertion().addActionListener(this);
-        menu.getModification().addActionListener(this);
-        menu.getSuppression().addActionListener(this);
-        menu.getInterrogation().addActionListener(this);
-        menu.getStatistique().addActionListener(this);
-        menu.getDeconnexion().addActionListener(this);
+         menu.getInsertion().addActionListener(this);
+         menu.getModification().addActionListener(this);
+         menu.getSuppression().addActionListener(this);
         
-        // Lance la page de connexion
-        launchPageConnexion();
+         menu.getRecherchePersonnelEmploye().addActionListener(this);
+         menu.getRecherchePersonnelDocteur().addActionListener(this);
+         menu.getRecherchePersonnelInfirmiere().addActionListener(this);
+         
+         menu.getRecherchePatient().addActionListener(this);
+         menu.getRechercheService().addActionListener(this);
+        
+         menu.getStatistique().addActionListener(this);
+         menu.getDeconnexion().addActionListener(this);
+        
+         // Lance la page de connexion
+         launchPageConnexion();
     } 
     
     public void launchPageConnexion()
@@ -66,9 +71,113 @@ public class HubGraph extends JFrame implements ActionListener
          this.setVisible(true);
     }
     
-    public void launchPageRecherche()
+    public void launchPageRecherchePersonnelEmploye()
     {
+        String tabArgument [];
+        tabArgument = new String [5];
         
+        String select [];
+        select = new String [5];
+        
+        tabArgument[0]="Nom";
+        tabArgument[1]="Prenom";
+        tabArgument[2]="NumÃ©ro_Employe";
+        tabArgument[3]="Telephone";
+        tabArgument[4]="Adresse"; 
+        
+        select[0]="nom_employe";
+        select[1]="prenom_employe";
+        select[2]="numero_e";
+        select[3]="telephone_employe";
+        select[4]="adresse_employe"; 
+        
+        String f="FROM employe ";
+        String w="";
+        
+         this.setVisible(false);
+         this.setJMenuBar(menu);
+         this.setContentPane(new PageRecherche(BDD,tabArgument, select, f,w ));
+         //this.pack();
+         this.setSize(1000, 650);
+         this.setLocationRelativeTo(null);
+         this.setVisible(true);
+    }
+    
+    public void launchPageRecherchePersonnelDocteur()
+    {
+        String tabArgument [];
+        tabArgument = new String [6];
+        
+        String select [];
+        select = new String [6];
+        
+        tabArgument[0]="Nom";
+        tabArgument[1]="Prenom";
+        tabArgument[2]="NumÃ©ro_Employe";
+        tabArgument[3]="Telephone";
+        tabArgument[4]="Adresse"; 
+        tabArgument[5]="Specialite"; 
+        
+        select[0]="nom_employe";
+        select[1]="prenom_employe";
+        select[2]="numero_e";
+        select[3]="telephone_employe";
+        select[4]="adresse_employe"; 
+        select[5]="specialite"; 
+        
+        String f="FROM employe, docteur ";
+        String w="WHERE employe.numero_e=docteur.numero";
+        
+         this.setVisible(false);
+         this.setJMenuBar(menu);
+         this.setContentPane(new PageRecherche(BDD,tabArgument,select, f,w ));
+         //this.pack();
+         this.setSize(1000, 650);
+         this.setLocationRelativeTo(null);
+         this.setVisible(true);
+    }
+    
+    public void launchPageRecherchePersonnelInfirmiere()
+    {
+        String tabArgument [];
+        tabArgument = new String [10];
+        
+        String select [];
+        select = new String [10];
+        
+        tabArgument[0]="Nom";
+        tabArgument[1]="Prenom";
+        tabArgument[2]="NumÃ©ro_Employe";
+        tabArgument[3]="Telephone";
+        tabArgument[4]="Adresse"; 
+        tabArgument[5]="Rotation"; 
+        tabArgument[6]="Salaire"; 
+        tabArgument[7]="Nom_Service"; 
+        tabArgument[8]="Batiment_Service"; 
+        tabArgument[9]="Directeur_Service";
+        
+        select[0]="nom_employe";
+        select[1]="prenom_employe";
+        select[2]="numero_e";
+        select[3]="telephone_employe";
+        select[4]="adresse_employe"; 
+        select[5]="rotation"; 
+        select[6]="salaire";
+        select[7]="nom_service";
+        select[8]="batiment";
+        select[9]="directeur"; 
+        
+        
+        String f="FROM employe, infirmier, service ";
+        String w="WHERE employe.numero_e=infirmier.numero AND infirmier.code_service = service.code";
+        
+         this.setVisible(false);
+         this.setJMenuBar(menu);
+         this.setContentPane(new PageRecherche(BDD,tabArgument,select, f,w ));
+         //this.pack();
+         this.setSize(1000, 650);
+         this.setLocationRelativeTo(null);
+         this.setVisible(true);
     }
     
     public void launchPageAjout()
@@ -97,8 +206,21 @@ public class HubGraph extends JFrame implements ActionListener
             System.out.println("Modification");
         if(source == menu.getSuppression())
             System.out.println("Suppression");
-        if(source == menu.getInterrogation())
-            System.out.println("Interrogation");
+        
+        if(source == menu.getRecherchePersonnelEmploye())
+            launchPageRecherchePersonnelEmploye();
+        
+        if(source == menu.getRecherchePersonnelDocteur())
+            launchPageRecherchePersonnelDocteur();
+        
+        if(source == menu.getRecherchePersonnelInfirmiere())
+            launchPageRecherchePersonnelInfirmiere();
+        
+        if(source == menu.getRecherchePatient())
+             System.out.println("Recherche Patient");
+        if(source == menu.getRechercheService())
+             System.out.println("Recherche Service");
+        
         if(source == menu.getStatistique())
              launchPageStatistique();
         if(source == menu.getDeconnexion())

@@ -18,11 +18,17 @@ import javax.swing.JMenuItem;
 public class MenuBar extends JMenuBar
 {
     private JMenu maj;
-    private JMenuItem insertion;
-    private JMenuItem modification;
-    private JMenuItem suppression;
+        private JMenuItem insertion;
+        private JMenuItem modification;
+        private JMenuItem suppression;
     
-    private JMenuItem interrogation;
+    private JMenu recherche;
+        private JMenu personnel;
+            private JMenuItem employe;
+            private JMenuItem docteur;
+            private JMenuItem infirmiere;
+        private JMenuItem patient;
+        private JMenuItem service;
     
     private JMenuItem statistique;
     
@@ -30,12 +36,18 @@ public class MenuBar extends JMenuBar
     
     public MenuBar()
     {   
-         maj = new JMenu("Màj des données");
-         insertion = new JMenuItem("Insertion");
-         modification = new JMenuItem("Modification");
-         suppression = new JMenuItem("Suppression");
+         maj = new JMenu("MÃ j des donnÃ©es");
+            insertion = new JMenuItem("Insertion");
+            modification = new JMenuItem("Modification");
+            suppression = new JMenuItem("Suppression");
          
-         interrogation = new JMenuItem("Interrogation");
+         recherche = new JMenu("Recherche");
+            personnel = new JMenu("Personnel");
+                employe = new JMenuItem("EmployÃ©");
+                docteur = new JMenuItem("Docteur");
+                infirmiere = new JMenuItem("InfirmiÃ¨re");
+            patient = new JMenuItem("Patient");
+            service = new JMenuItem("Service");
         
          statistique = new JMenuItem("Statistique");
          
@@ -53,8 +65,18 @@ public class MenuBar extends JMenuBar
         maj.addSeparator();
         maj.add(suppression);
         
+        personnel.add(employe);
+        personnel.add(docteur);
+        personnel.add(infirmiere);
+        
+        recherche.add(personnel);
+        recherche.addSeparator();
+        recherche.add(patient);
+        recherche.addSeparator();
+        recherche.add(service);
+        
         this.add(maj);
-        this.add(interrogation);
+        this.add(recherche);
         this.add(statistique);
         this.add(deconnexion);
 
@@ -67,7 +89,15 @@ public class MenuBar extends JMenuBar
      
      public JMenuItem getSuppression() { return suppression; }
      
-     public JMenuItem getInterrogation() { return interrogation; }
+     public JMenuItem getRecherchePersonnelEmploye() { return employe; }
+     
+     public JMenuItem getRecherchePersonnelDocteur() { return docteur; }
+     
+     public JMenuItem getRecherchePersonnelInfirmiere() { return infirmiere; }
+     
+     public JMenuItem getRecherchePatient() { return patient; }
+     
+     public JMenuItem getRechercheService() { return service; }
 
      public JMenuItem getStatistique() { return statistique; }
      
