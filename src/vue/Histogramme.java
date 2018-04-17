@@ -6,7 +6,6 @@
 package vue;
 
 import java.awt.Dimension;
-import java.util.Random;
 
 import javax.swing.JPanel;
 
@@ -33,8 +32,16 @@ public class Histogramme extends JPanel {
      * @param titre  the frame title.
      */
     public Histogramme(String titre) {
-        JFreeChart histogramme = createChart(createDataset(), titre);
+        //JFreeChart histogramme = createChart(createDataset(), titre);
         
+        PlotOrientation orientation = PlotOrientation.VERTICAL; 
+        boolean show = false; 
+        boolean toolTips = false;
+        boolean urls = false;
+        String xaxis = "number";
+        String yaxis = "value"; 
+        
+        JFreeChart histogramme = ChartFactory.createHistogram( titre, xaxis, yaxis, createDataset(), orientation, show, toolTips, urls);
         histogramme.setPadding(new RectangleInsets(0, 0, 10, 0)); // Marge en haut, gauche, bas, droit
         
         ChartPanel pan = new ChartPanel(histogramme);
@@ -48,19 +55,17 @@ public class Histogramme extends JPanel {
      *
      * @return the dataset.
      */
-    private static IntervalXYDataset createDataset() {
+    private static  HistogramDataset createDataset() {
+        
         HistogramDataset dataset = new HistogramDataset();
-        double[] values = new double[1000];
-        Random generator = new Random(12345678L);
-        for (int i = 0; i < 1000; i++) {
-            values[i] = generator.nextGaussian() + 5;
-        }
-        dataset.addSeries("H1", values, 100, 2.0, 8.0);
-        values = new double[1000];
-        for (int i = 0; i < 1000; i++) {
-            values[i] = generator.nextGaussian() + 7;
-        }
-        dataset.addSeries("H2", values, 100, 4.0, 10.0);
+        
+        //dataset.setType(HistogramType.RELATIVE_FREQUENCY);
+        
+        double[] values = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0};
+   
+
+        dataset.addSeries("Nombre de malade ces 100 derniers jours", values, 10, 0.0, 10.0); // 10 = nombre de rectangle
+
         return dataset;
     }
 

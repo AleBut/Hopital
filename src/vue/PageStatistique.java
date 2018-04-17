@@ -38,7 +38,7 @@ public class PageStatistique extends JPanel implements ActionListener {
         this.add(new Histogramme("Test2"));
         this.add(new Camembert("Test3"));
         this.add(new Camembert("Test4"));
-        this.add(new Camembert("Test5"));
+        this.add(new DiagrammeBaton("Test5"));
         this.add(new Camembert("Test6"));
     }
 
