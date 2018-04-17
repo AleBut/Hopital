@@ -18,5 +18,3 @@ nbproject/*
 *.swp
 *.DS_Store
 *.lock
-build/built-jar.properties
-nbproject/private/private.properties
