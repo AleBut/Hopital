@@ -38,6 +38,18 @@ public class ResultatRecherche extends JPanel {
 		
 		tableau = new JTable(donnees, entete);
 		
+		tableau.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		
+		// Attribue l'espace de chaque colonne
+		for(int i=0; i<entete.length; i++)
+		{
+			if(entete[i] == "Adresse")
+				tableau.getColumnModel().getColumn(i).setPreferredWidth(250);
+			else
+				tableau.getColumnModel().getColumn(i).setPreferredWidth(100);
+		}
+			
+		
 		this.setVisible(false);
 		this.add(new JScrollPane(tableau), BorderLayout.CENTER);
 		this.setVisible(true);
@@ -82,11 +94,14 @@ public class ResultatRecherche extends JPanel {
         {
             if(machaine.charAt(i)==',')
             {
-                buffer = machaine.substring(x, i);
-                retour[indice] = buffer;
-                
-                x = i + 1;
-                indice++;
+				if(machaine.charAt(i+1)!=' ')
+				{
+					buffer = machaine.substring(x, i);
+					retour[indice] = buffer;
+
+					x = i + 1;
+					indice++;
+				}
             }
             
             if(i==machaine.length()-1)
