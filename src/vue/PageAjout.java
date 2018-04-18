@@ -63,7 +63,7 @@ public class PageAjout extends JPanel implements ActionListener {
     private JTextField prénom;
     private JTextField adresse;
     private JFormattedTextField tel;
-    private JFormattedTextField mutuelle;
+    private JTextField mutuelle;
 
     // Chargement de l'image
     private JLabel image;
@@ -104,12 +104,12 @@ public class PageAjout extends JPanel implements ActionListener {
         nom = new JTextField("");
         prénom = new JTextField("");
         adresse = new JTextField("");
-        // mutuelle = new JTextField("");
+        mutuelle = new JTextField("");
         //Format téléphonique
         MaskFormatter format = new MaskFormatter("## ## ## ## ##");
-        MaskFormatter format2 = new MaskFormatter("UUUUUUUUU");
+        
         tel = new JFormattedTextField(format);
-        mutuelle = new JFormattedTextField(format2);
+      
         //image
         image = new JLabel(new ImageIcon("images\\form.png"));
         //Creéation du bouton
@@ -268,7 +268,7 @@ public class PageAjout extends JPanel implements ActionListener {
             } else {
 
               String blindage;
-                blindage = "SELECT MAX(numero) FROM malade;";
+                blindage = "SELECT MAX(numero_m) FROM malade;";
                 BDD.rechercheInformation(blindage);
                 //BDD.afficherInformations();
                 String num = BDD.afficherNuméro();
@@ -277,8 +277,9 @@ public class PageAjout extends JPanel implements ActionListener {
                 int numérofinal = strToInt(num)+1;
                 System.out.println(numérofinal);
                 patient=new Malade(numérofinal,nom.getText(),prénom.getText(),adresse.getText(),tel.getText(),mutuelle.getText());
-                requeteajout = "INSERT INTO malade (numero, nom, prenom, adresse, tel, mutuelle) VALUES ('"+patient.getNum()+"', '" + patient.getNom() + "', '" + patient.getPrenom() + "', '" + patient.getAdresse() + "', '" + patient.getTel() + "', '" + patient.getMutuelle() + "');";
+                requeteajout = "INSERT INTO malade (numero_m, nom_malade, prenom_malade, adresse_malade, tel_malade, mutuelle) VALUES ('"+patient.getNum()+"', '" + patient.getNom() + "', '" + patient.getPrenom() + "', '" + patient.getAdresse() + "', '" + patient.getTel() + "', '" + patient.getMutuelle() + "');";
                 System.out.println(requeteajout);
+               
                 try {
                     BDD.executerRequete(requeteajout);
                     JOptionPane.showMessageDialog(this, "Le patient a bien été ajouté.", "Formulaire valide", JOptionPane.INFORMATION_MESSAGE);
