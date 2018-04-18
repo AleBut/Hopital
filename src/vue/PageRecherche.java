@@ -7,62 +7,177 @@ package vue;
 
 import controleur.GestionBase;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  *
  * @author Alex1
  */
-public class PageRecherche extends JPanel implements ActionListener {
-    // Lien vers le panneau gérant l'interface graphique
-    private HubGraph hub;
-    
+public class PageRecherche extends JPanel {
     // Connexion vers la base de donnée
     private GestionBase BDD;
     
-    // container
-    private JPanel container ;
+    // Cocher les éléments souhaités
+    private JCheckBox personnel[];
+
+    // Recherche texte
+    private JTextField rechercheTexte;
     
-    /*
-        LA SUITE DE TES ATTRIBUTS ICI
-    */
+    // Aide é la recherche
+    private JComboBox volet;
     
+    // Bouton de validation de la recherche
+    private JButton valider;
     
+    private int tailleTab;
     
-    public PageRecherche(HubGraph _hub, GestionBase _BDD)
-    {
-        // Hub graphique
-        hub = _hub;
-        
+    private String select;
+    private String sql[];
+    private String from;
+    private String where;
+    private String whereInit;
+    
+    private String recherche;
+    
+
+    public PageRecherche(GestionBase _BDD, String tabArgument [], String s [], String f, String w) {
         // Base de donnée
         BDD = _BDD;
+        tailleTab = tabArgument.length;
         
-        // Container
-        container = new JPanel();
+        select="SELECT ";
+        from=f;
+        where=w;
+        whereInit=w;
+        recherche="";
         
-        /*
-            LA SUITE DE TON CODE POUR INITIALISER LES ATTRIBUTS ICI
-        */
+        sql=s;
         
+        // Checkbox
+        personnel = new JCheckBox[tailleTab];
+        for(int i=0;i<tailleTab;i++)
+        { 
+            personnel[i] = new JCheckBox();
+            personnel[i].setText(tabArgument [i]);
+        }
+        
+        // Recherche texte
+         rechercheTexte = new JTextField("");
+        
+        
+        volet = new JComboBox(tabArgument);
+        
+        // Valider
+        valider = new JButton("Rechercher");
+        valider.addActionListener(new PageRecherche.ValiderRecherche());
+
         // Construction graphique de la fenetre dans le Jpanel container.
         constructionGraphique();
         
-        // PageConnexion renvoit ici le container à HubGraph
-        this.setSize(500, 500);
-        this.setBackground(Color.white); // Définir la couleur de l'arrière plan
-        this.add(container);
     }
     
      private void constructionGraphique()
     {
+        rechercheTexte.setPreferredSize(new Dimension(200, 24));
+        
+        Box miseEnForme = Box.createVerticalBox();
+        for(int i=0; i<tailleTab; i++)
+        {
+            miseEnForme.add(personnel[i]);
+        }
+        
+        JPanel p1 = new JPanel();
+        p1.add(rechercheTexte);
+        p1.add(volet);
+        p1.add(valider);
+        
+        this.setBackground(Color.white); // Définir la couleur de l'arriére plan
+        this.add(miseEnForme);
+        this.add(p1);
+        
+        
         
     }
-
+     
+     class ValiderRecherche implements ActionListener{
+    //Redéfinition de la méthode actionPerformed()
+        
     @Override
-    public void actionPerformed(ActionEvent ae)
-    {
+    public void actionPerformed(ActionEvent arg0) {
         
+        
+        for(int i=0;i<tailleTab;i++)
+        {
+            if(personnel[i].isSelected())
+            {
+             select=select+sql[i]+", ";
+            }
+            
+        }
+       
+        String champ ="";
+        
+        
+        
+        if(!rechercheTexte.getText().equals(""))
+        {
+              for(int i=0;i<tailleTab;i++)
+                {
+                    if(volet.getSelectedItem().toString()==personnel[i].getText())
+                    {
+                       champ=sql[i];
+                    }
+
+                }
+        
+        }
+        
+        
+        if(!champ.equals(""))
+        {       
+                if(where=="")
+                {
+                where="WHERE "+champ+" LIKE '"+ rechercheTexte.getText()+"'";
+                }
+                
+                else
+                {where=where+" AND "+champ+" LIKE '"+ rechercheTexte.getText()+"'";}
+        
+        }
+        
+        
+        
+        
+        
+        
+    
+        if(select.charAt(select.length()-2)==',')
+        {
+            select=select.substring(0,select.length()-2)+" ";
+            
+        }
+        
+        recherche=select+from+where;
+        
+        System.out.println("la requete sql associe : "+recherche);
+        
+        
+        
+        BDD.rechercheInformation(recherche);
+        
+        BDD.afficherInformations();
+        
+        select="SELECT ";
+        where=whereInit;
+             
     }
+  }
 }

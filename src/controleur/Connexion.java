@@ -62,7 +62,6 @@ public class Connexion {
 
         // création d'un ordre SQL (statement)
         stmt = conn.createStatement();
-       
     }
 
     /**

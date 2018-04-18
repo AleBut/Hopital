@@ -7,6 +7,7 @@ package vue;
 
 import controleur.GestionBase;
 import controleur.Connexion;
+import controleur.HubGraph;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
@@ -316,3 +317,4 @@ public class PageAjout extends JPanel implements ActionListener {
 }
 
 }
+

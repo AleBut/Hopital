@@ -5,6 +5,7 @@
  */
 package vue;
 
+import controleur.HubGraph;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,9 +25,6 @@ public class PageConnexion extends JPanel implements ActionListener {
     // Connexion vers la base de donnée
     private GestionBase BDD;
     
-    // container
-    private JPanel container;
-    
     // Zones de texte: login, mot de passe, et mot de passe MySQL
     private JTextField login;
     private JPasswordField mdp;
@@ -41,17 +39,11 @@ public class PageConnexion extends JPanel implements ActionListener {
     
     // Bouton de connexion
     private JButton bouton;
-    
-    // Image en bas du panneau de connexion
-    private JLabel image;
 
     public PageConnexion(HubGraph _hub) { // constructeur
         // Hub graphique
         hub = _hub;
-        
-        // container
-        container = new JPanel();
-         
+
         // Création des zones de texte pour les mots de passes
         login = new JTextField("");
         mdp = new JPasswordField("");
@@ -66,16 +58,9 @@ public class PageConnexion extends JPanel implements ActionListener {
         
         // Création du bouton
         bouton = new JButton("Connexion");
-       
-        // Chargement de l'image
-        image = new JLabel(new ImageIcon("images\\Cad.png"));
-        
+
         // Construction graphique de la fenetre dans le Jpanel container.
-        constructionGraphique();
-        
-        // PageConnexion renvoit ici le container à HubGraph
-        this.setBackground(Color.white); // Définir la couleur de l'arrière plan
-        this.add(container);
+        constructionGraphique();   
     }
     
     private void constructionGraphique()
@@ -120,6 +105,9 @@ public class PageConnexion extends JPanel implements ActionListener {
         // Ajout du listener sur le bouton
         bouton.addActionListener(this);
         
+        // Chargement de l'image
+        JLabel image = new JLabel(new ImageIcon("images\\Cad.png"));
+        
         // Box de mise en forme
         Box miseEnForme = Box.createVerticalBox();
         miseEnForme.add(titre); // Ajout d'un titre de bienvenue
@@ -131,8 +119,14 @@ public class PageConnexion extends JPanel implements ActionListener {
         miseEnForme.add(bouton); // Ajout du bouton de connexion
         miseEnForme.add(image);
         
+        // container
+        JPanel container = new JPanel();
         container.setBackground(Color.white); // Définir la couleur de l'arrière plan
         container.add(miseEnForme); // Ajout des boutons/interfaces mises en forme
+        
+        // JPanel qu'on renvoit
+        this.setBackground(Color.white); // Définir la couleur de l'arrière plan
+        this.add(container);
     }
 
     @Override

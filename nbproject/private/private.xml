@@ -3,15 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/solene/Desktop/Hoptial%20V2.2/Hopital-master/src/modele/Docteur.java</file>
-            <file>file:/C:/Users/solene/Desktop/Hoptial%20V2.2/Hopital-master/src/vue/HubGraph.java</file>
-            <file>file:/C:/Users/solene/Desktop/Hoptial%20V2.2/Hopital-master/src/vue/PageMenu.java</file>
-            <file>file:/C:/Users/solene/Desktop/Hoptial%20V2.2/Hopital-master/src/controleur/Connexion.java</file>
-            <file>file:/C:/Users/solene/Desktop/Hoptial%20V2.2/Hopital-master/src/modele/Malade.java</file>
-            <file>file:/C:/Users/solene/Desktop/Hoptial%20V2.2/Hopital-master/src/controleur/GestionBase.java</file>
-            <file>file:/C:/Users/solene/Desktop/Hoptial%20V2.2/Hopital-master/src/vue/PageAjout.java</file>
-            <file>file:/C:/Users/solene/Desktop/Hoptial%20V2.2/Hopital-master/src/controleur/Hopital.java</file>
-            <file>file:/C:/Users/solene/Desktop/Hoptial%20V2.2/Hopital-master/src/vue/PageConnexion.java</file>
+            <file>file:/C:/Users/Alex1/Documents/GitHub/Hopital/src/modele/Malade.java</file>
+            <file>file:/C:/Users/Alex1/Documents/GitHub/Hopital/src/vue/PageAjout.java</file>
+            <file>file:/C:/Users/Alex1/Documents/GitHub/Hopital/src/controleur/GestionBase.java</file>
+            <file>file:/C:/Users/Alex1/Documents/GitHub/Hopital/src/controleur/HubGraph.java</file>
+            <file>file:/C:/Users/Alex1/Documents/GitHub/Hopital/src/vue/PageStatistique.java</file>
+            <file>file:/C:/Users/Alex1/Documents/GitHub/Hopital/src/vue/PageRecherche.java</file>
         </group>
     </open-files>
 </project-private>
