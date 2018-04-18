@@ -92,8 +92,24 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
         no = new JLabel("Nom :");
         prén = new JLabel("Prénom :");
         téléphone = new JLabel("Numéro de tel. :");
+        rot = new JLabel("Rotation : ");
+        serv = new JLabel("Service : ");
+        salaire = new JLabel("Salaire : ");
         
+        //combobox
+        //Creéation des combobox
+        service = new JComboBox();
+        service.addItem("REA");
+        service.addItem("CHG");
+        service.addItem("CAR");
         
+        // Création des checkbox
+        jour = new JRadioButton("JOUR", true);
+        nuit = new JRadioButton("NUIT", false);
+        
+        rotation = new ButtonGroup();
+        rotation.add(jour);
+        rotation.add(nuit);
         
 
         nom = new JTextField("");
@@ -106,6 +122,9 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
         
         //image
         image = new JLabel(new ImageIcon("images\\infirmier.png"));
+        
+        //bouton 
+          bouton=new JButton("Ajouter");
 
         constructionGraphique();
         
@@ -147,14 +166,40 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
         téléphone.setFont(new Font("Arial", Font.BOLD, 15));
         pan3.add(téléphone);
 
-        //label numéro de adresse placé dans un panel
+        //label adresse placé dans un panel
         JPanel pan4 = new JPanel();
         adr.setFont(new Font("Arial", Font.BOLD, 15));
         pan4.add(adr);
         
+        //label rotation placé dans un panel
+        JPanel pan5 = new JPanel();
+        rot.setFont(new Font("Arial", Font.BOLD, 15));
+        pan5.add(rot);
+        
+        //label radiobutton rotation placé dans un panel
+        JPanel pan6 = new JPanel();
+        jour.setBackground(Color.white);
+        nuit.setBackground(Color.white);
+        pan6.add(jour);
+        pan6.add(nuit);
+        
+        //label texte service
+        JPanel pan7 = new JPanel();
+        serv.setFont(new Font("Arial", Font.BOLD, 15));
+        pan7.add(serv);
+        
+        //label contenant la combobox
+        JPanel pan8 = new JPanel();
+        pan8.add(service);
+        
         //label contenant l'image
         JPanel pan9 = new JPanel();
         pan9.add(image);
+        
+        //label adresse placé dans un panel
+        JPanel pan10 = new JPanel();
+        salaire.setFont(new Font("Arial", Font.BOLD, 15));
+        pan10.add(salaire);
 
         //Placer label nom
         this.add(pan);
@@ -179,6 +224,37 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
         pan4.setVisible(true);
         pan4.setBounds(120, 300, 70, 30);
         pan4.setBackground(Color.white);
+        
+        //placer label rotation texte sur la page
+        this.add(pan5);
+        pan5.setVisible(true);
+        pan5.setBounds(570, 200, 70, 30);
+        pan5.setBackground(Color.white);
+        
+        //placer JradioButton rotation
+        this.add(pan6);
+        pan6.setVisible(true);
+        pan6.setBounds(620, 196, 170, 30);
+        pan6.setBackground(Color.white);
+        
+        //placer label contenant texte service
+        this.add(pan7);
+        pan7.setVisible(true);
+        pan7.setBounds(570, 300, 70, 40);
+        pan7.setBackground(Color.white);
+
+        
+        //placer label contenant combobox
+        this.add(pan8);
+        pan8.setVisible(true);
+        pan8.setBounds(620, 295, 110, 40);
+        pan8.setBackground(Color.white);
+        
+        //placer label contenant texte salaire
+        this.add(pan10);
+        pan10.setVisible(true);
+        pan10.setBounds(570, 400, 70, 40);
+        pan10.setBackground(Color.white);
 
         //placer champ texte nom
         this.add(nom);
@@ -200,12 +276,22 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
         adresse.setVisible(true);
         adresse.setBounds(200, 302, 250, 25);
         
+        //placer champ salaire
+        this.add(sal);
+        sal.setVisible(true);
+        sal.setBounds(660, 402, 100, 25);
+        
         //placer label image
         this.add(pan9);
         pan9.setVisible(true);
         pan9.setBounds(0, 340, 400, 400);
         pan9.setBackground(Color.white);
-
+        
+        //placer bouton
+        this.add(bouton);
+        bouton.setVisible(true);
+        bouton.setBounds(440, 450, 120, 80);
+        bouton.addActionListener(this);
     }
 
     @Override
