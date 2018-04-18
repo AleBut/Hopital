@@ -124,14 +124,4 @@ public class GestionBase {
             
         
     }
-
-	public void effacerResultat()
-	{
-		array.clear();
-	}
-	
-	public ArrayList<String> getArray()
-	{
-		return array;
-	}
 }
