@@ -19,15 +19,17 @@ public class MenuBar extends JMenuBar
     private JMenu maj;
         private JMenu insertion;
 			private JMenuItem malade;
-			private JMenuItem employe;
+			private JMenu employe;
+				private JMenuItem docteur;
+				private JMenuItem infirmier;
         private JMenuItem modification;
         private JMenuItem suppression;
     
     private JMenu recherche;
         private JMenu personnel;
             private JMenuItem employe2;
-            private JMenuItem docteur;
-            private JMenuItem infirmiere;
+            private JMenuItem docteur2;
+            private JMenuItem infirmier2;
         private JMenuItem patient;
         private JMenuItem service;
     
@@ -39,7 +41,9 @@ public class MenuBar extends JMenuBar
     {   
          maj = new JMenu("Màj des données");
             insertion = new JMenu("Insertion");
-				 employe = new JMenuItem("Employé");
+				 employe = new JMenu("Employé");
+					docteur = new JMenuItem("Docteur");
+					infirmier = new JMenuItem("Infirmier");
 				 malade = new JMenuItem("Malade");
             modification = new JMenuItem("Modification");
             suppression = new JMenuItem("Suppression");
@@ -47,8 +51,8 @@ public class MenuBar extends JMenuBar
          recherche = new JMenu("Recherche");
             personnel = new JMenu("Personnel");
                 employe2 = new JMenuItem("Employée");
-                docteur = new JMenuItem("Docteur");
-                infirmiere = new JMenuItem("Infirmière");
+                docteur2 = new JMenuItem("Docteur");
+                infirmier2 = new JMenuItem("Infirmière");
             patient = new JMenuItem("Patient");
             service = new JMenuItem("Service");
         
@@ -62,6 +66,9 @@ public class MenuBar extends JMenuBar
     
      private void constructionGraphique()
     {
+		employe.add(docteur);
+		employe.add(infirmier);
+		
 		insertion.add(employe);
 		insertion.add(malade);
 		
@@ -72,8 +79,8 @@ public class MenuBar extends JMenuBar
         maj.add(suppression);
         
         personnel.add(employe2);
-        personnel.add(docteur);
-        personnel.add(infirmiere);
+        personnel.add(docteur2);
+        personnel.add(infirmier2);
         
         recherche.add(personnel);
         recherche.addSeparator();
@@ -89,7 +96,9 @@ public class MenuBar extends JMenuBar
         this.setLayout(new GridLayout(1,4));
     }
      
-     public JMenuItem getInsertionEmploye() { return employe; }
+     public JMenuItem getInsertionDocteur() { return docteur; }
+	 
+	 public JMenuItem getInsertionInfirmier() { return infirmier; }
 	 
 	 public JMenuItem getInsertionMalade() { return malade; }
 
@@ -99,9 +108,9 @@ public class MenuBar extends JMenuBar
      
      public JMenuItem getRecherchePersonnelEmploye() { return employe2; }
      
-     public JMenuItem getRecherchePersonnelDocteur() { return docteur; }
+     public JMenuItem getRecherchePersonnelDocteur() { return docteur2; }
      
-     public JMenuItem getRecherchePersonnelInfirmiere() { return infirmiere; }
+     public JMenuItem getRecherchePersonnelInfirmier() { return infirmier2; }
      
      public JMenuItem getRecherchePatient() { return patient; }
      

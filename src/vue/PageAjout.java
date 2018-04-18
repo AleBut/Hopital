@@ -53,7 +53,7 @@ public class PageAjout extends JPanel implements ActionListener {
     private JLabel adr;
     private JLabel mal;
     private JLabel mut;
-    private JLabel nume;
+   
 
     //combobox sur le type de maladie du patient pour l'affecter à un service
     private JComboBox maladie;
@@ -92,7 +92,7 @@ public class PageAjout extends JPanel implements ActionListener {
         numérotel = new JLabel("Numéro de tel. :");
         mal = new JLabel("Service affecté : ");
         mut = new JLabel("Mutuelle : ");
-        nume = new JLabel("Numéro dossier : ");
+        
 
         //Creéation des combobox
         maladie = new JComboBox();
@@ -192,7 +192,7 @@ public class PageAjout extends JPanel implements ActionListener {
         pan3.setBounds(120, 200, 110, 40);
         pan3.setBackground(Color.white);
 
-        //placer label adresse de tel sur la page
+        //placer label adresse  sur la page
         this.add(pan4);
         pan4.setVisible(true);
         pan4.setBounds(120, 300, 70, 40);
