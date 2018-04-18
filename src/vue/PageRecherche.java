@@ -196,15 +196,21 @@ public class PageRecherche extends JPanel {
 			// On remplit le tableau avec les éléments sélectionnés.
 			String tabSelection[] = new String[compteur];
 			
-			for(int i=0;i<tailleTab;i++)
+			// On remplit le tableau avec le nom des champs sélectionnés
+			compteur = 0;
+			for(int i=0; i<tailleTab; i++)
 			{
 				if(personnel[i].isSelected())
-					tabSelection[i] = personnel[i].getText();
+				{
+					tabSelection[compteur] = personnel[i].getText();
+					compteur++;
+				}
+					
 			}
 			
+			// Actualise l'image
 			resultat.raffraichir(tabSelection);
 
-			//BDD.afficherInformations();
 
 			select="SELECT ";
 			where=whereInit;
