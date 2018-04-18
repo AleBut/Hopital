@@ -6,6 +6,7 @@
 package vue;
 
 import controleur.GestionBase;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -19,51 +20,85 @@ public class ResultatRecherche extends JPanel {
 	// Connexion vers la base de donnée
 	private GestionBase BDD;
 	
-	private String tabArgument[];
+	private JTable tableau;
 	
-	private JScrollPane ascenseur;
 
 	public ResultatRecherche(GestionBase _BDD)
 	{
 		BDD = _BDD;
 		
-		ascenseur = new JScrollPane(this);
-		ascenseur.setPreferredSize(this.getPreferredSize());
-		
-		this.setBackground(Color.LIGHT_GRAY);
+		this.setBackground(Color.white);
 	}
 	
-	public void raffraichir(String tabArgument[])
+	public void raffraichir(String entete[])
 	{
 		this.removeAll();
 		
-		int grilleTaille = tabArgument.length;
+		Object[][] donnees = getDonnees(BDD, entete);
+		
+		tableau = new JTable(donnees, entete);
+		
+		this.setVisible(false);
+		this.add(new JScrollPane(tableau), BorderLayout.CENTER);
+		this.setVisible(true);
+	}
+	
+	private Object[][] getDonnees(GestionBase BDD, String entete[])
+	{
 		ArrayList<String> table = new ArrayList<>(BDD.getArray());
 		
-		JPanel container = new JPanel();
-		container.setLayout(new GridLayout(1, grilleTaille));
-		for(int i=0; i<grilleTaille; i++)
-			container.add(new JLabel(tabArgument[i]));
+		BDD.afficherInformations();
+		//BDD.effacerResultat();
 		
-		Box miseEnForme = Box.createVerticalBox();
-		miseEnForme.add(container);
+		Object[][] donnees = new Object[table.size()][entete.length];
 		
 		for(int i=0; i<table.size(); i++)
 		{
-			// On prend une ligne contenant la réponse
-			String reponse = table.get(i);
+			String buffer[] = new String[entete.length];
+			buffer = conversion(table.get(i), entete.length);
 			
-			miseEnForme.add(new JLabel(reponse));
+			for(int j=0; j<entete.length; j++)
+			{
+				String x = buffer[j];
+				donnees[i][j] = x;
+			}
 		}
 		
-		BDD.effacerResultat();
-		
-		
-		this.setVisible(false);
-		this.add(miseEnForme);
-		this.setVisible(true);
-			
-		//BDD.afficherInformations();
+		return donnees;
+	}
+	
+	public String[] conversion(String machaine, int nbreElement)
+	{
+        String retour[] = new String [nbreElement];
+		String buffer;
+        
+        int x=0;
+        
+        /// On connait la taille d'avance car ça correspond au nombre d'element selectionné 
+        int indice=0;
+        
+        
+        for(int i=0;i<machaine.length();i++)
+        {
+            if(machaine.charAt(i)==',')
+            {
+                buffer = machaine.substring(x, i);
+                retour[indice] = buffer;
+                
+                x = i + 1;
+                indice++;
+            }
+            
+            if(i==machaine.length()-1)
+            {
+                buffer = machaine.substring(x, i + 1);
+                retour[indice] = buffer;
+                
+				x = i + 1;
+                indice++;
+            }
+        }
+		return retour;
 	}
 
 }

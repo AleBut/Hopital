@@ -131,13 +131,12 @@ public class PageRecherche extends JPanel {
 		p2.setBounds(200, 0, 800, 40);
 		
 
-		JPanel p3 = resultat;
-		p3.setBounds(200, 40, 800, 550); 
+		resultat.setBounds(200, 40, 800, 550); 
         
-        this.setBackground(Color.white); // Définir la couleur de l'arriére plan
+        //this.setBackground(Color.white); // Définir la couleur de l'arriére plan
         this.add(p1);
         this.add(p2);
-		this.add(p3);   
+		this.add(resultat);   
     }
      
     class ValiderRecherche implements ActionListener //Redéfinition de la méthode actionPerformed()
