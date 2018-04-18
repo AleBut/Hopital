@@ -17,13 +17,15 @@ import javax.swing.JMenuItem;
 public class MenuBar extends JMenuBar
 {
     private JMenu maj;
-        private JMenuItem insertion;
+        private JMenu insertion;
+			private JMenuItem malade;
+			private JMenuItem employe;
         private JMenuItem modification;
         private JMenuItem suppression;
     
     private JMenu recherche;
         private JMenu personnel;
-            private JMenuItem employe;
+            private JMenuItem employe2;
             private JMenuItem docteur;
             private JMenuItem infirmiere;
         private JMenuItem patient;
@@ -36,13 +38,15 @@ public class MenuBar extends JMenuBar
     public MenuBar()
     {   
          maj = new JMenu("Màj des données");
-            insertion = new JMenuItem("Insertion");
+            insertion = new JMenu("Insertion");
+				 employe = new JMenuItem("Employé");
+				 malade = new JMenuItem("Malade");
             modification = new JMenuItem("Modification");
             suppression = new JMenuItem("Suppression");
          
          recherche = new JMenu("Recherche");
             personnel = new JMenu("Personnel");
-                employe = new JMenuItem("Employée");
+                employe2 = new JMenuItem("Employée");
                 docteur = new JMenuItem("Docteur");
                 infirmiere = new JMenuItem("Infirmière");
             patient = new JMenuItem("Patient");
@@ -58,13 +62,16 @@ public class MenuBar extends JMenuBar
     
      private void constructionGraphique()
     {
+		insertion.add(employe);
+		insertion.add(malade);
+		
         maj.add(insertion);
         maj.addSeparator();
         maj.add(modification);
         maj.addSeparator();
         maj.add(suppression);
         
-        personnel.add(employe);
+        personnel.add(employe2);
         personnel.add(docteur);
         personnel.add(infirmiere);
         
@@ -82,13 +89,15 @@ public class MenuBar extends JMenuBar
         this.setLayout(new GridLayout(1,4));
     }
      
-     public JMenuItem getInsertion() { return insertion; }
+     public JMenuItem getInsertionEmploye() { return employe; }
+	 
+	 public JMenuItem getInsertionMalade() { return malade; }
 
      public JMenuItem getModification() { return modification; }
      
      public JMenuItem getSuppression() { return suppression; }
      
-     public JMenuItem getRecherchePersonnelEmploye() { return employe; }
+     public JMenuItem getRecherchePersonnelEmploye() { return employe2; }
      
      public JMenuItem getRecherchePersonnelDocteur() { return docteur; }
      

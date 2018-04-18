@@ -32,7 +32,9 @@ public class HubGraph extends JFrame implements ActionListener
          
          menu = new MenuBar();
          
-         menu.getInsertion().addActionListener(this);
+         menu.getInsertionEmploye().addActionListener(this);
+		 menu.getInsertionMalade().addActionListener(this);
+		 
          menu.getModification().addActionListener(this);
          menu.getSuppression().addActionListener(this);
         
@@ -212,8 +214,11 @@ public class HubGraph extends JFrame implements ActionListener
     {
         Object  source =e.getSource();
  
-        if(source == menu.getInsertion())
+        if(source == menu.getInsertionEmploye())
             launchPageAjout();
+		if(source == menu.getInsertionMalade())
+            System.out.println("Insertion malade");
+		
         if(source == menu.getModification())
             System.out.println("Modification");
         if(source == menu.getSuppression())
