@@ -96,7 +96,7 @@ public class GestionBase {
             System.out.print(array.get(i));
         }
 
-		effacerResultat();
+		array.clear();
 	}
 	
 	public void effacerResultat()
