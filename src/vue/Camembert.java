@@ -6,6 +6,7 @@
 package vue;
 
 
+import controleur.GestionBase;
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JPanel;
@@ -26,8 +27,16 @@ import org.jfree.data.general.PieDataset;
  * @author Alex1
  */
 public class Camembert extends JPanel {
-    public Camembert(String titre) {
-        boolean montrerLegendes = true; 
+	
+	// Base de donnée
+	GestionBase BDD;
+	
+    public Camembert(String titre, GestionBase _BDD) {
+		
+		BDD = _BDD;
+		
+		
+        boolean montrerLegendes = false; 
         boolean toolTips = true;
         boolean urls = false;
         
@@ -40,12 +49,12 @@ public class Camembert extends JPanel {
         
         ChartPanel pan = new ChartPanel(camembert);
         pan.setMouseWheelEnabled(true); // Permet de faire tourner le diagramme
-        pan.setPreferredSize(new Dimension(300, 300)); // Dimension
-        pan.setBackground(Color.white);
+        pan.setPreferredSize(new Dimension(500, 580)); // Dimension
+        pan.setBackground(Color.white); 
         this.add(pan);
     }
 
-    private static PieDataset createDataset() {
+    public PieDataset createDataset() {
         DefaultPieDataset dataset = new DefaultPieDataset();
         
         //initialisation des valeurs
