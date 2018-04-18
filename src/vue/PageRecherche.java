@@ -8,12 +8,14 @@ package vue;
 import controleur.GestionBase;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -70,7 +72,7 @@ public class PageRecherche extends JPanel {
         }
         
         // Recherche texte
-         rechercheTexte = new JTextField("");
+        rechercheTexte = new JTextField("");
         
         
         volet = new JComboBox(tabArgument);
@@ -86,25 +88,42 @@ public class PageRecherche extends JPanel {
     
      private void constructionGraphique()
     {
-        rechercheTexte.setPreferredSize(new Dimension(200, 24));
-        
+		// Layout null car on veut disposer les éléments comme on veut
+		this.setLayout(null);
+		
+		// Options de recherche pour les utilisateurs
         Box miseEnForme = Box.createVerticalBox();
+		
+		JLabel titre = new JLabel("Elements souhaités: ");
+		titre.setFont(new Font("Arial", Font.BOLD, 15));
+		
+		miseEnForme.add(new JLabel(" "));
+		miseEnForme.add(titre);
+		miseEnForme.add(new JLabel(" "));
+		
         for(int i=0; i<tailleTab; i++)
-        {
-            miseEnForme.add(personnel[i]);
-        }
-        
-        JPanel p1 = new JPanel();
-        p1.add(rechercheTexte);
-        p1.add(volet);
-        p1.add(valider);
+			miseEnForme.add(personnel[i]);
+		
+		JPanel p1 = new JPanel();
+		p1.add(miseEnForme);
+		p1.setBounds(0, 0, 200, 590);
+		
+		
+		// Zone de texte pour la recherche
+		rechercheTexte.setPreferredSize(new Dimension(200, 24));
+		
+		
+        // Panneau incluant la zone de recherche, le volet et le bouton valider
+        JPanel p2 = new JPanel();
+        p2.add(rechercheTexte);
+        p2.add(volet);
+        p2.add(valider);
+		
+		p2.setBounds(200, 0, 800, 40);
         
         this.setBackground(Color.white); // Définir la couleur de l'arriére plan
-        this.add(miseEnForme);
         this.add(p1);
-        
-        
-        
+        this.add(p2);   
     }
      
      class ValiderRecherche implements ActionListener{
