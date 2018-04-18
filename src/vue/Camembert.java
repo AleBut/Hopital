@@ -45,11 +45,11 @@ public class Camembert extends JPanel {
         
         PiePlot tracer = (PiePlot) camembert.getPlot();
         tracer.setBackgroundPaint(null); // Enlève l'arrière plan
-        tracer.setOutlineVisible(false); // Enlève la ligne entourant le camembert
+        tracer.setOutlineVisible(true); // Enlève la ligne entourant le camembert
         
         ChartPanel pan = new ChartPanel(camembert);
         pan.setMouseWheelEnabled(true); // Permet de faire tourner le diagramme
-        pan.setPreferredSize(new Dimension(500, 580)); // Dimension
+        pan.setPreferredSize(new Dimension(500, 590)); // Dimension
         pan.setBackground(Color.white); 
         this.add(pan);
     }
