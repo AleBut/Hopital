@@ -125,7 +125,7 @@ public class GestionBase {
     
     public String getLogin() {
         return login;
-    }
+}
     
     public void executerRequete(String requeteMaj) throws SQLException {
        
