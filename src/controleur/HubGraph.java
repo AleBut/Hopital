@@ -7,6 +7,9 @@ package controleur;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 import vue.*;
@@ -182,7 +185,16 @@ public class HubGraph extends JFrame implements ActionListener
     
     public void launchPageAjout()
     {
-        
+         this.setVisible(false);
+         this.setJMenuBar(menu);
+         try {
+			this.setContentPane(new PageAjout(this,BDD));
+		 } catch (ParseException ex) {
+           Logger.getLogger(HubGraph.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         this.setSize(1000, 650);
+         this.setLocationRelativeTo(null);
+         this.setVisible(true);
     }
     
     public void launchPageStatistique()
@@ -201,7 +213,7 @@ public class HubGraph extends JFrame implements ActionListener
         Object  source =e.getSource();
  
         if(source == menu.getInsertion())
-            System.out.println("Insertion");
+            launchPageAjout();
         if(source == menu.getModification())
             System.out.println("Modification");
         if(source == menu.getSuppression())
