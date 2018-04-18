@@ -99,6 +99,16 @@ public class GestionBase {
 
         array.clear();
     }
+	
+	public void effacerResultat()
+	{
+		array.clear();
+	}
+	
+	public ArrayList<String> getArray()
+	{
+		return array;
+	}
     
     public String afficherNuméro() {
         String max = null;
@@ -117,11 +127,8 @@ public class GestionBase {
         return login;
     }
     
-    public void executerRequete(String requeteMaj) throws SQLException {
-       
-            co.executeUpdate(requeteMaj);
-            
-            
-        
+    public void executerRequete(String requeteMaj) throws SQLException
+	{
+		co.executeUpdate(requeteMaj);   
     }
 }
