@@ -49,11 +49,6 @@ public class CamembertOriginePatients extends Camembert {
 			}
 		}
 		
-		// test pour vérifier
-		for(int i=0; i<nomVille.size(); i++)
-			System.out.println(nomVille.get(i) + "-" + nombrePatients[i]);
-		
-		
 		// Conversion du nombre de ville en pourcentage par rapport au nombre total de patients
 		for(int i=0; i<nombrePatients.length; i++)
 		{
