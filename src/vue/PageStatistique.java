@@ -32,14 +32,10 @@ public class PageStatistique extends JPanel implements ActionListener {
      private void constructionGraphique()
     {
         this.setBackground(Color.white); // Définir la couleur de l'arrière plan
-        this.setLayout(new GridLayout(2,3));
+        this.setLayout(new GridLayout(1,2));
         
-        this.add(new Camembert("Test1", BDD));
-        this.add(new Histogramme("Test2"));
-        this.add(new CamembertOriginePatients("Test3", BDD));
-        this.add(new Camembert("Test4", BDD));
+        this.add(new CamembertOriginePatients("Origine des patients", BDD));
         this.add(new DiagrammeBaton("Répartition des ressources par service", BDD));
-        this.add(new Camembert("Test6", BDD));
     }
 
     @Override

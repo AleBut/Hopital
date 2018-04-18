@@ -36,7 +36,7 @@ public class Camembert extends JPanel {
 		BDD = _BDD;
 		
 		
-        boolean montrerLegendes = true; 
+        boolean montrerLegendes = false; 
         boolean toolTips = true;
         boolean urls = false;
         
@@ -49,8 +49,8 @@ public class Camembert extends JPanel {
         
         ChartPanel pan = new ChartPanel(camembert);
         pan.setMouseWheelEnabled(true); // Permet de faire tourner le diagramme
-        pan.setPreferredSize(new Dimension(300, 300)); // Dimension
-        pan.setBackground(Color.white);
+        pan.setPreferredSize(new Dimension(500, 580)); // Dimension
+        pan.setBackground(Color.white); 
         this.add(pan);
     }
 
