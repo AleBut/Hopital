@@ -38,7 +38,7 @@ public class PageAjout extends JPanel implements ActionListener {
 
     // Connexion vers la base de donnée
     private GestionBase BDD;
-    
+
     //nouvel objet malade
     private Malade patient;
 
@@ -52,26 +52,24 @@ public class PageAjout extends JPanel implements ActionListener {
     private JLabel adr;
     private JLabel mal;
     private JLabel mut;
+    private JLabel nume;
 
     //combobox sur le type de maladie du patient pour l'affecter à un service
     private JComboBox maladie;
-
-    //combobox sur la mutuelle
-    private JComboBox mutuelle;
 
     //Zones de texte: nom, prénom, adresse, numero de tel
     private JTextField nom;
     private JTextField prénom;
     private JTextField adresse;
     private JFormattedTextField tel;
-    
+    private JFormattedTextField mutuelle;
+
     // Chargement de l'image
     private JLabel image;
-    
 
     //bouton ajouter patient
     private JButton bouton;
-    
+
     private String requeteajout;
 
     public PageAjout(HubGraph _hub, GestionBase _BDD) throws ParseException {
@@ -91,8 +89,9 @@ public class PageAjout extends JPanel implements ActionListener {
         no = new JLabel("Nom :");
         pre = new JLabel("Prénom :");
         numérotel = new JLabel("Numéro de tel. :");
-        mal = new JLabel("Serivice affecté : ");
+        mal = new JLabel("Service affecté : ");
         mut = new JLabel("Mutuelle : ");
+        nume = new JLabel("Numéro dossier : ");
 
         //Creéation des combobox
         maladie = new JComboBox();
@@ -100,31 +99,16 @@ public class PageAjout extends JPanel implements ActionListener {
         maladie.addItem("CHG");
         maladie.addItem("CAR");
 
-        mutuelle = new JComboBox();
-        mutuelle.addItem("MNAM");
-        mutuelle.addItem("LMDE");
-        mutuelle.addItem("MNH");
-        mutuelle.addItem("MAAF");
-        mutuelle.addItem("MGEN");
-        mutuelle.addItem("MMA");
-        mutuelle.addItem("CNAMTS");
-        mutuelle.addItem("CCVRP");
-        mutuelle.addItem("MNFTC");
-        mutuelle.addItem("MAS");
-        mutuelle.addItem("AG2R");
-        mutuelle.addItem("MGSP");
-        mutuelle.addItem("LMDE");
-        mutuelle.addItem("MGSP");
-
         //création des zones de texte
         nom = new JTextField("");
         prénom = new JTextField("");
         adresse = new JTextField("");
-
+        // mutuelle = new JTextField("");
         //Format téléphonique
         MaskFormatter format = new MaskFormatter("## ## ## ## ##");
+        MaskFormatter format2 = new MaskFormatter("UUUUUUUUU");
         tel = new JFormattedTextField(format);
-        
+        mutuelle = new JFormattedTextField(format2);
         //image
         image = new JLabel(new ImageIcon("images\\form.png"));
         //Creéation du bouton
@@ -134,6 +118,7 @@ public class PageAjout extends JPanel implements ActionListener {
         constructionGraphique();
 
         
+         
         this.setBackground(Color.white); // Définir la couleur de l'arrière plan
 
         this.add(container);
@@ -183,7 +168,7 @@ public class PageAjout extends JPanel implements ActionListener {
         JPanel pan6 = new JPanel();
         mut.setFont(new Font("Arial", Font.BOLD, 15));
         pan6.add(mut);
-        
+
         //label mutuelle placé dans un planel
         JPanel pan7 = new JPanel();
         pan7.add(image);
@@ -223,7 +208,7 @@ public class PageAjout extends JPanel implements ActionListener {
         pan6.setVisible(true);
         pan6.setBounds(560, 200, 80, 40);
         pan6.setBackground(Color.white);
-        
+
         //placer label image
         this.add(pan7);
         pan7.setVisible(true);
@@ -259,8 +244,6 @@ public class PageAjout extends JPanel implements ActionListener {
         this.add(mutuelle);
         mutuelle.setVisible(true);
         mutuelle.setBounds(650, 202, 80, 25);
-        
-        
 
         //placer bouton
         this.add(bouton);
@@ -275,35 +258,61 @@ public class PageAjout extends JPanel implements ActionListener {
         Object source = ae.getSource();
 
         if (source == bouton) {
-            
-            String chainemutuelle = (String) mutuelle.getSelectedItem();
-            
-            
-            //test pour vérifier que tous les champs sont remplis
-            if (("".equals(nom.getText())) || ("".equals(prénom.getText())) || ("".equals(tel.getText())) || ("".equals(adresse.getText()))) {
-                
-                JOptionPane.showMessageDialog(this,"Un champ est vide.","Erreur",JOptionPane.WARNING_MESSAGE);
 
-            }
-            
-            else{
-                int num=49;
-                patient=new Malade(num,nom.getText(),prénom.getText(),adresse.getText(),tel.getText(),chainemutuelle);
-                requeteajout="INSERT INTO malade (numero, nom, prenom, adresse, tel, mutuelle) VALUES ('"+patient.getNum()+"', '"+patient.getNom()+"', '"+patient.getPrenom()+"', '"+patient.getAdresse()+"', '"+patient.getTel()+"', '"+patient.getMutuelle()+"');";
-                 System.out.println(requeteajout);
+            //test pour vérifier que tous les champs sont remplis
+            if (("".equals(nom.getText())) || ("".equals(prénom.getText())) || ("".equals(tel.getText())) || ("".equals(adresse.getText())) || ("".equals(mutuelle.getText()))) {
+
+                JOptionPane.showMessageDialog(this, "Un champ est vide.", "Erreur", JOptionPane.WARNING_MESSAGE);
+
+            } else {
+
+              String blindage;
+                blindage = "SELECT MAX(numero) FROM malade;";
+                BDD.rechercheInformation(blindage);
+                //BDD.afficherInformations();
+                String num = BDD.afficherNuméro();
+                num = num.substring(0, num.length() - 1);
+                
+                int numérofinal = strToInt(num)+1;
+                System.out.println(numérofinal);
+                patient=new Malade(numérofinal,nom.getText(),prénom.getText(),adresse.getText(),tel.getText(),mutuelle.getText());
+                requeteajout = "INSERT INTO malade (numero, nom, prenom, adresse, tel, mutuelle) VALUES ('"+patient.getNum()+"', '" + patient.getNom() + "', '" + patient.getPrenom() + "', '" + patient.getAdresse() + "', '" + patient.getTel() + "', '" + patient.getMutuelle() + "');";
+                System.out.println(requeteajout);
                 try {
                     BDD.executerRequete(requeteajout);
-                    JOptionPane.showMessageDialog(this,"Le patient a bien été ajouté.","Formulaire valide",JOptionPane.INFORMATION_MESSAGE);
-                    
+                    JOptionPane.showMessageDialog(this, "Le patient a bien été ajouté.", "Formulaire valide", JOptionPane.INFORMATION_MESSAGE);
+
                 } catch (SQLException ex) {
                     Logger.getLogger(PageAjout.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 hub.launchPageMenu(BDD);
-                
+
             }
 
         }
 
     }
+    
+    public static int strToInt( String str ){
+    int i = 0;
+    int num = 0;
+    boolean isNeg = false;
+
+    //Check for negative sign; if it's there, set the isNeg flag
+    if (str.charAt(0) == '-') {
+        isNeg = true;
+        i = 1;
+    }
+
+    //Process each character of the string;
+    while( i < str.length()) {
+        num *= 10;
+        num += str.charAt(i++) - '0'; //Minus the ASCII code of '0' to get the value of the charAt(i++).
+    }
+
+    if (isNeg)
+        num = -num;
+    return num;
+}
 
 }

@@ -19,6 +19,7 @@ public class GestionBase {
     // Réponse du serveur sous forme d'un tableau de string
     private ArrayList<String> array = new ArrayList<>();
     
+    
     // Objets utilisés pour la connexion locale et distante
     private Connexion co;
     private static SSHTunnel ssh;
@@ -97,6 +98,19 @@ public class GestionBase {
         }
 
         array.clear();
+    }
+    
+    public String afficherNuméro() {
+        String max = null;
+        int maxint = 0;
+        for (int i = 0; i < array.size(); i++) {
+            max=(array.get(i));
+           
+        }
+        
+        array.clear();
+       
+        return max;
     }
     
     public String getLogin() {
