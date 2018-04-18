@@ -20,7 +20,7 @@ import vue.*;
  */
 public class HubGraph extends JFrame implements ActionListener
 {    
-    // Base de donnÃ©e
+    // Base de donnée
     private GestionBase BDD;
     
     private MenuBar menu;
@@ -32,7 +32,8 @@ public class HubGraph extends JFrame implements ActionListener
          
          menu = new MenuBar();
          
-         menu.getInsertionEmploye().addActionListener(this);
+         menu.getInsertionDocteur().addActionListener(this);
+		 menu.getInsertionInfirmier().addActionListener(this);
 		 menu.getInsertionMalade().addActionListener(this);
 		 
          menu.getModification().addActionListener(this);
@@ -40,7 +41,7 @@ public class HubGraph extends JFrame implements ActionListener
         
          menu.getRecherchePersonnelEmploye().addActionListener(this);
          menu.getRecherchePersonnelDocteur().addActionListener(this);
-         menu.getRecherchePersonnelInfirmiere().addActionListener(this);
+         menu.getRecherchePersonnelInfirmier().addActionListener(this);
          
          menu.getRecherchePatient().addActionListener(this);
          menu.getRechercheService().addActionListener(this);
@@ -78,31 +79,15 @@ public class HubGraph extends JFrame implements ActionListener
     
     public void launchPageRecherchePersonnelEmploye()
     {
-        String tabArgument [];
-        tabArgument = new String [5];
-        
-        String select [];
-        select = new String [5];
-        
-        tabArgument[0]="Nom";
-        tabArgument[1]="Prenom";
-        tabArgument[2]="Numéro_Employe";
-        tabArgument[3]="Telephone";
-        tabArgument[4]="Adresse"; 
-        
-        select[0]="nom_employe";
-        select[1]="prenom_employe";
-        select[2]="numero_e";
-        select[3]="telephone_employe";
-        select[4]="adresse_employe"; 
-        
+        String tabArgument [] = {"Nom", "Prenom", "Numéro d'employé", "Téléphone", "Adresse"};
+        String select [] = {"nom_employe", "prenom_employe", "numero_e", "telephone_employe", "adresse_employe"};
+ 
         String f="FROM employe ";
         String w="";
         
          this.setVisible(false);
          this.setJMenuBar(menu);
          this.setContentPane(new PageRecherche(BDD,tabArgument, select, f,w ));
-         //this.pack();
          this.setSize(1000, 650);
          this.setLocationRelativeTo(null);
          this.setVisible(true);
@@ -110,25 +95,8 @@ public class HubGraph extends JFrame implements ActionListener
     
     public void launchPageRecherchePersonnelDocteur()
     {
-        String tabArgument [];
-        tabArgument = new String [6];
-        
-        String select [];
-        select = new String [6];
-        
-        tabArgument[0]="Nom";
-        tabArgument[1]="Prenom";
-        tabArgument[2]="Numéro_Employe";
-        tabArgument[3]="Telephone";
-        tabArgument[4]="Adresse"; 
-        tabArgument[5]="Specialite"; 
-        
-        select[0]="nom_employe";
-        select[1]="prenom_employe";
-        select[2]="numero_e";
-        select[3]="telephone_employe";
-        select[4]="adresse_employe"; 
-        select[5]="specialite"; 
+		String tabArgument [] = {"Nom", "Prenom", "Numéro d'employé", "Téléphone", "Adresse", "Spécialité"};
+        String select [] = {"nom_employe", "prenom_employe", "numero_e", "telephone_employe", "adresse_employe", "specialite"};
         
         String f="FROM employe, docteur ";
         String w="WHERE employe.numero_e=docteur.numero";
@@ -136,7 +104,6 @@ public class HubGraph extends JFrame implements ActionListener
          this.setVisible(false);
          this.setJMenuBar(menu);
          this.setContentPane(new PageRecherche(BDD,tabArgument,select, f,w ));
-         //this.pack();
          this.setSize(1000, 650);
          this.setLocationRelativeTo(null);
          this.setVisible(true);
@@ -144,42 +111,15 @@ public class HubGraph extends JFrame implements ActionListener
     
     public void launchPageRecherchePersonnelInfirmiere()
     {
-        String tabArgument [];
-        tabArgument = new String [10];
-        
-        String select [];
-        select = new String [10];
-        
-        tabArgument[0]="Nom";
-        tabArgument[1]="Prenom";
-        tabArgument[2]="Numéro_Employe";
-        tabArgument[3]="Telephone";
-        tabArgument[4]="Adresse"; 
-        tabArgument[5]="Rotation"; 
-        tabArgument[6]="Salaire"; 
-        tabArgument[7]="Nom_Service"; 
-        tabArgument[8]="Batiment_Service"; 
-        tabArgument[9]="Directeur_Service";
-        
-        select[0]="nom_employe";
-        select[1]="prenom_employe";
-        select[2]="numero_e";
-        select[3]="telephone_employe";
-        select[4]="adresse_employe"; 
-        select[5]="rotation"; 
-        select[6]="salaire";
-        select[7]="nom_service";
-        select[8]="batiment";
-        select[9]="directeur"; 
-        
-        
+        String tabArgument [] = {"Nom", "Prenom", "Numéro d'employé", "Téléphone", "Adresse", "Rotation", "Salaire", "Nom du service", "Batiment du service", "Directeur du service"};
+        String select [] = {"nom_employe", "prenom_employe", "numero_e", "telephone_employe", "adresse_employe", "rotation", "salaire", "nom_service", "batiment", "directeur"};
+		
         String f="FROM employe, infirmier, service ";
         String w="WHERE employe.numero_e=infirmier.numero AND infirmier.code_service = service.code";
         
          this.setVisible(false);
          this.setJMenuBar(menu);
          this.setContentPane(new PageRecherche(BDD,tabArgument,select, f,w ));
-         //this.pack();
          this.setSize(1000, 650);
          this.setLocationRelativeTo(null);
          this.setVisible(true);
@@ -214,8 +154,10 @@ public class HubGraph extends JFrame implements ActionListener
     {
         Object  source =e.getSource();
  
-        if(source == menu.getInsertionEmploye())
+        if(source == menu.getInsertionDocteur())
             launchPageAjout();
+		if(source == menu.getInsertionInfirmier())
+            System.out.println("Insertion infirmier");
 		if(source == menu.getInsertionMalade())
             System.out.println("Insertion malade");
 		
@@ -230,7 +172,7 @@ public class HubGraph extends JFrame implements ActionListener
         if(source == menu.getRecherchePersonnelDocteur())
             launchPageRecherchePersonnelDocteur();
         
-        if(source == menu.getRecherchePersonnelInfirmiere())
+        if(source == menu.getRecherchePersonnelInfirmier())
             launchPageRecherchePersonnelInfirmiere();
         
         if(source == menu.getRecherchePatient())

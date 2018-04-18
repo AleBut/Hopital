@@ -38,7 +38,11 @@ public class PageRecherche extends JPanel {
     
     // Bouton de validation de la recherche
     private JButton valider;
-    
+	
+	// Resultat recherche
+	private ResultatRecherche resultat;
+
+    // SQL Stuff
     private int tailleTab;
     
     private String select;
@@ -51,17 +55,11 @@ public class PageRecherche extends JPanel {
     
 
     public PageRecherche(GestionBase _BDD, String tabArgument [], String s [], String f, String w) {
-        // Base de donnée
+        
+		// Base de donnée
         BDD = _BDD;
-        tailleTab = tabArgument.length;
-        
-        select="SELECT ";
-        from=f;
-        where=w;
-        whereInit=w;
-        recherche="";
-        
-        sql=s;
+		
+		tailleTab = tabArgument.length;
         
         // Checkbox
         personnel = new JCheckBox[tailleTab];
@@ -80,6 +78,18 @@ public class PageRecherche extends JPanel {
         // Valider
         valider = new JButton("Rechercher");
         valider.addActionListener(new PageRecherche.ValiderRecherche());
+		
+		// Resultat recherche
+		resultat = new ResultatRecherche(BDD);
+		
+		// SQL
+        select="SELECT ";
+        from=f;
+        where=w;
+        whereInit=w;
+        recherche="";
+        
+        sql=s;
 
         // Construction graphique de la fenetre dans le Jpanel container.
         constructionGraphique();
@@ -118,85 +128,87 @@ public class PageRecherche extends JPanel {
         p2.add(rechercheTexte);
         p2.add(volet);
         p2.add(valider);
-		
 		p2.setBounds(200, 0, 800, 40);
+		
+
+		JPanel p3 = resultat;
+		p3.setBounds(200, 40, 800, 550); 
         
         this.setBackground(Color.white); // Définir la couleur de l'arriére plan
         this.add(p1);
-        this.add(p2);   
+        this.add(p2);
+		this.add(p3);   
     }
      
-     class ValiderRecherche implements ActionListener{
-    //Redéfinition de la méthode actionPerformed()
-        
-    @Override
-    public void actionPerformed(ActionEvent arg0) {
-        
-        
-        for(int i=0;i<tailleTab;i++)
-        {
-            if(personnel[i].isSelected())
-            {
-             select=select+sql[i]+", ";
-            }
-            
-        }
-       
-        String champ ="";
-        
-        
-        
-        if(!rechercheTexte.getText().equals(""))
-        {
-              for(int i=0;i<tailleTab;i++)
-                {
-                    if(volet.getSelectedItem().toString()==personnel[i].getText())
-                    {
-                       champ=sql[i];
-                    }
-
-                }
-        
-        }
-        
-        
-        if(!champ.equals(""))
-        {       
-                if(where=="")
-                {
-                where="WHERE "+champ+" LIKE '"+ rechercheTexte.getText()+"'";
-                }
-                
-                else
-                {where=where+" AND "+champ+" LIKE '"+ rechercheTexte.getText()+"'";}
-        
-        }
-        
-        
-        
-        
-        
-        
+    class ValiderRecherche implements ActionListener //Redéfinition de la méthode actionPerformed()
+	{
     
-        if(select.charAt(select.length()-2)==',')
-        {
-            select=select.substring(0,select.length()-2)+" ";
-            
-        }
         
-        recherche=select+from+where;
-        
-        System.out.println("la requete sql associe : "+recherche);
-        
-        
-        
-        BDD.rechercheInformation(recherche);
-        
-        BDD.afficherInformations();
-        
-        select="SELECT ";
-        where=whereInit;
-             
-    }
-  }
+		@Override
+		public void actionPerformed(ActionEvent arg0)
+		{
+			for(int i=0;i<tailleTab;i++)
+			{
+				if(personnel[i].isSelected())
+				 select=select+sql[i]+", ";
+			}
+
+			String champ ="";
+
+			if(!rechercheTexte.getText().equals(""))
+			{
+				for(int i=0;i<tailleTab;i++)
+				  {
+					  if(volet.getSelectedItem().toString()==personnel[i].getText())
+						 champ=sql[i];
+				  }
+			}
+
+			if(!champ.equals(""))
+			{       
+				if(where=="")
+					where="WHERE "+champ+" LIKE '"+ rechercheTexte.getText()+"'";
+				else
+					where=where+" AND "+champ+" LIKE '"+ rechercheTexte.getText()+"'";
+			}
+
+			if(select.charAt(select.length()-2)==',')
+				select=select.substring(0,select.length()-2)+" ";
+
+			recherche = select + from + where;
+
+			System.out.println("la requete sql associé est : " + recherche);
+
+
+
+			BDD.rechercheInformation(recherche);
+			
+			// Espace création
+			
+			// Combien de charactéristique sélectionnés? 
+			int compteur = 0;
+			
+			for(int i=0;i<tailleTab;i++)
+			{
+				if(personnel[i].isSelected())
+					compteur++;
+			}
+			
+			// On remplit le tableau avec les éléments sélectionnés.
+			String tabSelection[] = new String[compteur];
+			
+			for(int i=0;i<tailleTab;i++)
+			{
+				if(personnel[i].isSelected())
+					tabSelection[i] = personnel[i].getText();
+			}
+			
+			resultat.raffraichir(tabSelection);
+
+			//BDD.afficherInformations();
+
+			select="SELECT ";
+			where=whereInit;
+		}
+	}
 }
