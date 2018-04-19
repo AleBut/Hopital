@@ -11,7 +11,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,10 +22,12 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
+import modele.Docteur;
 
 /**
  *
@@ -39,10 +44,7 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
     // container
     private JPanel container;
     
-    
-    private JRadioButton docteur;
-    private JRadioButton infirmier;
-
+    private Docteur docteur;
     
 
     //JLabel
@@ -56,8 +58,8 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
    
     //combobox
     private JComboBox service;
-
-    //docteur
+    private JComboBox spécialité;
+   
    
     private JCheckBox directeur;
 
@@ -66,7 +68,7 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
     private JTextField prénom;
     private JTextField adresse;
     private JFormattedTextField tel;
-    private JTextField spécialité;
+    
 
 
     //bouton ajouter un employé
@@ -81,6 +83,9 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
 
         // Base de donnée
         BDD = _BDD;
+        
+        //nouvel objet docteur
+       
 
         // Container
         container = new JPanel();
@@ -103,14 +108,24 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
         service.addItem("REA");
         service.addItem("CHG");
         service.addItem("CAR");
-       
+        
+        //Creéation des combobox
+        spécialité = new JComboBox();
+        spécialité.addItem("Anesthesiste");
+        spécialité.addItem("Cardiologue");
+        spécialité.addItem("Generaliste");
+        spécialité.addItem("Orthopediste");
+        spécialité.addItem("Pneumologue");
+        spécialité.addItem("Traumatologue");
+        spécialité.addItem("Radiologue");
+        
         //texfield
         nom = new JTextField("");
         prénom = new JTextField("");
         adresse = new JTextField("");
         MaskFormatter format = new MaskFormatter("## ## ## ## ##");
         tel = new JFormattedTextField(format);
-        spécialité = new JTextField("");
+        
         
         //image
         image = new JLabel(new ImageIcon("images\\medecin.png"));
@@ -189,6 +204,11 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
         JPanel pan9 = new JPanel();
         pan9.add(image);
 
+        //label contenant la combobox
+        JPanel pan10 = new JPanel();
+        spécialité.setBackground(Color.white);
+        pan10.add(spécialité);
+        
         //Placer label nom
         this.add(pan);
         pan.setVisible(true);
@@ -231,7 +251,7 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
         pan6.setBounds(600, 198, 110, 40);
         pan6.setBackground(Color.white);
         
-        //placer label contenant combobox
+        //placer label contenant combobox service
         this.add(pan8);
         pan8.setVisible(true);
         pan8.setBounds(800, 195, 110, 40);
@@ -257,10 +277,11 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
         adresse.setVisible(true);
         adresse.setBounds(200, 302, 250, 25);
         
-        //placer champ spécialité
-        this.add(spécialité);
-        spécialité.setVisible(true);
-        spécialité.setBounds(650, 302, 200, 25);
+        //placer combobox spécialité
+        this.add(pan10);
+        pan10.setVisible(true);
+        pan10.setBounds(630, 295, 160, 40);
+        pan10.setBackground(Color.white);
         
         //placer label image
         this.add(pan9);
@@ -279,9 +300,78 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ae) {
         Object source = ae.getSource();
+        
+        if (source == bouton) {
+
+            //test pour vérifier que tous les champs sont remplis
+            if (("".equals(nom.getText())) || ("".equals(prénom.getText())) || ("".equals(tel.getText())) || ("".equals(adresse.getText()))) {
+
+                JOptionPane.showMessageDialog(this, "Un champ est vide.", "Erreur", JOptionPane.WARNING_MESSAGE);
+
+            } else {
+                
+                  
+                
+                int numérofinal;
+                
+                String IDmax;
+                
+                IDmax = "SELECT MAX(numero_e) FROM employe;";
+                BDD.rechercheInformation(IDmax);
+                String IDnew = BDD.afficherNuméro();
+                IDnew = IDnew.substring(0, IDnew.length() - 1);
+                
+                numérofinal = Integer.parseInt(IDnew)+1;
+                
+               
+                
+                String requeteAjoutDocteur;
+                
+                docteur=new Docteur(numérofinal,nom.getText(),prénom.getText(),adresse.getText(),tel.getText(), (String) spécialité.getSelectedItem());
+                requeteAjoutDocteur = "INSERT INTO docteur (numero, specialite) VALUES ('"+docteur.getNum()+"', '" + docteur.getSpécialité() + "');";
+                
+                String requeteAjoutEmploye;
+                requeteAjoutEmploye = "INSERT INTO employe (numero_e, nom_employe, prenom_employe, adresse_employe, telephone_employe) VALUES ('"+docteur.getNum()+"', '" + docteur.getNom() + "', '" + docteur.getPrenom() + "', '" + docteur.getAdresse() + "', '" + docteur.getTel() + "');";
+                
+                
+                System.out.println(requeteAjoutDocteur);
+                System.out.println(requeteAjoutEmploye);
+                
+                try {
+                    BDD.executerRequete(requeteAjoutDocteur);
+                    BDD.executerRequete(requeteAjoutEmploye);
+                    JOptionPane.showMessageDialog(this, "Le docteur a bien été ajouté.", "Formulaire valide", JOptionPane.INFORMATION_MESSAGE);
+                    
+                    
+                       if (directeur.isSelected()==true)
+                    
+                       {
+                        String requeteAjoutDirecteur;
+                        String nbdirecteur;
+                        nbdirecteur = "SELECT directeur FROM service WHERE code = '"+service.getSelectedItem()+"';";
+                        BDD.rechercheInformation(nbdirecteur);
+                        System.out.println(service.getSelectedItem());
+                        String nbnew = BDD.afficherNuméro();
+                        nbnew = nbnew.substring(0, nbnew.length() - 1);
+                        int nbfinal;
+                        nbfinal = Integer.parseInt(nbnew)+1;
+                        System.out.println(nbfinal);
+                        
+                        requeteAjoutDirecteur="UPDATE service SET directeur = '"+nbfinal+"' WHERE code = '"+service.getSelectedItem()+"';";
+                        BDD.executerRequete(requeteAjoutDirecteur);
+                        
+                    }
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(PageAjout.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                hub.launchPageMenu(BDD);
+            }
 
         
 
     }
-
+    }
 }
+
+

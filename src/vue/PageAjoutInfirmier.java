@@ -11,7 +11,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,11 +22,12 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
-
+import modele.Infirmier;
 /**
  *
  * @author solene
@@ -39,7 +43,8 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
     // container
     private JPanel container;
     
-   
+   //Création objet infirmier
+    private Infirmier infirmier;
     
 
     //JLabel
@@ -55,10 +60,9 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
 
     //infirmier:
     private JLabel rot;
-    private JRadioButton nuit;
-    private JRadioButton jour;
+    
    // ButtonGroup utilisé pour gérer les boutons radios
-    private ButtonGroup rotation;
+    private JComboBox rotation;
     
 
 
@@ -103,13 +107,13 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
         service.addItem("CHG");
         service.addItem("CAR");
         
-        // Création des checkbox
-        jour = new JRadioButton("JOUR", true);
-        nuit = new JRadioButton("NUIT", false);
         
-        rotation = new ButtonGroup();
-        rotation.add(jour);
-        rotation.add(nuit);
+        //rotation
+        rotation= new JComboBox();
+        rotation.addItem("JOUR");
+        rotation.addItem("NUIT");
+        
+        
         
 
         nom = new JTextField("");
@@ -178,10 +182,8 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
         
         //label radiobutton rotation placé dans un panel
         JPanel pan6 = new JPanel();
-        jour.setBackground(Color.white);
-        nuit.setBackground(Color.white);
-        pan6.add(jour);
-        pan6.add(nuit);
+        rotation.setBackground(Color.white);
+        pan6.add(rotation);
         
         //label texte service
         JPanel pan7 = new JPanel();
@@ -190,6 +192,7 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
         
         //label contenant la combobox
         JPanel pan8 = new JPanel();
+        service.setBackground(Color.white);
         pan8.add(service);
         
         //label contenant l'image
@@ -231,10 +234,10 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
         pan5.setBounds(570, 200, 70, 30);
         pan5.setBackground(Color.white);
         
-        //placer JradioButton rotation
+        //placer combobox rotation
         this.add(pan6);
         pan6.setVisible(true);
-        pan6.setBounds(620, 196, 170, 30);
+        pan6.setBounds(590, 196, 170, 30);
         pan6.setBackground(Color.white);
         
         //placer label contenant texte service
@@ -297,9 +300,61 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ae) {
         Object source = ae.getSource();
+        
+        if (source == bouton) {
+
+            //test pour vérifier que tous les champs sont remplis
+            if (("".equals(nom.getText())) || ("".equals(prénom.getText())) || ("".equals(tel.getText())) || ("".equals(adresse.getText()))||("".equals(salaire.getText()))) {
+
+                JOptionPane.showMessageDialog(this, "Un champ est vide.", "Erreur", JOptionPane.WARNING_MESSAGE);
+
+            } else {
+                
+                
+                int numérofinal;
+                
+                String IDmax;
+                
+                IDmax = "SELECT MAX(numero_e) FROM employe;";
+                BDD.rechercheInformation(IDmax);
+                String IDnew = BDD.afficherNuméro();
+                IDnew = IDnew.substring(0, IDnew.length() - 1);
+                
+                numérofinal = Integer.parseInt(IDnew)+1;
+                
+                String requeteAjoutInfirmier;
+                
+                infirmier=new Infirmier(numérofinal,nom.getText(),prénom.getText(),adresse.getText(),tel.getText(), (String) service.getSelectedItem(), (String) rotation.getSelectedItem(), sal.getText());
+                
+                requeteAjoutInfirmier = "INSERT INTO infirmier (numero, code_service, rotation, salaire) VALUES ('"+infirmier.getNum()+"', '" + infirmier.getService() + "', '" + infirmier.getRotation() + "','" + infirmier.getSalaire() + "');";
+                
+                String requeteAjoutEmploye;
+                requeteAjoutEmploye = "INSERT INTO employe (numero_e, nom_employe, prenom_employe, adresse_employe, telephone_employe) VALUES ('"+infirmier.getNum()+"', '" + infirmier.getNom() + "', '" + infirmier.getPrenom() + "', '" + infirmier.getAdresse() + "', '" + infirmier.getTel() + "');";
+                
+                
+                System.out.println(requeteAjoutInfirmier);
+                System.out.println(requeteAjoutEmploye);
+               
+                try {
+                    BDD.executerRequete(requeteAjoutInfirmier);
+                    BDD.executerRequete(requeteAjoutEmploye);
+                    JOptionPane.showMessageDialog(this, "L'infirmier a bien été ajouté.", "Formulaire valide", JOptionPane.INFORMATION_MESSAGE);
+                    
+                    
+                       
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(PageAjout.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                hub.launchPageMenu(BDD);
+            }
+                
+                
+                
+            }
 
        
 
     }
+ }
 
-}

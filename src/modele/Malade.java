@@ -5,7 +5,7 @@
  */
 package modele;
 
-import java.util.Date;
+
 
 /**
  *
@@ -19,10 +19,10 @@ public class Malade {
     private String adresse;
     private String telephone;
     private String mutuelle;
-    private Date date;
+    private String date;
     
     /**constructeur de Malade*/
-    public Malade(int m_numéro, String m_nom, String m_prénom, String m_adresse, String m_telephone, String m_mutuelle, Date m_date){
+    public Malade(int m_numéro, String m_nom, String m_prénom, String m_adresse, String m_telephone, String m_mutuelle, String m_date){
         numero=m_numéro;
         nom=m_nom;
         prenom=m_prénom;
@@ -64,7 +64,7 @@ public class Malade {
     }
     
     /**getter de date malade*/
-    public Date getDate(){
+    public String getDate(){
         return date;
     }
 }

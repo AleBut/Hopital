@@ -16,8 +16,6 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date; 
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
@@ -60,6 +58,7 @@ public class PageAjout extends JPanel implements ActionListener {
     private JLabel adr;
     private JLabel mal;
     private JLabel mut;
+    private JLabel dateArrivée;
    
 
     //combobox sur le type de maladie du patient pour l'affecter à un service
@@ -107,6 +106,7 @@ public class PageAjout extends JPanel implements ActionListener {
         numérotel = new JLabel("Numéro de tel. :");
         mal = new JLabel("Service affecté : ");
         mut = new JLabel("Mutuelle : ");
+        dateArrivée= new JLabel("Date d'arrivée : ");
         
         //date
         
@@ -202,6 +202,11 @@ public class PageAjout extends JPanel implements ActionListener {
         //label mutuelle placé dans un planel
         JPanel pan8 = new JPanel();
         pan8.add(datePicker);
+        
+        //texte date d arrivée
+        JPanel pan9 = new JPanel();
+        dateArrivée.setFont(new Font("Arial", Font.BOLD, 15));
+        pan9.add(dateArrivée);
 
         //Placer label nom
         this.add(pan);
@@ -238,6 +243,12 @@ public class PageAjout extends JPanel implements ActionListener {
         pan6.setVisible(true);
         pan6.setBounds(560, 200, 80, 40);
         pan6.setBackground(Color.white);
+        
+        //placer label mutuelle 
+        this.add(pan9);
+        pan9.setVisible(true);
+        pan9.setBounds(550, 400, 130, 40);
+        pan9.setBackground(Color.white);
 
         //placer label image
         this.add(pan7);
@@ -278,7 +289,8 @@ public class PageAjout extends JPanel implements ActionListener {
         //calendrier
         this.add(pan8);
         pan8.setVisible(true);
-        pan8.setBounds(650, 400, 230, 50);
+        pan8.setBounds(670, 396, 230, 50);
+        pan8.setBackground(Color.white);
 
         //placer bouton
         this.add(bouton);
@@ -303,7 +315,7 @@ public class PageAjout extends JPanel implements ActionListener {
 
             } else {
 
-              String blindage;
+                String blindage;
                 blindage = "SELECT MAX(numero_m) FROM malade;";
                 BDD.rechercheInformation(blindage);
                 //BDD.afficherInformations();
@@ -313,18 +325,12 @@ public class PageAjout extends JPanel implements ActionListener {
                 int numérofinal = strToInt(num)+1;
                 System.out.println(numérofinal);
                 String dateString = datePicker.getJFormattedTextField().getText();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
-                try {
-                    Date date = sdf.parse(dateString);
-                    System.out.println(date);
-                    patient=new Malade(numérofinal,nom.getText(),prénom.getText(),adresse.getText(),tel.getText(),mutuelle.getText(),date);
+              
+                    patient=new Malade(numérofinal,nom.getText(),prénom.getText(),adresse.getText(),tel.getText(),mutuelle.getText(),dateString);
                     
-                } catch (ParseException ex) {
-                    Logger.getLogger(PageAjout.class.getName()).log(Level.SEVERE, null, ex);
-                }
                 
                 
-                requeteajout = "INSERT INTO malade (numero_m, nom_malade, prenom_malade, adresse_malade, tel_malade, mutuelle) VALUES ('"+patient.getNum()+"', '" + patient.getNom() + "', '" + patient.getPrenom() + "', '" + patient.getAdresse() + "', '" + patient.getTel() + "', '" + patient.getMutuelle() + "','" + patient.getDate() + "');";
+                requeteajout = "INSERT INTO malade (numero_m, nom_malade, prenom_malade, adresse_malade, tel_malade, mutuelle, date_arrive) VALUES ('"+patient.getNum()+"', '" + patient.getNom() + "', '" + patient.getPrenom() + "', '" + patient.getAdresse() + "', '" + patient.getTel() + "', '" + patient.getMutuelle() + "','" + patient.getDate() + "');";
                 System.out.println(requeteajout);
                
                 try {
