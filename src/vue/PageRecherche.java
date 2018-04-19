@@ -141,11 +141,13 @@ public class PageRecherche extends JPanel {
      
     class ValiderRecherche implements ActionListener //Redéfinition de la méthode actionPerformed()
 	{
+        
     
         
 		@Override
 		public void actionPerformed(ActionEvent arg0)
 		{
+                    String testAdresse="";
 			for(int i=0;i<tailleTab;i++)
 			{
 				if(personnel[i].isSelected())
@@ -159,16 +161,32 @@ public class PageRecherche extends JPanel {
 				for(int i=0;i<tailleTab;i++)
 				  {
 					  if(volet.getSelectedItem().toString()==personnel[i].getText())
-						 champ=sql[i];
+                                          {champ=sql[i];
+                                          testAdresse=personnel[i].getText();
+                                          }
 				  }
 			}
 
 			if(!champ.equals(""))
-			{       
+			{   
+                            if(testAdresse=="Adresse")
+                            {
+                                if(where=="")
+					where="WHERE "+champ+" LIKE '%"+ rechercheTexte.getText()+"%'";
+				else
+					where=where+" AND "+champ+" LIKE '%"+ rechercheTexte.getText()+"%'";
+                            
+                            }
+                            
+                            else
+                            {
+                            
 				if(where=="")
 					where="WHERE "+champ+" LIKE '"+ rechercheTexte.getText()+"'";
 				else
 					where=where+" AND "+champ+" LIKE '"+ rechercheTexte.getText()+"'";
+                                
+                            }
 			}
 
 			if(select.charAt(select.length()-2)==',')
