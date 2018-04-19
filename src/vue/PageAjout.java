@@ -15,6 +15,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date; 
+import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
+import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
+import net.sourceforge.jdatepicker.impl.UtilDateModel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -27,6 +33,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 import modele.Malade;
+import net.sourceforge.jdatepicker.DateModel;
 
 /**
  *
@@ -64,6 +71,14 @@ public class PageAjout extends JPanel implements ActionListener {
     private JTextField adresse;
     private JFormattedTextField tel;
     private JTextField mutuelle;
+    
+    //date
+    private String datePattern = "yyyy-MM-dd";
+    private SimpleDateFormat dateFormatter;
+    private JDatePickerImpl datePicker;
+    private JDatePanelImpl datePanel;
+     
+    
 
     // Chargement de l'image
     private JLabel image;
@@ -93,7 +108,17 @@ public class PageAjout extends JPanel implements ActionListener {
         mal = new JLabel("Service affecté : ");
         mut = new JLabel("Mutuelle : ");
         
+        //date
+        
+       
+        UtilDateModel model=new UtilDateModel();
+        datePanel=new JDatePanelImpl(model);
+        datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
 
+        
+        
+        
+        //(DateModel<?>)
         //Creéation des combobox
         maladie = new JComboBox();
         maladie.addItem("REA");
@@ -173,6 +198,10 @@ public class PageAjout extends JPanel implements ActionListener {
         //label mutuelle placé dans un planel
         JPanel pan7 = new JPanel();
         pan7.add(image);
+        
+        //label mutuelle placé dans un planel
+        JPanel pan8 = new JPanel();
+        pan8.add(datePicker);
 
         //Placer label nom
         this.add(pan);
@@ -245,6 +274,11 @@ public class PageAjout extends JPanel implements ActionListener {
         this.add(mutuelle);
         mutuelle.setVisible(true);
         mutuelle.setBounds(650, 202, 80, 25);
+        
+        //calendrier
+        this.add(pan8);
+        pan8.setVisible(true);
+        pan8.setBounds(650, 400, 230, 50);
 
         //placer bouton
         this.add(bouton);
@@ -253,6 +287,8 @@ public class PageAjout extends JPanel implements ActionListener {
         bouton.addActionListener(this);
 
     }
+    
+    
 
     @Override
     public void actionPerformed(ActionEvent ae) {
@@ -276,8 +312,19 @@ public class PageAjout extends JPanel implements ActionListener {
                 
                 int numérofinal = strToInt(num)+1;
                 System.out.println(numérofinal);
-                patient=new Malade(numérofinal,nom.getText(),prénom.getText(),adresse.getText(),tel.getText(),mutuelle.getText());
-                requeteajout = "INSERT INTO malade (numero_m, nom_malade, prenom_malade, adresse_malade, tel_malade, mutuelle) VALUES ('"+patient.getNum()+"', '" + patient.getNom() + "', '" + patient.getPrenom() + "', '" + patient.getAdresse() + "', '" + patient.getTel() + "', '" + patient.getMutuelle() + "');";
+                String dateString = datePicker.getJFormattedTextField().getText();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+                try {
+                    Date date = sdf.parse(dateString);
+                    System.out.println(date);
+                    patient=new Malade(numérofinal,nom.getText(),prénom.getText(),adresse.getText(),tel.getText(),mutuelle.getText(),date);
+                    
+                } catch (ParseException ex) {
+                    Logger.getLogger(PageAjout.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                
+                requeteajout = "INSERT INTO malade (numero_m, nom_malade, prenom_malade, adresse_malade, tel_malade, mutuelle) VALUES ('"+patient.getNum()+"', '" + patient.getNom() + "', '" + patient.getPrenom() + "', '" + patient.getAdresse() + "', '" + patient.getTel() + "', '" + patient.getMutuelle() + "','" + patient.getDate() + "');";
                 System.out.println(requeteajout);
                
                 try {
