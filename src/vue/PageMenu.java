@@ -37,16 +37,19 @@ public class PageMenu extends JPanel {
          // Image
         JLabel image = new JLabel(new ImageIcon("images\\hopitalAnime.gif"));
 		
+		// Panel contenant le titre
 		JPanel p1 = new JPanel();
 		p1.add(titre);
 		p1.setBounds(0, 50, 1000, 50);
 		p1.setBackground(Color.white);
         
+		// Panel contenant l'image
         JPanel p2 = new JPanel();
 		p2.add(image);
 		p2.setBounds(0, 100, 1000, 490);
 		p2.setBackground(Color.white);
 		
+		// Ajout des panels
 		this.add(p1);
 		this.add(p2);
      }
