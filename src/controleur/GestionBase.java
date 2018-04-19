@@ -27,7 +27,6 @@ public class GestionBase {
     // Variables sur la connexion
     private String login;
     private String mdp;
-    private String mdpSQL;
     
     // Booléen utilisé pour empêcher l'utilisateur d'effectuer une connexion distance/locale s'il n'est pas autorisé
     private boolean localOnly;
@@ -47,7 +46,6 @@ public class GestionBase {
     public GestionBase(String _login, String _mdp, String _mdpSQL) {
         login = _login;
         mdp = _mdp;
-        mdpSQL = _mdpSQL;
         
         localOnly = false;
     }
@@ -71,10 +69,10 @@ public class GestionBase {
     }
 
     public void connexionDistance() throws InterruptedException {
-        System.out.println("Connexion à la base de donnée via le serveur Gandalf...");
+        System.out.println("Connexion à la base de donnée distante...");
 
         try {
-            co = new Connexion(login, mdp, (login + "-rw"), mdpSQL);
+            co = new Connexion(("id5465697_" + login), mdp);
         } catch (SQLException |ClassNotFoundException ex) {
             Logger.getLogger(GestionBase.class.getName()).log(Level.SEVERE, null, ex);
         }

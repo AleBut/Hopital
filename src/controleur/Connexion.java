@@ -8,6 +8,7 @@ package controleur;
  * 
  * Librairies importées
  */
+import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -67,34 +68,46 @@ public class Connexion {
     /**
      * Constructeur avec 4 paramètres : username et password ECE, login et
      * password de la BDD à distance sur le serveur de l'ECE
-     * @param usernameECE
-     * @param passwordECE
      * @param loginDatabase
      * @param passwordDatabase
      * @throws java.sql.SQLException
      * @throws java.lang.ClassNotFoundException
      */
-    public Connexion(String usernameECE, String passwordECE, String loginDatabase, String passwordDatabase) throws SQLException, ClassNotFoundException {
+    public Connexion(String loginDatabase, String passwordDatabase) throws SQLException, ClassNotFoundException {
         // chargement driver "com.mysql.jdbc.Driver"
-        Class.forName("com.mysql.jdbc.Driver");
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+		
+		String serverName = "den1.mssql6.gear.host";
+		String dataBaseName = "hopital";
+		
+		String login = "hopital";
+		String mdp = "Ux39F3y~m!63";
 
-        // Connexion via le tunnel SSH avec le username et le password ECE
-        SSHTunnel ssh = new SSHTunnel(usernameECE, passwordECE);
+        String connectionString
+                = "jdbc:sqlserver://" + serverName + ".database.windows.net:3306;"
+                + "database=" + dataBaseName + ";"
+                + "user=" + login + "@" + serverName + ";"
+                + "password=" + mdp + ";"
+                + "encrypt=true;"
+                + "trustServerCertificate=false;"
+                + "hostNameInCertificate=*.database.windows.net;"
+                + "loginTimeout=30;";
+		
+		System.out.println(connectionString);
+		
+        SQLServerDataSource ds = null;
+        try {
+            conn = DriverManager.getConnection(connectionString);
 
-        if (ssh.connect()) {
-            System.out.println("Connexion reussie");
+        } catch (Exception e) {
 
-            // url de connexion "jdbc:mysql://localhost:3305/usernameECE"
-            String urlDatabase = "jdbc:mysql://localhost:3305/" + usernameECE;
-
-            //création d'une connexion JDBC à la base
-            conn = DriverManager.getConnection(urlDatabase, loginDatabase, passwordDatabase);
-
-            // création d'un ordre SQL (statement)
-            stmt = conn.createStatement();
-
+            throw new SQLException("Erreur Connection A Distance");
         }
-    }
+		finally {  
+			if (conn != null) 
+				try { conn.close(); } catch(Exception e) {}
+		}
+	}
 
     /**
      * Méthode qui ajoute la table en parametre dans son ArrayList
