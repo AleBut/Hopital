@@ -8,6 +8,7 @@ package vue;
 import controleur.GestionBase;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -51,7 +52,10 @@ public class ResultatRecherche extends JPanel {
 			
 		
 		this.setVisible(false);
-		this.add(new JScrollPane(tableau), BorderLayout.CENTER);
+                JScrollPane resultat;
+                resultat = new JScrollPane(tableau);
+                resultat.setPreferredSize(new Dimension(750, 525));
+		this.add(resultat, BorderLayout.WEST);
 		this.setVisible(true);
 	}
 	
