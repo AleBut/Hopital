@@ -25,26 +25,33 @@ public class PageMenu extends JPanel {
     }
     
      private void constructionGraphique()
-     {        
+     {
+		// Layout null car on veut disposer les éléments comme on veut
+		this.setLayout(null);
+		this.setBackground(Color.white); // Définir la couleur de l'arrière plan
+		
         // Titre
         JLabel titre = new JLabel("Bienvenue,  " +  BDD.getLogin());
-        titre.setFont(new Font("Arial", Font.BOLD, 15)); // Attribuer la police au titre
+        titre.setFont(new Font("Arial", Font.BOLD, 24)); // Attribuer la police au titre
         
          // Image
-        JLabel image = new JLabel(new ImageIcon("images\\hopitalGroot.png"));
+        JLabel image = new JLabel(new ImageIcon("images\\hopitalAnime.gif"));
+		
+		// Panel contenant le titre
+		JPanel p1 = new JPanel();
+		p1.add(titre);
+		p1.setBounds(0, 50, 1000, 50);
+		p1.setBackground(Color.white);
         
-        Box miseEnForme = Box.createVerticalBox();
-        miseEnForme.add(titre);
-        miseEnForme.add(image);
-        
-        // Container
-        JPanel container = new JPanel();
-        container.setBackground(Color.white);
-        container.add(miseEnForme);
-        
-        // PageMenu renvoit ici le container à HubGraph
-        this.setBackground(Color.white); // Définir la couleur de l'arrière plan
-        this.add(container);
+		// Panel contenant l'image
+        JPanel p2 = new JPanel();
+		p2.add(image);
+		p2.setBounds(0, 100, 1000, 490);
+		p2.setBackground(Color.white);
+		
+		// Ajout des panels
+		this.add(p1);
+		this.add(p2);
      }
 }
 

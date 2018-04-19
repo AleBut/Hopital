@@ -44,9 +44,8 @@ public class PageStatistique extends JPanel implements ActionListener {
         this.add(miseEnForme);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent ae)
-    {
-        
-    }
+	@Override
+	public void actionPerformed(ActionEvent ae) {
+		
+	}
 }
