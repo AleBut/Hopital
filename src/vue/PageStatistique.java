@@ -40,7 +40,7 @@ public class PageStatistique extends JPanel implements ActionListener {
 		miseEnForme.add(new GraphiqueLineaire("Arrivée des malades en fonction du temps", BDD));
 		miseEnForme.add(new DiagrammeBaton("Répartition des ressources par service", BDD));
         
-        this.add(new CamembertOriginePatients("Origine des patients", BDD));
+        this.add(new Camembert("Origine des patients", BDD));
         this.add(miseEnForme);
     }
 

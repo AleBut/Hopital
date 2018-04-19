@@ -40,7 +40,7 @@ public class DiagrammeBaton extends JPanel {
         barChart.setPadding(new RectangleInsets(0, 0, 10, 0)); // Marge en haut, gauche, bas, droit
         
         ChartPanel pan = new ChartPanel(barChart);
-        pan.setMouseWheelEnabled(true); // Permet de faire tourner le diagramme
+        pan.setMouseWheelEnabled(false); // Permet de faire tourner le diagramme
         pan.setPreferredSize(new Dimension(500, 295)); // Dimension
         this.add(pan);
     }
