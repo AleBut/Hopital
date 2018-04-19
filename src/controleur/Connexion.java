@@ -77,14 +77,14 @@ public class Connexion {
         // chargement driver "com.mysql.jdbc.Driver"
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 		
-		String serverName = "den1.mssql6.gear.host";
+		String serverName = "hopitalece";
 		String dataBaseName = "hopital";
 		
-		String login = "hopital";
-		String mdp = "Ux39F3y~m!63";
+		String login = "alexis";
+		String mdp = "rootROOT1";
 
-        String connectionString
-                = "jdbc:sqlserver://" + serverName + ".database.windows.net:3306;"
+         String connectionString
+                = "jdbc:sqlserver://" + serverName + ".database.windows.net:1433;"
                 + "database=" + dataBaseName + ";"
                 + "user=" + login + "@" + serverName + ";"
                 + "password=" + mdp + ";"
@@ -92,8 +92,6 @@ public class Connexion {
                 + "trustServerCertificate=false;"
                 + "hostNameInCertificate=*.database.windows.net;"
                 + "loginTimeout=30;";
-		
-		System.out.println(connectionString);
 		
         SQLServerDataSource ds = null;
         try {
