@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.Box;
 import javax.swing.JPanel;
 
 /**
@@ -33,14 +34,18 @@ public class PageStatistique extends JPanel implements ActionListener {
     {
         this.setBackground(Color.white); // Définir la couleur de l'arrière plan
         this.setLayout(new GridLayout(1,2));
+		
+		// Box de mise en forme
+        Box miseEnForme = Box.createVerticalBox();
+		miseEnForme.add(new GraphiqueLineaire("Arrivée des malades en fonction du temps", BDD));
+		miseEnForme.add(new DiagrammeBaton("Répartition des ressources par service", BDD));
         
-        this.add(new CamembertOriginePatients("Origine des patients", BDD));
-        this.add(new DiagrammeBaton("Répartition des ressources par service", BDD));
+        this.add(new Camembert("Origine des patients", BDD));
+        this.add(miseEnForme);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent ae)
-    {
-        
-    }
+	@Override
+	public void actionPerformed(ActionEvent ae) {
+		
+	}
 }
