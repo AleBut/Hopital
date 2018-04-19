@@ -25,7 +25,7 @@ public class HubGraph extends JFrame implements ActionListener
     
     private MenuBar menu;
     
-    public HubGraph()
+       public HubGraph()
     {         
          this.setTitle("Hopital");
          this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Ferme la fenetre automatiquement
@@ -33,8 +33,9 @@ public class HubGraph extends JFrame implements ActionListener
          menu = new MenuBar();
          
          menu.getInsertionDocteur().addActionListener(this);
-		 menu.getInsertionInfirmier().addActionListener(this);
-		 menu.getInsertionMalade().addActionListener(this);
+
+		    menu.getInsertionInfirmier().addActionListener(this);
+		    menu.getInsertionMalade().addActionListener(this);
 		 
          menu.getModification().addActionListener(this);
          menu.getSuppression().addActionListener(this);
@@ -188,6 +189,34 @@ public class HubGraph extends JFrame implements ActionListener
          this.setVisible(true);
     }
     
+     public void launchPageAjoutDoc()
+    {
+         this.setVisible(false);
+         this.setJMenuBar(menu);
+         try {
+			this.setContentPane(new PageAjoutDocteur(this,BDD));
+		 } catch (ParseException ex) {
+           Logger.getLogger(HubGraph.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         this.setSize(1000, 650);
+         this.setLocationRelativeTo(null);
+         this.setVisible(true);
+    }
+     
+      public void launchPageAjoutInf()
+    {
+         this.setVisible(false);
+         this.setJMenuBar(menu);
+         try {
+			this.setContentPane(new PageAjoutInfirmier(this,BDD));
+		 } catch (ParseException ex) {
+           Logger.getLogger(HubGraph.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         this.setSize(1000, 650);
+         this.setLocationRelativeTo(null);
+         this.setVisible(true);
+    }
+    
     public void launchPageStatistique()
     {
          this.setVisible(false);
@@ -204,11 +233,12 @@ public class HubGraph extends JFrame implements ActionListener
         Object  source =e.getSource();
  
         if(source == menu.getInsertionDocteur())
+            launchPageAjoutDoc();
+        if(source == menu.getInsertionInfirmier())
+            launchPageAjoutInf();
+
+        if(source == menu.getInsertionMalade())
             launchPageAjout();
-		if(source == menu.getInsertionInfirmier())
-            System.out.println("Insertion infirmier");
-		if(source == menu.getInsertionMalade())
-            System.out.println("Insertion malade");
 		
         if(source == menu.getModification())
             System.out.println("Modification");
