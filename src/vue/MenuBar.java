@@ -32,6 +32,7 @@ public class MenuBar extends JMenuBar
             private JMenuItem infirmier2;
         private JMenuItem patient;
         private JMenuItem service;
+        private JMenuItem chambre;
     
     private JMenuItem statistique;
     
@@ -55,6 +56,7 @@ public class MenuBar extends JMenuBar
                 infirmier2 = new JMenuItem("Infirmière");
             patient = new JMenuItem("Patient");
             service = new JMenuItem("Service");
+            chambre = new JMenuItem("Chambre");
         
          statistique = new JMenuItem("Statistique");
          
@@ -87,6 +89,8 @@ public class MenuBar extends JMenuBar
         recherche.add(patient);
         recherche.addSeparator();
         recherche.add(service);
+        recherche.addSeparator();
+        recherche.add(chambre);
         
         this.add(maj);
         this.add(recherche);
@@ -115,6 +119,8 @@ public class MenuBar extends JMenuBar
      public JMenuItem getRecherchePatient() { return patient; }
      
      public JMenuItem getRechercheService() { return service; }
+     
+     public JMenuItem getRechercheChambre() { return chambre; }
 
      public JMenuItem getStatistique() { return statistique; }
      
