@@ -9,7 +9,6 @@ import controleur.GestionBase;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -52,19 +51,17 @@ public class ResultatRecherche extends JPanel {
 			
 		
 		this.setVisible(false);
-                JScrollPane resultat;
-                resultat = new JScrollPane(tableau);
-                resultat.setPreferredSize(new Dimension(750, 525));
-		this.add(resultat, BorderLayout.WEST);
+		JScrollPane resultat;
+		resultat = new JScrollPane(tableau);
+		resultat.setPreferredSize(new Dimension(750, 525));
+		this.add(resultat, BorderLayout.NORTH);
 		this.setVisible(true);
 	}
 	
 	private Object[][] getDonnees(GestionBase BDD, String entete[])
 	{
 		ArrayList<String> table = new ArrayList<>(BDD.getArray());
-		
-		BDD.afficherInformations();
-		//BDD.effacerResultat();
+		BDD.effacerResultat();
 		
 		Object[][] donnees = new Object[table.size()][entete.length];
 		

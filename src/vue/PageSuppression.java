@@ -69,9 +69,8 @@ public class PageSuppression extends JPanel implements ActionListener {
         // Container
         container = new JPanel();
         container.setLayout(null);
-        /*
-            LA SUITE DE TON CODE POUR INITIALISER LES ATTRIBUTS ICI
-         */
+		
+		// JLabels
         pren = new JLabel("Prénom :");
         infolabel = new JLabel("Séléctionner les informations de recherche : ");
         NumNom = new JLabel("Numéro d'identification ou Nom :");
@@ -111,6 +110,7 @@ public class PageSuppression extends JPanel implements ActionListener {
         // Titre de bienvenue
         JLabel titre = new JLabel("Gestionnaire de suppression : ");
         titre.setFont(new Font("Arial", Font.BOLD, 24)); // Attribuer la police au titre
+		
         //panel contenant le titre
         JPanel t = new JPanel();
         t.add(titre);
@@ -216,8 +216,8 @@ public class PageSuppression extends JPanel implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent ae) {
-
+    public void actionPerformed(ActionEvent ae)
+	{
         Object source = ae.getSource();
 
         if (source == bouton) {
@@ -225,10 +225,9 @@ public class PageSuppression extends JPanel implements ActionListener {
             if (typePersonne.getSelectedItem() == "Malade") {
                 if (info.getSelectedItem() == "ID") {
                     //test pour vérifier que tous les champs sont remplis
-                    if (("".equals(nomID.getText()))) {
-
+                    if (("".equals(nomID.getText())))
+					{
                         JOptionPane.showMessageDialog(this, "Le champ ID est vide.", "Erreur", JOptionPane.WARNING_MESSAGE);
-
                     }
 
                     String lecture1;
