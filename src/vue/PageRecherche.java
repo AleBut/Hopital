@@ -29,6 +29,8 @@ public class PageRecherche extends JPanel {
     
     // Cocher les éléments souhaités
     private JCheckBox personnel[];
+    
+    private JCheckBox all;
 
     // Recherche texte
     private JTextField rechercheTexte;
@@ -68,6 +70,11 @@ public class PageRecherche extends JPanel {
             personnel[i] = new JCheckBox();
             personnel[i].setText(tabArgument [i]);
         }
+        
+        all = new JCheckBox("Tous les elements");
+        all.addActionListener(new PageRecherche.ToutCocher());
+        
+        
         
         // Recherche texte
         rechercheTexte = new JTextField("");
@@ -110,6 +117,8 @@ public class PageRecherche extends JPanel {
 		miseEnForme.add(new JLabel(" "));
 		miseEnForme.add(titre);
 		miseEnForme.add(new JLabel(" "));
+                
+                miseEnForme.add(all);
 		
         for(int i=0; i<tailleTab; i++)
 			miseEnForme.add(personnel[i]);
@@ -234,4 +243,33 @@ public class PageRecherche extends JPanel {
 			where=whereInit;
 		}
 	}
+    
+    class ToutCocher implements ActionListener
+    {
+    @Override
+		public void actionPerformed(ActionEvent arg0)
+		{
+                    if(all.isSelected()==true)
+                    {
+                        for(int i=0;i<tailleTab;i++)
+                            { 
+                                personnel[i].setSelected(true);
+                                
+                            }
+                    
+                    }
+                    
+                    else
+                    {
+                        for(int i=0;i<tailleTab;i++)
+                            { 
+                                personnel[i].setSelected(false);
+                                
+                            }
+                    }
+                
+                
+                }
+    
+    }
 }
