@@ -216,6 +216,20 @@ public class HubGraph extends JFrame implements ActionListener
          this.setLocationRelativeTo(null);
          this.setVisible(true);
     }
+      
+      public void launchPageSuppression()
+    {
+         this.setVisible(false);
+         this.setJMenuBar(menu);
+         try {
+			this.setContentPane(new PageSuppression(this,BDD));
+		 } catch (ParseException ex) {
+           Logger.getLogger(HubGraph.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         this.setSize(1000, 650);
+         this.setLocationRelativeTo(null);
+         this.setVisible(true);
+    }
     
     public void launchPageStatistique()
     {
@@ -243,7 +257,7 @@ public class HubGraph extends JFrame implements ActionListener
         if(source == menu.getModification())
             System.out.println("Modification");
         if(source == menu.getSuppression())
-            System.out.println("Suppression");
+            launchPageSuppression();
         
         if(source == menu.getRecherchePersonnelEmploye())
             launchPageRecherchePersonnelEmploye();

@@ -118,8 +118,8 @@ public class PageAjout extends JPanel implements ActionListener {
         
         
         
-        //(DateModel<?>)
-        //Creéation des combobox
+        
+        //Création des combobox
         maladie = new JComboBox();
         maladie.addItem("REA");
         maladie.addItem("CHG");
@@ -187,6 +187,7 @@ public class PageAjout extends JPanel implements ActionListener {
 
         //label service placé dans un planel
         JPanel pan5 = new JPanel();
+        mal.setBackground(Color.white);
         mal.setFont(new Font("Arial", Font.BOLD, 15));
         pan5.add(mal);
 
