@@ -28,8 +28,6 @@ public class GestionBase {
     private String login;
     private String mdp;
     
-    // Booléen utilisé pour empêcher l'utilisateur d'effectuer une connexion distance/locale s'il n'est pas autorisé
-    private boolean localOnly;
     
     private static Erreur err = new Erreur();
 
@@ -39,18 +37,14 @@ public class GestionBase {
     public GestionBase(String _login, String _mdp) {
         login = _login;
         mdp = _mdp;
-        
-        localOnly = true;
     }
     
     public GestionBase(String _login, String _mdp, String _mdpSQL) {
         login = _login;
         mdp = _mdp;
-        
-        localOnly = false;
     }
 
-    public boolean connexionLocale() throws InterruptedException {
+    public void connexionLocale() throws InterruptedException {
 
         System.out.println("Connexion à la base de donnée locale...");
 
@@ -65,17 +59,20 @@ public class GestionBase {
             System.exit(1);
         }
         System.out.println("Connecté!");
-        return true;
     }
 
     public void connexionDistance() throws InterruptedException {
         System.out.println("Connexion à la base de donnée distante...");
 
         try {
-            co = new Connexion(("id5465697_" + login), mdp);
+            co = new Connexion(login, mdp);
         } catch (SQLException |ClassNotFoundException ex) {
-            Logger.getLogger(GestionBase.class.getName()).log(Level.SEVERE, null, ex);
+            Thread.sleep(5 * 1000);
+            System.out.println("Erreur: " + ex);
+
+            System.exit(1);
         }
+		System.out.println("Connecté!");
     }
 
 

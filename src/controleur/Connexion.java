@@ -8,7 +8,6 @@ package controleur;
  * 
  * Librairies importées
  */
-import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -66,45 +65,28 @@ public class Connexion {
     }
 
     /**
-     * Constructeur avec 4 paramètres : username et password ECE, login et
-     * password de la BDD à distance sur le serveur de l'ECE
+     * 
      * @param loginDatabase
      * @param passwordDatabase
      * @throws java.sql.SQLException
      * @throws java.lang.ClassNotFoundException
      */
-    public Connexion(String loginDatabase, String passwordDatabase) throws SQLException, ClassNotFoundException {
-        // chargement driver "com.mysql.jdbc.Driver"
-        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+    public Connexion(String loginDatabase, String passwordDatabase) throws SQLException, ClassNotFoundException {		
+		String serverName = "sql7.freemysqlhosting.net"; 
+		String databaseName = "sql7233639";
 		
-		String serverName = "hopitalece";
-		String dataBaseName = "hopital";
+		if(loginDatabase.length() == 0)		loginDatabase = "sql7233639";
 		
-		String login = "alexis";
-		String mdp = "rootROOT1";
+		if(passwordDatabase.length() == 0)	passwordDatabase = "zjXNmh5Tz9";
 
-         String connectionString
-                = "jdbc:sqlserver://" + serverName + ".database.windows.net:1433;"
-                + "database=" + dataBaseName + ";"
-                + "user=" + login + "@" + serverName + ";"
-                + "password=" + mdp + ";"
-                + "encrypt=true;"
-                + "trustServerCertificate=false;"
-                + "hostNameInCertificate=*.database.windows.net;"
-                + "loginTimeout=30;";
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+			conn=DriverManager.getConnection("jdbc:mysql://" + serverName + ":3306/" + databaseName, loginDatabase, passwordDatabase);
+		}catch (ClassNotFoundException | SQLException e) {
+			throw new SQLException("Erreur Connection A Distance" + e);
+		} 
 		
-        SQLServerDataSource ds = null;
-        try {
-            conn = DriverManager.getConnection(connectionString);
-
-        } catch (Exception e) {
-
-            throw new SQLException("Erreur Connection A Distance");
-        }
-		finally {  
-			if (conn != null) 
-				try { conn.close(); } catch(Exception e) {}
-		}
+		 stmt = conn.createStatement();
 	}
 
     /**
