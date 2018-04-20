@@ -323,7 +323,7 @@ public class PageAjout extends JPanel implements ActionListener {
                 String num = BDD.afficherNuméro();
                 num = num.substring(0, num.length() - 1);
                 
-                int numérofinal = strToInt(num)+1;
+                int numérofinal = Integer.parseInt(num)+1;
                 System.out.println(numérofinal);
                 String dateString = datePicker.getJFormattedTextField().getText();
               
@@ -349,27 +349,7 @@ public class PageAjout extends JPanel implements ActionListener {
 
     }
     
-    public static int strToInt( String str ){
-    int i = 0;
-    int num = 0;
-    boolean isNeg = false;
-
-    //Check for negative sign; if it's there, set the isNeg flag
-    if (str.charAt(0) == '-') {
-        isNeg = true;
-        i = 1;
-    }
-
-    //Process each character of the string;
-    while( i < str.length()) {
-        num *= 10;
-        num += str.charAt(i++) - '0'; //Minus the ASCII code of '0' to get the value of the charAt(i++).
-    }
-
-    if (isNeg)
-        num = -num;
-    return num;
-}
+   
 
 }
 
