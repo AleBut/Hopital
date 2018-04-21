@@ -349,7 +349,7 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
                        
 
                 } catch (SQLException ex) {
-                    Logger.getLogger(PageAjout.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(PageAjoutInfirmier.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 hub.launchPageMenu(BDD);
 

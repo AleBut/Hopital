@@ -11,10 +11,18 @@ package modele;
  */
 public class Docteur extends Employe {
     private String specialite;
-    
-    public Docteur(int d_numéro, String d_nom, String d_prénom, String d_adresse, String d_telephone, String d_specialite){
+	private String directeurService;
+	
+	public Docteur(int d_numéro, String d_nom, String d_prénom, String d_adresse, String d_telephone, String d_specialite){
         super(d_numéro, d_nom, d_prénom, d_adresse, d_telephone);
         specialite=d_specialite;
+		directeurService = "";
+    }
+    
+    public Docteur(int d_numéro, String d_nom, String d_prénom, String d_adresse, String d_telephone, String d_specialite, String d_directeurService){
+        super(d_numéro, d_nom, d_prénom, d_adresse, d_telephone);
+        specialite=d_specialite;
+		directeurService = d_directeurService;
     }
     
     /**getter de num docteur*/
@@ -42,8 +50,13 @@ public class Docteur extends Employe {
         return super.telephone;
     }
     
-    /**getter de mutuelle docteur*/
+    /**getter de specialite docteur*/
     public String getSpécialité(){
         return specialite;
     }
+	
+	/* getter du service dirigé docteur*/
+	public String getDirecteurService() {
+		return directeurService;
+	}
 }

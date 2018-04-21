@@ -128,7 +128,7 @@ public class PageConnexion extends JPanel implements ActionListener {
         {
             BDD = new GestionBase(login.getText(), mdp.getText());
             try {
-                BDD.connexionLocale();
+                BDD.connexionLocale(hub);
             } catch (InterruptedException ex) {
                 Logger.getLogger(PageConnexion.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -139,7 +139,7 @@ public class PageConnexion extends JPanel implements ActionListener {
         {
             BDD = new GestionBase(login.getText(), mdp.getText());
             try {
-                BDD.connexionDistance();
+                BDD.connexionDistance(hub);
             } catch (InterruptedException ex) {
                 Logger.getLogger(PageConnexion.class.getName()).log(Level.SEVERE, null, ex);
             }

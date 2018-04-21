@@ -21,7 +21,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
@@ -29,16 +28,18 @@ import modele.Docteur;
 
 /**
  *
- * @author solene
+ * @author Alex1
  */
-public class PageAjoutDocteur extends JPanel implements ActionListener {
-
-    // Lien vers le panneau gérant l'interface graphique
-    private HubGraph hub;
-
+public class PageModificationDocteur extends JPanel implements ActionListener{
+	// Docteur
+	private Docteur doc;
+	
     // Connexion vers la base de donnée
     private GestionBase BDD;
 
+	// Lien vers le panneau gérant l'interface graphique
+    private HubGraph hub;
+	
     // container
     private JPanel container;
     
@@ -67,23 +68,22 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
     private JTextField adresse;
     private JFormattedTextField tel;
     
-
-
-    //bouton ajouter un employé
+    //bouton Modifier l'employé
     private JButton bouton;
     
     // Chargement de l'image
     private JLabel image;
-
-    public PageAjoutDocteur(HubGraph _hub, GestionBase _BDD) throws ParseException {
-        // Hub graphique
-        hub = _hub;
-
-        // Base de donnée
+	
+	public PageModificationDocteur(Docteur _doc, GestionBase _BDD, HubGraph _hub) throws ParseException
+	{
+		//nouvel objet docteur
+		doc = _doc;
+		
+		// Base de donnée
         BDD = _BDD;
-        
-        //nouvel objet docteur
-       
+		
+		// Hub graphique
+		hub = _hub;
 
         // Container
         container = new JPanel();
@@ -98,53 +98,64 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
         serv = new JLabel("du service : ");
         
         //checkbox
-       directeur =new JCheckBox("Directeur");
+       directeur = new JCheckBox("Directeur");
         
        //combobox
         //Creéation des combobox
         service = new JComboBox();
-        service.addItem("REA");
-        service.addItem("CHG");
-        service.addItem("CAR");
+        String tableService[] = {"REA", "CHG", "CAR"};
+		
+		// Si le docteur est directeur d'un service
+		if(doc.getDirecteurService() != "")
+		{
+			directeur.setSelected(true);
+			service.addItem(doc.getDirecteurService());
+		}
+		// On ajoute les services restants
+		for(String serviceDirige : tableService)
+		{
+			if( serviceDirige != doc.getDirecteurService() )
+				service.addItem(serviceDirige);
+		}
+
         
-        //Creéation des combobox
+        //Creéation des combobox, en affichant la spécialité du docteur actuel
         spécialité = new JComboBox();
-        spécialité.addItem("Anesthesiste");
-        spécialité.addItem("Cardiologue");
-        spécialité.addItem("Generaliste");
-        spécialité.addItem("Orthopediste");
-        spécialité.addItem("Pneumologue");
-        spécialité.addItem("Traumatologue");
-        spécialité.addItem("Radiologue");
+		spécialité.addItem(doc.getSpécialité());
+		
+		String tableSpecialite[] = {"Anesthesiste", "Cardiologue", "Generaliste", "Orthopediste", "Pneumologue", "Traumatologue", "Radiologue" };
+		for (String element : tableSpecialite)
+		{
+			if(element != doc.getSpécialité())
+				spécialité.addItem(element);
+		}
+
         
         //texfield
-        nom = new JTextField("");
-        prénom = new JTextField("");
-        adresse = new JTextField("");
+        nom = new JTextField(doc.getNom());
+        prénom = new JTextField(doc.getPrenom());
+        adresse = new JTextField(doc.getAdresse());
+		
         MaskFormatter format = new MaskFormatter("## ## ## ## ##");
         tel = new JFormattedTextField(format);
+		tel.setText(doc.getTel());
         
         
         //image
         image = new JLabel(new ImageIcon("images\\medecin.png"));
         
         //bouton 
-          bouton=new JButton("Ajouter");
+          bouton=new JButton("Modifier");
+		  
+		constructionGraphique();
         
-
-        constructionGraphique();
-        
-        
-
         this.setBackground(Color.white); // Définir la couleur de l'arrière plan
-
         this.add(container);
-
-    }
-
-    public void constructionGraphique() {
+	}
+	
+	public void constructionGraphique() {
         // Titre de bienvenue
-        JLabel titre = new JLabel("Recrutement Docteur : ");
+        JLabel titre = new JLabel("Modification Docteur : ");
 
         titre.setFont(new Font("Arial", Font.BOLD, 24)); // Attribuer la police au titre
         //panel contenant le titre
@@ -294,96 +305,63 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
         bouton.addActionListener(this);
 
     }
-
-    @Override
-    public void actionPerformed(ActionEvent ae) {
-        Object source = ae.getSource();
-        
-        if (source == bouton) {
-
-            //test pour vérifier que tous les champs sont remplis
-            if (("".equals(nom.getText())) || ("".equals(prénom.getText())) || ("".equals(tel.getText())) || ("".equals(adresse.getText()))) {
-
-                JOptionPane.showMessageDialog(this, "Un champ est vide.", "Erreur", JOptionPane.WARNING_MESSAGE);
-
-
-            } else {
-                
-                  String blindageNom = "SELECT (nom_employe) FROM employe WHERE nom_employe= '"+nom.getText()+"';";
-                BDD.rechercheInformation(blindageNom);
-                String Information1 = BDD.afficherNuméro();
-                String blindagePrenom = "SELECT (prenom_employe) FROM employe WHERE prenom_employe = '"+prénom.getText()+"';";
-                BDD.rechercheInformation(blindagePrenom);
-                String Information2 = BDD.afficherNuméro();
-                
-                if ((Information1==null)&&(Information2==null)||(((null)!=Information1)&&((null)==Information2))||(((null)!=Information2)&&((null)==Information1)))
-                {
-                
-
-                int numérofinal;
-                
-                String IDmax;
-                
-                IDmax = "SELECT MAX(numero_e) FROM employe;";
-                BDD.rechercheInformation(IDmax);
-                String IDnew = BDD.afficherNuméro();
-                IDnew = IDnew.substring(0, IDnew.length() - 1);
-                
-                numérofinal = Integer.parseInt(IDnew)+1;
-                
-               
-                
-                String requeteAjoutDocteur;
-                
-                docteur = new Docteur(numérofinal,nom.getText(),prénom.getText(),adresse.getText(),tel.getText(), (String) spécialité.getSelectedItem());
-                requeteAjoutDocteur = "INSERT INTO docteur (numero, specialite) VALUES ('"+docteur.getNum()+"', '" + docteur.getSpécialité() + "');";
-                
-                String requeteAjoutEmploye;
-                requeteAjoutEmploye = "INSERT INTO employe (numero_e, nom_employe, prenom_employe, adresse_employe, telephone_employe) VALUES ('"+docteur.getNum()+"', '" + docteur.getNom() + "', '" + docteur.getPrenom() + "', '" + docteur.getAdresse() + "', '" + docteur.getTel() + "');";
-                
-                
-                System.out.println(requeteAjoutDocteur);
-                System.out.println(requeteAjoutEmploye);
-                
-                try {
-                    BDD.executerRequete(requeteAjoutDocteur);
-                    BDD.executerRequete(requeteAjoutEmploye);
-                    JOptionPane.showMessageDialog(this, "Le docteur a bien été ajouté.", "Formulaire valide", JOptionPane.INFORMATION_MESSAGE);
-                    
-                    
-                       if (directeur.isSelected()==true)
-                    
-                       {
-                        String requeteAjoutDirecteur;
-                        String nbdirecteur;
-                        nbdirecteur = "SELECT directeur FROM service WHERE code = '"+service.getSelectedItem()+"';";
-                        BDD.rechercheInformation(nbdirecteur);
-                        System.out.println(service.getSelectedItem());
-                        String nbnew = BDD.afficherNuméro();
-                        nbnew = nbnew.substring(0, nbnew.length() - 1);
-                        int nbfinal;
-                        nbfinal = Integer.parseInt(nbnew)+1;
-                        System.out.println(nbfinal);
-                        
-                        requeteAjoutDirecteur="UPDATE service SET directeur = '"+nbfinal+"' WHERE code = '"+service.getSelectedItem()+"';";
-                        BDD.executerRequete(requeteAjoutDirecteur);
-                        
-                    }
-
-                } catch (SQLException ex) {
-                    Logger.getLogger(PageAjoutDocteur.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                hub.launchPageMenu(BDD);
-            }
-
-                else if ((((null)!=Information1)&&(((null)!=Information2)))){
-                    JOptionPane.showMessageDialog(this, "Un employé possède déjà ce nom de famille et prénom.", "Formulaire non valide", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-
-        
-
-    }
-
-    }
+	
+	@Override
+    public void actionPerformed(ActionEvent e) {
+        Object source = e.getSource();
+		
+		if (source == bouton)
+		{
+			// Changement dans la table employe
+			if(nom.getText() != doc.getNom() || prénom.getText() != doc.getPrenom() || adresse.getText() != doc.getAdresse() || tel.getText() != doc.getTel())
+			{
+				try {
+					BDD.executerRequete("UPDATE employe SET nom_employe = '" + nom.getText() + "', prenom_employe = '" + prénom.getText() + "', adresse_employe = '" + adresse.getText() + "', telephone_employe = '" + tel.getText() + "' WHERE numero_e = " + doc.getNum() + ";");
+				} catch (SQLException ex) {
+					Logger.getLogger(PageModificationDocteur.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+			
+			// Changement dans la table service
+			// Si on supprime le poste de directeur
+			if(!directeur.isSelected() && doc.getDirecteurService() != "")
+			{
+				try {
+					BDD.executerRequete("UPDATE service SET directeur = '0' WHERE code = '" + doc.getDirecteurService() + "';");
+				} catch (SQLException ex) {
+					Logger.getLogger(PageModificationDocteur.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+			// Si on ajoute un poste de directeur
+			else if(directeur.isSelected() && doc.getDirecteurService() == "")
+			{
+				try {
+					BDD.executerRequete("UPDATE service SET directeur = '" + doc.getNum() + "' WHERE code = '" + service.getSelectedItem() + "';");
+				} catch (SQLException ex) {
+					Logger.getLogger(PageModificationDocteur.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+			// Si on modifie le service qu'il dirige
+			else if( (directeur.isSelected()) && (service.getSelectedItem() != doc.getDirecteurService()) )
+			{
+				try {
+					BDD.executerRequete("UPDATE service SET directeur = '0' WHERE code = '" + doc.getDirecteurService() + "';");
+					BDD.executerRequete("UPDATE service SET directeur = '" + doc.getNum() + "' WHERE code = '" + service.getSelectedItem() + "';");
+				} catch (SQLException ex) {
+					Logger.getLogger(PageModificationDocteur.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+				
+			// Changement de specialite
+			if(doc.getSpécialité() != (String) spécialité.getSelectedItem())
+			{
+				try {
+					BDD.executerRequete("UPDATE docteur SET specialite = '" + (String) spécialité.getSelectedItem() + "' WHERE numero = " + doc.getNum() + ";");
+				} catch (SQLException ex) {
+					Logger.getLogger(PageModificationDocteur.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+		hub.launchPageMenu(BDD);
+		}
+	}
 }
