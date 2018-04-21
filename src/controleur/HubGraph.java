@@ -47,7 +47,7 @@ public class HubGraph extends JFrame implements ActionListener
          
          menu.getRecherchePatient().addActionListener(this);
          menu.getRechercheService().addActionListener(this);
-         menu.getRechercheChambre().addActionListener(this);
+         
         
          menu.getStatistique().addActionListener(this);
          menu.getDeconnexion().addActionListener(this);
@@ -127,11 +127,11 @@ public class HubGraph extends JFrame implements ActionListener
     
     public void launchPageRechercheMalade()
     {
-        String tabArgument [] = {"Nom", "Prenom", "Numéro du patient", "Téléphone", "Adresse", "Mutuelle", "Date d'arrivée","Numéro Docteur en charge", "Numéro de chambre","Lit"};
-        String select [] = {"nom_malade", "prenom_malade", "numero_m", "tel_malade", "adresse_malade", "mutuelle", "date_arrive", "no_docteur", "no_chambre", "lit"};
+        String tabArgument [] = {"Nom", "Prenom", "Numéro du patient", "Téléphone", "Adresse", "Mutuelle", "Date d'arrivée"};
+        String select [] = {"nom_malade", "prenom_malade", "numero_m", "tel_malade", "adresse_malade", "mutuelle", "date_arrive"};
 		
-        String f="FROM malade, hospitalisation, soigne ";
-        String w="WHERE malade.numero_m=hospitalisation.no_malade AND soigne.no_malade=malade.numero_m";
+        String f="FROM malade ";
+        String w="";
         
          this.setJMenuBar(menu);
          this.setContentPane(new PageRecherche(BDD,tabArgument,select, f,w ));
@@ -155,20 +155,7 @@ public class HubGraph extends JFrame implements ActionListener
          this.setVisible(true);
     }
     
-    public void launchPageRechercheChambre()
-    {
-        String tabArgument [] = {"Numéro de chambre", "Surveillant", "Nombre de lit", "Nom du service","Batiment"};
-        String select [] = {"no_chambre", "surveillant", "nb_lits", "nom_service","batiment"};
-		
-        String f="FROM service,chambre "; 
-        String w="WHERE service.code=chambre.code_service ";
-        
-         this.setJMenuBar(menu);
-         this.setContentPane(new PageRecherche(BDD,tabArgument,select, f,w ));
-         this.setSize(1000, 650);
-         this.setLocationRelativeTo(null);
-         this.setVisible(true);
-    }
+    
     
     public void launchPageAjoutPatient()
     {
@@ -286,8 +273,7 @@ public class HubGraph extends JFrame implements ActionListener
              launchPageRechercheMalade();
         if(source == menu.getRechercheService())
              launchPageRechercheService();
-        if(source == menu.getRechercheChambre())
-             launchPageRechercheChambre();
+        
         
         if(source == menu.getStatistique())
              launchPageStatistique();
