@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import modele.Docteur;
+import modele.Infirmier;
 
 import vue.*;
 
@@ -221,6 +222,19 @@ public class HubGraph extends JFrame implements ActionListener
          this.setLocationRelativeTo(null);
          this.setVisible(true); 
 	  }
+	  
+	  public void launchPageModificationInfirmier(Infirmier inf)
+	  {
+		 this.setJMenuBar(menu);
+		try {
+			this.setContentPane(new PageModificationInfirmier(inf, BDD, this));
+		} catch (ParseException ex) {
+			Logger.getLogger(HubGraph.class.getName()).log(Level.SEVERE, null, ex);
+		}
+         this.setSize(1000, 650);
+         this.setLocationRelativeTo(null);
+         this.setVisible(true); 
+	  }
       
       public void launchPageSuppression()
     {
@@ -237,7 +251,6 @@ public class HubGraph extends JFrame implements ActionListener
     
     public void launchPageStatistique()
     {
-         //this.setVisible(false);
          this.setJMenuBar(menu);
          this.setContentPane(new PageStatistique(BDD));
          this.setSize(1000, 650);
