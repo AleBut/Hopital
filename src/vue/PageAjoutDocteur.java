@@ -360,7 +360,7 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
                     }
 
                 } catch (SQLException ex) {
-                    Logger.getLogger(PageAjout.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(PageAjoutDocteur.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 hub.launchPageMenu(BDD);
             }

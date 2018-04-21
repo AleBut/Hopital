@@ -34,9 +34,10 @@ public class HubGraph extends JFrame implements ActionListener
          
          menu.getInsertionDocteur().addActionListener(this);
 		 menu.getInsertionInfirmier().addActionListener(this);
-		 menu.getInsertionMalade().addActionListener(this);
+		 menu.getInsertionPatient().addActionListener(this);
 		 
-         menu.getModification().addActionListener(this);
+         menu.getModification().addActionListener(this);;
+		 
          menu.getSuppression().addActionListener(this);
         
          menu.getRecherchePersonnelEmploye().addActionListener(this);
@@ -168,11 +169,11 @@ public class HubGraph extends JFrame implements ActionListener
          this.setVisible(true);
     }
     
-    public void launchPageAjout()
+    public void launchPageAjoutPatient()
     {
          this.setJMenuBar(menu);
          try {
-			this.setContentPane(new PageAjout(this,BDD));
+			this.setContentPane(new PageAjoutPatient(this,BDD));
 		 } catch (ParseException ex) {
            Logger.getLogger(HubGraph.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -252,34 +253,31 @@ public class HubGraph extends JFrame implements ActionListener
             launchPageAjoutDoc();
         if(source == menu.getInsertionInfirmier())
             launchPageAjoutInf();
-
-        if(source == menu.getInsertionMalade())
-            launchPageAjout();
+        if(source == menu.getInsertionPatient())
+            launchPageAjoutPatient();
 		
         if(source == menu.getModification())
             launchPageModification();
+		
         if(source == menu.getSuppression())
             launchPageSuppression();
         
         if(source == menu.getRecherchePersonnelEmploye())
             launchPageRecherchePersonnelEmploye();
-        
         if(source == menu.getRecherchePersonnelDocteur())
             launchPageRecherchePersonnelDocteur();
-        
         if(source == menu.getRecherchePersonnelInfirmier())
             launchPageRecherchePersonnelInfirmiere();
-        
         if(source == menu.getRecherchePatient())
              launchPageRechercheMalade();
         if(source == menu.getRechercheService())
              launchPageRechercheService();
-        
         if(source == menu.getRechercheChambre())
              launchPageRechercheChambre();
         
         if(source == menu.getStatistique())
              launchPageStatistique();
+		
         if(source == menu.getDeconnexion())
              launchPageConnexion();
     }

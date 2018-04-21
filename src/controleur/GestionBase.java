@@ -106,13 +106,14 @@ public class GestionBase {
     public String afficherNuméro() {
         String max = null;
         int maxint = 0;
-        for (int i = 0; i < array.size(); i++) {
-            max=(array.get(i));
-           
+        for (int i = 0; i < array.size(); i++)
+		{
+            max = array.get(i).substring(0, array.get(i).length() - 1);
         }
         
-        array.clear();
+        this.effacerResultat();
        
+		
         return max;
     }
     

@@ -18,7 +18,7 @@ public class MenuBar extends JMenuBar
 {
     private JMenu maj;
         private JMenu insertion;
-			private JMenuItem malade;
+			private JMenuItem patient;
 			private JMenuItem docteur;
 			private JMenuItem infirmier;
         private JMenuItem modification;
@@ -29,7 +29,7 @@ public class MenuBar extends JMenuBar
             private JMenuItem employe;
             private JMenuItem docteur2;
             private JMenuItem infirmier2;
-        private JMenuItem patient;
+        private JMenuItem patient2;
         private JMenuItem service;
         private JMenuItem chambre;
     
@@ -43,7 +43,7 @@ public class MenuBar extends JMenuBar
             insertion = new JMenu("Insertion");
 				docteur = new JMenuItem("Docteur");
 				infirmier = new JMenuItem("Infirmier");
-				 malade = new JMenuItem("Malade");
+				patient = new JMenuItem("Patient");
             modification = new JMenuItem("Modification");
             suppression = new JMenuItem("Suppression");
          
@@ -52,7 +52,7 @@ public class MenuBar extends JMenuBar
                 employe = new JMenuItem("Employée");
                 docteur2 = new JMenuItem("Docteur");
                 infirmier2 = new JMenuItem("Infirmière");
-            patient = new JMenuItem("Patient");
+            patient2 = new JMenuItem("Patient");
             service = new JMenuItem("Service");
             chambre = new JMenuItem("Chambre");
         
@@ -69,7 +69,7 @@ public class MenuBar extends JMenuBar
 		insertion.add(docteur);
 		insertion.add(infirmier);
 		insertion.addSeparator();
-		insertion.add(malade);
+		insertion.add(patient);
 		
         maj.add(insertion);
         maj.addSeparator();
@@ -83,7 +83,7 @@ public class MenuBar extends JMenuBar
         
         recherche.add(personnel);
         recherche.addSeparator();
-        recherche.add(patient);
+        recherche.add(patient2);
         recherche.addSeparator();
         recherche.add(service);
         recherche.addSeparator();
@@ -101,7 +101,7 @@ public class MenuBar extends JMenuBar
 	 
 	 public JMenuItem getInsertionInfirmier() { return infirmier; }
 	 
-	 public JMenuItem getInsertionMalade() { return malade; }
+	 public JMenuItem getInsertionPatient() { return patient; }
 
      public JMenuItem getModification() { return modification; }
      
@@ -113,7 +113,7 @@ public class MenuBar extends JMenuBar
      
      public JMenuItem getRecherchePersonnelInfirmier() { return infirmier2; }
      
-     public JMenuItem getRecherchePatient() { return patient; }
+     public JMenuItem getRecherchePatient() { return patient2; }
      
      public JMenuItem getRechercheService() { return service; }
      

@@ -34,7 +34,7 @@ import modele.Malade;
  *
  * @author solene
  */
-public class PageAjout extends JPanel implements ActionListener {
+public class PageAjoutPatient extends JPanel implements ActionListener {
 
     // Lien vers le panneau gérant l'interface graphique
     private HubGraph hub;
@@ -84,7 +84,7 @@ public class PageAjout extends JPanel implements ActionListener {
 
     private String requeteajout;
 
-    public PageAjout(HubGraph _hub, GestionBase _BDD) throws ParseException {
+    public PageAjoutPatient(HubGraph _hub, GestionBase _BDD) throws ParseException {
         // Hub graphique
         hub = _hub;
 
@@ -336,7 +336,7 @@ public class PageAjout extends JPanel implements ActionListener {
                     JOptionPane.showMessageDialog(this, "Le patient a bien été ajouté.", "Formulaire valide", JOptionPane.INFORMATION_MESSAGE);
 
                 } catch (SQLException ex) {
-                    Logger.getLogger(PageAjout.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(PageAjoutPatient.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 hub.launchPageMenu(BDD);
 
