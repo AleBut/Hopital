@@ -86,7 +86,6 @@ public class HubGraph extends JFrame implements ActionListener
         String f="FROM employe ";
         String w="";
         
-         //this.setVisible(false);
          this.setJMenuBar(menu);
          this.setContentPane(new PageRecherche(BDD,tabArgument, select, f,w ));
          this.setSize(1000, 650);
@@ -102,7 +101,6 @@ public class HubGraph extends JFrame implements ActionListener
         String f="FROM employe, docteur ";
         String w="WHERE employe.numero_e=docteur.numero";
         
-         //this.setVisible(false);
          this.setJMenuBar(menu);
          this.setContentPane(new PageRecherche(BDD,tabArgument,select, f,w ));
          this.setSize(1000, 650);
@@ -118,7 +116,6 @@ public class HubGraph extends JFrame implements ActionListener
         String f="FROM employe, infirmier, service ";
         String w="WHERE employe.numero_e=infirmier.numero AND infirmier.code_service = service.code";
         
-         //this.setVisible(false);
          this.setJMenuBar(menu);
          this.setContentPane(new PageRecherche(BDD,tabArgument,select, f,w ));
          this.setSize(1000, 650);
@@ -134,7 +131,6 @@ public class HubGraph extends JFrame implements ActionListener
         String f="FROM malade, hospitalisation, soigne ";
         String w="WHERE malade.numero_m=hospitalisation.no_malade AND soigne.no_malade=malade.numero_m";
         
-         //this.setVisible(false);
          this.setJMenuBar(menu);
          this.setContentPane(new PageRecherche(BDD,tabArgument,select, f,w ));
          this.setSize(1000, 650);
@@ -150,7 +146,6 @@ public class HubGraph extends JFrame implements ActionListener
         String f="FROM service "; 
         String w="";
         
-         //this.setVisible(false);
          this.setJMenuBar(menu);
          this.setContentPane(new PageRecherche(BDD,tabArgument,select, f,w ));
          this.setSize(1000, 650);
@@ -166,7 +161,6 @@ public class HubGraph extends JFrame implements ActionListener
         String f="FROM service,chambre "; 
         String w="WHERE service.code=chambre.code_service ";
         
-         //this.setVisible(false);
          this.setJMenuBar(menu);
          this.setContentPane(new PageRecherche(BDD,tabArgument,select, f,w ));
          this.setSize(1000, 650);
@@ -176,7 +170,6 @@ public class HubGraph extends JFrame implements ActionListener
     
     public void launchPageAjout()
     {
-         //this.setVisible(false);
          this.setJMenuBar(menu);
          try {
 			this.setContentPane(new PageAjout(this,BDD));
@@ -190,7 +183,6 @@ public class HubGraph extends JFrame implements ActionListener
     
      public void launchPageAjoutDoc()
     {
-         //this.setVisible(false);
          this.setJMenuBar(menu);
          try {
 			this.setContentPane(new PageAjoutDocteur(this,BDD));
@@ -204,7 +196,6 @@ public class HubGraph extends JFrame implements ActionListener
      
       public void launchPageAjoutInf()
     {
-         //this.setVisible(false);
          this.setJMenuBar(menu);
          try {
 			this.setContentPane(new PageAjoutInfirmier(this,BDD));
@@ -215,10 +206,22 @@ public class HubGraph extends JFrame implements ActionListener
          this.setLocationRelativeTo(null);
          this.setVisible(true);
     }
+	  
+	  public void launchPageModification()
+	  {
+		 this.setJMenuBar(menu);
+         try {
+			this.setContentPane(new PageModification(this,BDD));
+		 } catch (ParseException ex) {
+           Logger.getLogger(HubGraph.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         this.setSize(1000, 650);
+         this.setLocationRelativeTo(null);
+         this.setVisible(true); 
+	  }
       
       public void launchPageSuppression()
     {
-         //this.setVisible(false);
          this.setJMenuBar(menu);
          try {
 			this.setContentPane(new PageSuppression(this,BDD));
@@ -254,7 +257,7 @@ public class HubGraph extends JFrame implements ActionListener
             launchPageAjout();
 		
         if(source == menu.getModification())
-            System.out.println("Modification");
+            launchPageModification();
         if(source == menu.getSuppression())
             launchPageSuppression();
         

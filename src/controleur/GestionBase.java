@@ -7,9 +7,7 @@ package controleur;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import vue.Erreur;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,8 +26,6 @@ public class GestionBase {
     private String login;
     private String mdp;
     
-    
-    private static Erreur err = new Erreur();
 
     /**
      *
@@ -44,32 +40,34 @@ public class GestionBase {
         mdp = _mdp;
     }
 
-    public void connexionLocale() throws InterruptedException {
+    public void connexionLocale(HubGraph hub) throws InterruptedException {
 
         System.out.println("Connexion à la base de donnée locale...");
 
-        try {
+        try
+		{
             co = new Connexion("Hopital", login, mdp);
-
-        } catch (SQLException | ClassNotFoundException ex) {
-            err.setVisible(true);
-            Thread.sleep(5 * 1000);
+        }
+		catch (SQLException | ClassNotFoundException ex)
+		{
             System.out.println("Erreur: " + ex);
-
+			JOptionPane.showMessageDialog(hub, "Une erreur de connexion est survenue, L'application va fermer. Veuillez réessayer", "Erreur", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
         System.out.println("Connecté!");
     }
 
-    public void connexionDistance() throws InterruptedException {
+    public void connexionDistance(HubGraph hub) throws InterruptedException {
         System.out.println("Connexion à la base de donnée distante...");
 
-        try {
+        try
+		{
             co = new Connexion(login, mdp);
-        } catch (SQLException |ClassNotFoundException ex) {
-            Thread.sleep(5 * 1000);
-            System.out.println("Erreur: " + ex);
-
+        }
+		catch (SQLException |ClassNotFoundException ex)
+		{
+			System.out.println("Erreur: " + ex);
+			JOptionPane.showMessageDialog(hub, "Une erreur de connexion est survenue, L'application va fermer. Veuillez réessayer", "Erreur", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
 		System.out.println("Connecté!");
