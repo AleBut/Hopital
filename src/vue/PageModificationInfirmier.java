@@ -112,7 +112,7 @@ public class PageModificationInfirmier extends JPanel implements ActionListener 
 		String tableService[] = {"REA", "CHG", "CAR"};
 		for(String serviceAssigne : tableService)
 		{
-			if( serviceAssigne != inf.getService() )
+			if( !serviceAssigne.equals(inf.getService()) )
 				service.addItem(serviceAssigne);
 		}
         
@@ -121,7 +121,7 @@ public class PageModificationInfirmier extends JPanel implements ActionListener 
         rotation= new JComboBox();
 		rotation.addItem(inf.getRotation());
 		
-		if(inf.getRotation() == "JOUR")
+		if("JOUR".equals(inf.getRotation()))
 			 rotation.addItem("NUIT");
 		else
 			 rotation.addItem("JOUR");
@@ -317,7 +317,7 @@ public class PageModificationInfirmier extends JPanel implements ActionListener 
 		if (source == bouton)
 		{
 			// Changement dans la table employe
-			if(nom.getText() != inf.getNom() || prénom.getText() != inf.getPrenom() || adresse.getText() != inf.getAdresse() || tel.getText() != inf.getTel())
+			if(!nom.getText().equals(inf.getNom()) || !prénom.getText().equals(inf.getPrenom()) || !adresse.getText().equals(inf.getAdresse()) || !tel.getText().equals(inf.getTel()))
 			{
 				try {
 					BDD.executerRequete("UPDATE employe SET nom_employe = '" + nom.getText() + "', prenom_employe = '" + prénom.getText() + "', adresse_employe = '" + adresse.getText() + "', telephone_employe = '" + tel.getText() + "' WHERE numero_e = " + inf.getNum() + ";");
@@ -327,15 +327,15 @@ public class PageModificationInfirmier extends JPanel implements ActionListener 
 			}
 			
 			// Changement dans la table infirmier
-			if(service.getSelectedItem() == inf.getService())
+			if(!((String) service.getSelectedItem()).equals(inf.getService()) || !((String) rotation.getSelectedItem()).equals(inf.getRotation()) || !sal.getText().equals(inf.getSalaire()) )
 			{
-				/*
 				try {
-					BDD.executerRequete("UPDATE docteur SET specialite = '" + (String) spécialité.getSelectedItem() + "' WHERE numero = " + doc.getNum() + ";");
+					BDD.executerRequete("UPDATE infirmier SET code_service = '" + (String) service.getSelectedItem() + "', rotation = '" + (String) rotation.getSelectedItem() + "', salaire = '" + sal.getText() + "' WHERE numero = " + inf.getNum() + ";");
 				} catch (SQLException ex) {
 					Logger.getLogger(PageModificationDocteur.class.getName()).log(Level.SEVERE, null, ex);
-				} */
+				} 
 			}
+			hub.launchPageMenu(BDD);
 		}
 	}
 }

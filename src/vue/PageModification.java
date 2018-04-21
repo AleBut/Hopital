@@ -360,6 +360,7 @@ public class PageModification extends JPanel implements ActionListener {
 						JOptionPane.showMessageDialog(this, "La personne n'existe pas.", "Introuvable", JOptionPane.WARNING_MESSAGE);
 					else
 					{
+						// Requête
 						BDD.rechercheInformation("SELECT nom_employe FROM employe WHERE numero_e = '" + nomID.getText() + "';");
 						String nom = BDD.afficherNuméro();
 						BDD.rechercheInformation("SELECT prenom_employe FROM employe WHERE numero_e = '" + nomID.getText() + "';");
@@ -376,21 +377,7 @@ public class PageModification extends JPanel implements ActionListener {
 						String salaire = BDD.afficherNuméro();
 						
 						// Requete
-						hub.launchPageModificationInfirmier(new Infirmier(Integer.parseInt(numero), nom, prenom, adresse, telephone, codeService, rotation, salaire));
-						
-						/*
-						int i_numéro
-						String i_nom
-						String i_prénom
-						String i_adresse
-						String i_telephone
-						String i_codeService
-						String i_rotation
-						String i_salaire
-						*/
-
-						// REQUETE
-						
+						hub.launchPageModificationInfirmier(new Infirmier(Integer.parseInt(numero), nom, prenom, adresse, telephone, codeService, rotation, salaire));						
 					}
 				}
 
@@ -412,6 +399,23 @@ public class PageModification extends JPanel implements ActionListener {
 						else
 						{
 							// REQUETE
+							BDD.rechercheInformation("SELECT nom_employe FROM employe WHERE numero_e = '" + numero + "';");
+							String nom = BDD.afficherNuméro();
+							BDD.rechercheInformation("SELECT prenom_employe FROM employe WHERE numero_e = '" + numero + "';");
+							String prenom = BDD.afficherNuméro();
+							BDD.rechercheInformation("SELECT adresse_employe FROM employe WHERE numero_e = '" + numero + "';");
+							String adresse = BDD.afficherNuméro();
+							BDD.rechercheInformation("SELECT telephone_employe FROM employe WHERE numero_e = '" + numero + "';");
+							String telephone = BDD.afficherNuméro();
+							BDD.rechercheInformation("SELECT code_service FROM infirmier WHERE numero = '" + numero + "';");
+							String codeService = BDD.afficherNuméro();
+							BDD.rechercheInformation("SELECT rotation FROM infirmier WHERE numero = '" + numero + "';");
+							String rotation = BDD.afficherNuméro();
+							BDD.rechercheInformation("SELECT salaire FROM infirmier WHERE numero = '" + numero + "';");
+							String salaire = BDD.afficherNuméro();
+
+							// Requete
+							hub.launchPageModificationInfirmier(new Infirmier(Integer.parseInt(numero), nom, prenom, adresse, telephone, codeService, rotation, salaire));
 							
 						}
                     }

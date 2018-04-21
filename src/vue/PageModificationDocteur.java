@@ -106,7 +106,7 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
         String tableService[] = {"REA", "CHG", "CAR"};
 		
 		// Si le docteur est directeur d'un service
-		if(doc.getDirecteurService() != "")
+		if(!"".equals(doc.getDirecteurService()))
 		{
 			directeur.setSelected(true);
 			service.addItem(doc.getDirecteurService());
@@ -114,7 +114,7 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
 		// On ajoute les services restants
 		for(String serviceDirige : tableService)
 		{
-			if( serviceDirige != doc.getDirecteurService() )
+			if( !serviceDirige.equals(doc.getDirecteurService()) )
 				service.addItem(serviceDirige);
 		}
 
@@ -126,7 +126,7 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
 		String tableSpecialite[] = {"Anesthesiste", "Cardiologue", "Generaliste", "Orthopediste", "Pneumologue", "Traumatologue", "Radiologue" };
 		for (String element : tableSpecialite)
 		{
-			if(element != doc.getSpécialité())
+			if(!element.equals(doc.getSpécialité()))
 				spécialité.addItem(element);
 		}
 
@@ -313,7 +313,7 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
 		if (source == bouton)
 		{
 			// Changement dans la table employe
-			if(nom.getText() != doc.getNom() || prénom.getText() != doc.getPrenom() || adresse.getText() != doc.getAdresse() || tel.getText() != doc.getTel())
+			if(!nom.getText().equals(doc.getNom()) || !prénom.getText().equals(doc.getPrenom()) || !adresse.getText().equals(doc.getAdresse()) || !tel.getText().equals(doc.getTel()))
 			{
 				try {
 					BDD.executerRequete("UPDATE employe SET nom_employe = '" + nom.getText() + "', prenom_employe = '" + prénom.getText() + "', adresse_employe = '" + adresse.getText() + "', telephone_employe = '" + tel.getText() + "' WHERE numero_e = " + doc.getNum() + ";");
@@ -324,7 +324,7 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
 			
 			// Changement dans la table service
 			// Si on supprime le poste de directeur
-			if(!directeur.isSelected() && doc.getDirecteurService() != "")
+			if(!directeur.isSelected() && !"".equals(doc.getDirecteurService()))
 			{
 				try {
 					BDD.executerRequete("UPDATE service SET directeur = '0' WHERE code = '" + doc.getDirecteurService() + "';");
@@ -333,7 +333,7 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
 				}
 			}
 			// Si on ajoute un poste de directeur
-			else if(directeur.isSelected() && doc.getDirecteurService() == "")
+			else if(directeur.isSelected() && "".equals(doc.getDirecteurService()))
 			{
 				try {
 					BDD.executerRequete("UPDATE service SET directeur = '" + doc.getNum() + "' WHERE code = '" + service.getSelectedItem() + "';");
@@ -342,7 +342,7 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
 				}
 			}
 			// Si on modifie le service qu'il dirige
-			else if( (directeur.isSelected()) && (service.getSelectedItem() != doc.getDirecteurService()) )
+			else if( (directeur.isSelected()) && ( !((String) service.getSelectedItem()).equals(doc.getDirecteurService())) )
 			{
 				try {
 					BDD.executerRequete("UPDATE service SET directeur = '0' WHERE code = '" + doc.getDirecteurService() + "';");
@@ -353,7 +353,7 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
 			}
 				
 			// Changement dans la table docteur
-			if(doc.getSpécialité() != (String) spécialité.getSelectedItem())
+			if(!doc.getSpécialité().equals((String) spécialité.getSelectedItem()))
 			{
 				try {
 					BDD.executerRequete("UPDATE docteur SET specialite = '" + (String) spécialité.getSelectedItem() + "' WHERE numero = " + doc.getNum() + ";");
