@@ -80,7 +80,7 @@ public class PageSuppression extends JPanel implements ActionListener {
         typePersonne = new JComboBox();
         typePersonne.addItem("Docteur");
         typePersonne.addItem("Infirmier");
-        typePersonne.addItem("Malade");
+        typePersonne.addItem("Patient");
 
         //Création des combobox
         info = new JComboBox();
@@ -222,7 +222,7 @@ public class PageSuppression extends JPanel implements ActionListener {
 
         if (source == bouton) {
 
-            if (typePersonne.getSelectedItem() == "Malade") {
+            if (typePersonne.getSelectedItem() == "Patient") {
                 if (info.getSelectedItem() == "ID") {
                     //test pour vérifier que tous les champs sont remplis
                     if (("".equals(nomID.getText())))

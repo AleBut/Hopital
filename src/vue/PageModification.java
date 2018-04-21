@@ -11,10 +11,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -24,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import modele.Docteur;
 import modele.Infirmier;
+import modele.Patient;
 
 /**
  *
@@ -82,7 +80,7 @@ public class PageModification extends JPanel implements ActionListener {
         typePersonne = new JComboBox();
         typePersonne.addItem("Docteur");
         typePersonne.addItem("Infirmier");
-        typePersonne.addItem("Malade");
+        typePersonne.addItem("Patient");
 
         //Création des combobox
         info = new JComboBox();
@@ -223,25 +221,38 @@ public class PageModification extends JPanel implements ActionListener {
 		Object source = e.getSource();
 
         if (source == bouton) {
-			/*
-            if (typePersonne.getSelectedItem() == "Malade")
+            if (typePersonne.getSelectedItem() == "Patient")
 			{
                 if (info.getSelectedItem() == "ID") {
                     //test pour vérifier que tous les champs sont remplis
                     if (("".equals(nomID.getText())))
                         JOptionPane.showMessageDialog(this, "Le champ ID est vide.", "Erreur", JOptionPane.WARNING_MESSAGE);
 
-                    BDD.rechercheInformation("SELECT (nom_malade) FROM malade WHERE numero_m = '" + nomID.getText() + "';");
-                    String nom = BDD.afficherNuméro();
-                    BDD.rechercheInformation("SELECT (prenom_malade) FROM malade WHERE numero_m = '" + nomID.getText() + "';");
-                    String prenom = BDD.afficherNuméro();
+                    BDD.rechercheInformation("SELECT numero_m FROM malade WHERE numero_m = '" + nomID.getText() + "';");
+					String numero = BDD.afficherNuméro();
 
-                    if ((nom == null) || (prenom == null))
+                    if (numero == null)
                         JOptionPane.showMessageDialog(this, "La personne n'existe pas.", "Introuvable", JOptionPane.WARNING_MESSAGE);
 					else
 					{
 						// REQUETE
-
+						BDD.rechercheInformation("SELECT nom_malade FROM malade WHERE numero_m = '" + nomID.getText() + "';");
+						String nom = BDD.afficherNuméro();
+						BDD.rechercheInformation("SELECT prenom_malade FROM malade WHERE numero_m = '" + nomID.getText() + "';");
+						String prenom = BDD.afficherNuméro();
+						BDD.rechercheInformation("SELECT adresse_malade FROM malade WHERE numero_m = '" + nomID.getText() + "';");
+						String adresse = BDD.afficherNuméro();
+						BDD.rechercheInformation("SELECT tel_malade FROM malade WHERE numero_m = '" + nomID.getText() + "';");
+						String telephone = BDD.afficherNuméro();
+						BDD.rechercheInformation("SELECT mutuelle FROM malade WHERE numero_m = '" + nomID.getText() + "';");
+						String mutuelle = BDD.afficherNuméro();
+						BDD.rechercheInformation("SELECT date_arrive FROM malade WHERE numero_m = '" + nomID.getText() + "';");
+						String date = BDD.afficherNuméro();
+						BDD.rechercheInformation("SELECT code_service FROM hospitalisation WHERE no_malade = '" + nomID.getText() + "';");
+						String service = BDD.afficherNuméro();
+						
+						// Requete
+						hub.launchPageModificationPatient(new Patient(Integer.parseInt(numero), nom, prenom, adresse, telephone, mutuelle, date, service));
                     }
 
                 }
@@ -253,18 +264,34 @@ public class PageModification extends JPanel implements ActionListener {
                     else
 					{
                         BDD.rechercheInformation("SELECT numero_m FROM malade WHERE nom_malade = '" + nomID.getText() + "' AND prenom_malade = '" + prénom.getText() + "';");
-                        String nom = BDD.afficherNuméro();
+                        String numero = BDD.afficherNuméro();
 						
-                        if (nom == null)
+                        if (numero == null)
                             JOptionPane.showMessageDialog(this, "La personne n'existe pas.", "Introuvable", JOptionPane.WARNING_MESSAGE);
                         else
 						{
 							// Requete
-
+							BDD.rechercheInformation("SELECT nom_malade FROM malade WHERE numero_m = '" + numero + "';");
+						String nom = BDD.afficherNuméro();
+						BDD.rechercheInformation("SELECT prenom_malade FROM malade WHERE numero_m = '" + numero + "';");
+						String prenom = BDD.afficherNuméro();
+						BDD.rechercheInformation("SELECT adresse_malade FROM malade WHERE numero_m = '" + numero + "';");
+						String adresse = BDD.afficherNuméro();
+						BDD.rechercheInformation("SELECT tel_malade FROM malade WHERE numero_m = '" + numero + "';");
+						String telephone = BDD.afficherNuméro();
+						BDD.rechercheInformation("SELECT mutuelle FROM malade WHERE numero_m = '" + numero + "';");
+						String mutuelle = BDD.afficherNuméro();
+						BDD.rechercheInformation("SELECT date_arrive FROM malade WHERE numero_m = '" + numero + "';");
+						String date = BDD.afficherNuméro();
+						BDD.rechercheInformation("SELECT code_service FROM hospitalisation WHERE no_malade = '" + numero + "';");
+						String service = BDD.afficherNuméro();
+						
+						// Requete
+						hub.launchPageModificationPatient(new Patient(Integer.parseInt(numero), nom, prenom, adresse, telephone, mutuelle, date, service));
 						}	
                     }
                 }
-            } */
+            } 
 
 			if (typePersonne.getSelectedItem() == "Docteur")
 			{

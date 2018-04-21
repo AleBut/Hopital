@@ -11,7 +11,7 @@ package modele;
  *
  * @author Alex1
  */
-public class Malade {
+public class Patient {
     /**attributs*/
     private int numero;
     private String nom;
@@ -20,9 +20,10 @@ public class Malade {
     private String telephone;
     private String mutuelle;
     private String date;
+	private String service;
     
     /**constructeur de Malade*/
-    public Malade(int m_numéro, String m_nom, String m_prénom, String m_adresse, String m_telephone, String m_mutuelle, String m_date){
+    public Patient(int m_numéro, String m_nom, String m_prénom, String m_adresse, String m_telephone, String m_mutuelle, String m_date, String m_service){
         numero=m_numéro;
         nom=m_nom;
         prenom=m_prénom;
@@ -30,9 +31,21 @@ public class Malade {
         telephone=m_telephone;
         mutuelle=m_mutuelle;
         date=m_date;
-        
-        
+        service = m_service;
     }
+	
+	public Patient(int m_numéro, String m_nom, String m_prénom, String m_adresse, String m_telephone, String m_mutuelle, String m_date){
+        numero=m_numéro;
+        nom=m_nom;
+        prenom=m_prénom;
+        adresse=m_adresse;
+        telephone=m_telephone;
+        mutuelle=m_mutuelle;
+        date=m_date;
+        service = "";
+    }
+	
+	
     /**getter de num malade*/
     public int getNum(){
         return numero;
@@ -67,4 +80,9 @@ public class Malade {
     public String getDate(){
         return date;
     }
+	
+	/**getter du service du malade*/
+	public String getService(){
+		return service;
+	}
 }

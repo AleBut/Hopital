@@ -55,7 +55,7 @@ public class GraphiqueLineaire extends JPanel {
 		
 		ChartPanel pan = new ChartPanel(graphique);
         pan.setMouseWheelEnabled(false); // Permet de faire tourner le diagramme
-        pan.setPreferredSize(new Dimension(500, 295)); // Dimension
+        pan.setPreferredSize(new Dimension(490, 295)); // Dimension
         this.add(pan);
 	}
 	
