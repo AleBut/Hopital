@@ -27,18 +27,23 @@ import org.jfree.data.general.PieDataset;
 
 /**
  *
- * @author Alex1
+ * @author Alexs Butin
  */
 public class Camembert extends JPanel {
 	
 	// Base de donnée
 	GestionBase BDD;
 	
+	/**
+	 * Construis un diagramme dans un JPanel
+	 * @param titre Titre attribué au graphique
+	 * @param _BDD  Base de donnnée à partir de laquelle on récupère les informations
+	 */
     public Camembert(String titre, GestionBase _BDD) {
 		
 		BDD = _BDD;
 		
-		
+		// Variables
         boolean montrerLegendes = false; 
         boolean toolTips = true;
         boolean urls = false;
@@ -56,7 +61,11 @@ public class Camembert extends JPanel {
         pan.setBackground(Color.white); 
         this.add(pan);
     }
-
+	
+	/**
+	 * Récupère les données à partir de la base de donnée
+	 * @return Un ensemble de donnée exploitables par le graphisme
+	 */
     public PieDataset createDataset() {
         DefaultPieDataset dataset = new DefaultPieDataset();
 		
@@ -89,6 +98,7 @@ public class Camembert extends JPanel {
 			nombrePatients[i] = (nombrePatients[i] * 100) / (double) listeVilles.size();
 		}
 		
+		// Ajoute les données au dataset
 		for(int i=0; i<nomVille.size(); i++)
 		{
 			dataset.setValue(nomVille.get(i), nombrePatients[i]);
@@ -97,6 +107,10 @@ public class Camembert extends JPanel {
         return dataset;
     }
 	
+	/**
+	 * Récupère le nom des villes à partir des adresses des malades
+	 * @return Une liste de l'ensemble des villes
+	 */
 	private ArrayList<String> getVilleRequete()
 	{
 		BDD.rechercheInformation("SELECT adresse_malade FROM malade");
@@ -106,7 +120,7 @@ public class Camembert extends JPanel {
 		
 		int tailleVille;
 
-		
+		// On parcours l'ensemble des adresses
 		for(int i=0; i<requete.size(); i++)
 		{
 			tailleVille = 0;

@@ -7,6 +7,8 @@ package vue;
 
 import controleur.GestionBase;
 import controleur.HubGraph;
+import modele.Patient;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -24,14 +26,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
-import modele.Patient;
+
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 /**
  *
- * @author Alex1
+ * @author Alexis Butin
  */
 public class PageModificationPatient extends JPanel implements ActionListener {
 	// Patient
@@ -83,7 +85,13 @@ public class PageModificationPatient extends JPanel implements ActionListener {
     //bouton ajouter patient
     private JButton bouton;
 
-
+	/**
+	 * Crée un JPanel pour modifier un patient
+	 * @param _pat Objet patient contenant les informations du patient
+	 * @param _BDD Base de donnée 
+	 * @param _hub Hub graphique lançant les différentes pages
+	 * @throws ParseException Exceptions
+	 */
 	public PageModificationPatient(Patient _pat, GestionBase _BDD, HubGraph _hub) throws ParseException
 	{
 		// Patient
@@ -143,18 +151,21 @@ public class PageModificationPatient extends JPanel implements ActionListener {
 
         // Construction graphique de la fenetre dans le Jpanel container.
         constructionGraphique();
-
-        
          
+		
         this.setBackground(Color.white); // Définir la couleur de l'arrière plan
 
         this.add(container);
 	}
 	
+	/**
+	 * Construis graphiquement la page
+	 */
 	public void constructionGraphique() {
 		// Titre de bienvenue
         JLabel titre = new JLabel("Edition du formulaire : ");
         titre.setFont(new Font("Arial", Font.BOLD, 24)); // Attribuer la police au titre
+		
         //panel contenant le titre
         JPanel t = new JPanel();
         t.add(titre);
@@ -300,12 +311,16 @@ public class PageModificationPatient extends JPanel implements ActionListener {
         bouton.addActionListener(this);
     }
 	
-	
+	/**
+	 * Vérifie que les arguments entrés par l'utilisateurs sont valides
+	 * @param e L'action event si l'utilisateur clique sur le bouton de validation
+	 */
 	@Override
     public void actionPerformed(ActionEvent e)
 	{
         Object source = e.getSource();
 		
+		// Si l'utilisateur clique sur le bouton
 		if (source == bouton)
 		{
 			// Changement dans la table malade

@@ -7,6 +7,8 @@ package vue;
 
 import controleur.GestionBase;
 import controleur.HubGraph;
+import modele.Docteur;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -24,11 +26,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
-import modele.Docteur;
 
 /**
  *
- * @author Alex1
+ * @author Alexis Butin
  */
 public class PageModificationDocteur extends JPanel implements ActionListener{
 	// Docteur
@@ -59,7 +60,7 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
     private JComboBox service;
     private JComboBox spécialité;
    
-   
+   // CheckBox
     private JCheckBox directeur;
 
     //JTextField
@@ -74,6 +75,13 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
     // Chargement de l'image
     private JLabel image;
 	
+	/**
+	 * Crée un JPanel pour modifier un docteur
+	 * @param _doc Objet docteur contenant les informations du docteur
+	 * @param _BDD Base de donnée 
+	 * @param _hub Hub graphique lançant les différentes pages
+	 * @throws ParseException Exceptions
+	 */
 	public PageModificationDocteur(Docteur _doc, GestionBase _BDD, HubGraph _hub) throws ParseException
 	{
 		//nouvel objet docteur
@@ -153,6 +161,9 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
         this.add(container);
 	}
 	
+	/**
+	 * Construis graphiquement la page
+	 */
 	public void constructionGraphique() {
         // Titre de bienvenue
         JLabel titre = new JLabel("Modification Docteur : ");
@@ -306,10 +317,15 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
 
     }
 	
+	/**
+	 * Vérifie que les arguments entrés par l'utilisateurs sont valides
+	 * @param e L'action event si l'utilisateur clique sur le bouton de validation
+	 */
 	@Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 		
+		// Si l'utilisateur clique sur le bouton Modifier
 		if (source == bouton)
 		{
 			// Changement dans la table employe
@@ -323,7 +339,7 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
 			}
 			
 			// Changement dans la table service
-			// Si on supprime le poste de directeur
+				// Si on supprime le poste de directeur du docteur
 			if(!directeur.isSelected() && !"".equals(doc.getDirecteurService()))
 			{
 				try {
@@ -332,7 +348,7 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
 					Logger.getLogger(PageModificationDocteur.class.getName()).log(Level.SEVERE, null, ex);
 				}
 			}
-			// Si on ajoute un poste de directeur
+				// Si on ajoute un poste de directeur au docteur
 			else if(directeur.isSelected() && "".equals(doc.getDirecteurService()))
 			{
 				try {
@@ -341,7 +357,7 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
 					Logger.getLogger(PageModificationDocteur.class.getName()).log(Level.SEVERE, null, ex);
 				}
 			}
-			// Si on modifie le service qu'il dirige
+				// Si on modifie le service que le docteur dirige
 			else if( (directeur.isSelected()) && ( !((String) service.getSelectedItem()).equals(doc.getDirecteurService())) )
 			{
 				try {
@@ -361,7 +377,7 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
 					Logger.getLogger(PageModificationDocteur.class.getName()).log(Level.SEVERE, null, ex);
 				}
 			}
-		hub.launchPageMenu(BDD);
+		hub.launchPageMenu(BDD); // On lance le menu
 		}
 	}
 }

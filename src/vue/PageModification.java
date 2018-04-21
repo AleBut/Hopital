@@ -7,6 +7,10 @@ package vue;
 
 import controleur.GestionBase;
 import controleur.HubGraph;
+import modele.Docteur;
+import modele.Infirmier;
+import modele.Patient;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -19,13 +23,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import modele.Docteur;
-import modele.Infirmier;
-import modele.Patient;
+
 
 /**
  *
- * @author Alex1
+ * @author Alexis Butin
  */
 public class PageModification extends JPanel implements ActionListener {
 
@@ -58,7 +60,13 @@ public class PageModification extends JPanel implements ActionListener {
 
     // Chargement de l'image
     private JLabel image;
-
+		
+	/**
+	 * Crée un JPanel pour modifier des éléments
+	 * @param _hub Le HubGraphique qui sélectionne quelle page afficher
+	 * @param _BDD La base de donnée
+	 * @throws ParseException Exceptions
+	 */
     public PageModification(HubGraph _hub, GestionBase _BDD) throws ParseException {
         // Hub graphique
         hub = _hub;
@@ -105,7 +113,10 @@ public class PageModification extends JPanel implements ActionListener {
         this.add(container);
 
     }
-
+	
+	/**
+	 * Construis la page graphiquement
+	 */
     private void constructionGraphique() {
         // Titre de bienvenue
         JLabel titre = new JLabel("Gestionnaire de modification : ");
@@ -215,14 +226,22 @@ public class PageModification extends JPanel implements ActionListener {
 
     }
 	
+	/**
+	 * Vérifie que les arguments entrés par l'utilisateurs sont valides
+	 * @param e L'action event si l'utilisateur clique sur le bouton de validation
+	 */
 	@Override
     public void actionPerformed(ActionEvent e)
 	{
 		Object source = e.getSource();
-
-        if (source == bouton) {
+		
+		// Si l'utilisateur a apppuyé sur le bouton de validation
+        if (source == bouton)
+		{
+			// Si l'utilisateur veut modifier un patient
             if (typePersonne.getSelectedItem() == "Patient")
 			{
+				// Si l'utilisateur effectue la recherche par l'ID du patient
                 if (info.getSelectedItem() == "ID") {
                     //test pour vérifier que tous les champs sont remplis
                     if (("".equals(nomID.getText())))
@@ -256,7 +275,7 @@ public class PageModification extends JPanel implements ActionListener {
                     }
 
                 }
-
+				// Si l'utilisateur effectue la recherche par le nom/prénom du patient
                 if (info.getSelectedItem() == "Nom Prénom") {
                     //test pour vérifier que tous les champs sont remplis
                     if (("".equals(nomID.getText())) || ("".equals(prénom.getText())))
@@ -292,9 +311,11 @@ public class PageModification extends JPanel implements ActionListener {
                     }
                 }
             } 
-
-			if (typePersonne.getSelectedItem() == "Docteur")
+			
+			// Si l'utilisateur veut modifier un docteur
+			else if (typePersonne.getSelectedItem() == "Docteur")
 			{
+				// Si l'utilisateur effectue la recherche par l'ID du docteur
 				if (info.getSelectedItem() == "ID")
 				{
 					//test pour vérifier que tous les champs sont remplis
@@ -329,7 +350,7 @@ public class PageModification extends JPanel implements ActionListener {
 						hub.launchPageModificationDocteur(new Docteur(Integer.parseInt(numero), nom,  prenom, adresse, telephone, specialite, directeurService));
 					}
 				}
-				
+				// Si l'utilisateur effectue la recherche par le nom/prénom du docteur
 				if (info.getSelectedItem() == "Nom Prénom")
 				{
 					//test pour vérifier que tous les champs sont remplis
@@ -372,8 +393,10 @@ public class PageModification extends JPanel implements ActionListener {
 				} 
 			}
 			
-			if (typePersonne.getSelectedItem() == "Infirmier")
+			// Si l'utilisateur veut modifier un infirmier 
+			else if (typePersonne.getSelectedItem() == "Infirmier")
 			{
+				// Si l'utilisateur effectue la recherche par l'ID de l'infirmier
 				if (info.getSelectedItem() == "ID")
 				{
 					//test pour vérifier que tous les champs sont remplis
@@ -407,7 +430,7 @@ public class PageModification extends JPanel implements ActionListener {
 						hub.launchPageModificationInfirmier(new Infirmier(Integer.parseInt(numero), nom, prenom, adresse, telephone, codeService, rotation, salaire));						
 					}
 				}
-
+				// Si l'utilisateur effectue la recherche par le nom/prénom de l'infirmier
 				if (info.getSelectedItem() == "Nom Prénom")
 				{
 					//test pour vérifier que tous les champs sont remplis

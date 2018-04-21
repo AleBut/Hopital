@@ -6,19 +6,21 @@
 package vue;
 
 import controleur.GestionBase;
-import java.awt.Color;
-import java.awt.GridLayout;
-import javax.swing.Box;
+
 import javax.swing.JPanel;
 
 /**
  *
- * @author Alex1
+ * @author Alexis Butin
  */
 public class PageStatistique extends JPanel {    
     // Connexion vers la base de donnée
     private GestionBase BDD;
-
+	
+	/**
+	 * Crée un JPanel pour afficher le reporting
+	 * @param _BDD Base de donnée
+	 */
     public PageStatistique(GestionBase _BDD)
     {   
         // Base de donnée
@@ -28,9 +30,11 @@ public class PageStatistique extends JPanel {
         constructionGraphique();
     }
     
+	/**
+	 * Construis graphiquement la page
+	 */
      private void constructionGraphique()
     {
-        //this.setBackground(Color.gray); // Définir la couleur de l'arrière plan
         this.setLayout(null);
 		
 		JPanel camembert = new Camembert("Origine des patients", BDD);
@@ -44,7 +48,5 @@ public class PageStatistique extends JPanel {
 		this.add(camembert);
 		this.add(graphique);
 		this.add(diagramme);
-		
-        
     }
 }

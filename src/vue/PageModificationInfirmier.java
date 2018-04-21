@@ -7,6 +7,8 @@ package vue;
 
 import controleur.GestionBase;
 import controleur.HubGraph;
+import modele.Infirmier;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -23,11 +25,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
-import modele.Infirmier;
 
 /**
  *
- * @author Alex1
+ * @author Alexis Butin
  */
 public class PageModificationInfirmier extends JPanel implements ActionListener {
 	// Infirmier
@@ -78,7 +79,14 @@ public class PageModificationInfirmier extends JPanel implements ActionListener 
 
     //bouton ajouter un employé
     private JButton bouton;
-
+	
+	/**
+	 * Crée un JPanel pour modifier un infirmier
+	 * @param _inf Objet infirmier contenant les informations de l'infirmier
+	 * @param _BDD Base de donnée 
+	 * @param _hub Hub graphique lançant les différentes pages
+	 * @throws ParseException Exceptions
+	 */
 	public PageModificationInfirmier(Infirmier _inf, GestionBase _BDD, HubGraph _hub) throws ParseException
 	{
 		// Infirmier
@@ -153,6 +161,9 @@ public class PageModificationInfirmier extends JPanel implements ActionListener 
         this.add(container);
 	}
 	
+	/**
+	 * Construis graphiquement la page
+	 */
 	public void constructionGraphique() {
         // Titre de bienvenue
         JLabel titre = new JLabel("Modification Infirmier : ");
@@ -309,11 +320,15 @@ public class PageModificationInfirmier extends JPanel implements ActionListener 
         bouton.addActionListener(this);
     }
 	
-	
+	/**
+	 * Vérifie que les arguments entrés par l'utilisateurs sont valides
+	 * @param e L'action event si l'utilisateur clique sur le bouton de validation
+	 */
 	@Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 		
+		// Si l'utilisateur clique sur le bouton Modifier
 		if (source == bouton)
 		{
 			// Changement dans la table employe
@@ -335,7 +350,7 @@ public class PageModificationInfirmier extends JPanel implements ActionListener 
 					Logger.getLogger(PageModificationDocteur.class.getName()).log(Level.SEVERE, null, ex);
 				} 
 			}
-			hub.launchPageMenu(BDD);
+			hub.launchPageMenu(BDD); // On lance le menu
 		}
 	}
 }

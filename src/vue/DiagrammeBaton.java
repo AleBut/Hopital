@@ -18,17 +18,23 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
- * @author Alex1
+ * @author Alexis Butin
  */
 public class DiagrammeBaton extends JPanel {
 	
 	// Base de donnée
 	GestionBase BDD;
 	
+	/**
+	 * Construis un diagramme dans un JPanel
+	 * @param titre Titre attribué au graphique
+	 * @param _BDD  Base de donnnée à partir de laquelle on récupère les informations
+	 */
     public DiagrammeBaton(String titre, GestionBase _BDD) {
 		
 		BDD = _BDD;
         
+		// Variables
         PlotOrientation orientation = PlotOrientation.VERTICAL; 
         boolean montrerLegendes = true; 
         boolean toolTips = true;
@@ -44,7 +50,11 @@ public class DiagrammeBaton extends JPanel {
         pan.setPreferredSize(new Dimension(490, 295)); // Dimension
         this.add(pan);
     }
-
+	
+	/**
+	 * Récupère les données à partir de la base de donnée
+	 * @return Un ensemble de donnée exploitables par le graphisme
+	 */
     private CategoryDataset createDataset() {
       String REA = "Reanimation et Traumatologie";        
       String CHG = "Chirurgie generale";        
@@ -72,6 +82,12 @@ public class DiagrammeBaton extends JPanel {
       return dataset; 
     }
 	
+	/**
+	 * Retourne le nombre d'élément d'une recherche SQL
+	 * @param table Table sélectionnée dans la recherche
+	 * @param service Le code du service hospitalier désiré
+	 * @return Le nombre de patients dans un service
+	 */
 	private int nombreSQL(String table, String service)
 	{
 		BDD.rechercheInformation("SELECT * FROM " + table + " WHERE code_service = '" + service + "'");

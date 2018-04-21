@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author A
+ * @author Alexis Butin
  */
 public class GestionBase {
     // Réponse du serveur sous forme d'un tableau de string
@@ -28,18 +28,20 @@ public class GestionBase {
     
 
     /**
-     *
-     */
+	 * Gère la base de donnée
+	 * @param _login Identifiant de la base de donnée
+	 * @param _mdp  Mot de passe de la base de donnée
+	 */
     public GestionBase(String _login, String _mdp) {
         login = _login;
         mdp = _mdp;
     }
-    
-    public GestionBase(String _login, String _mdp, String _mdpSQL) {
-        login = _login;
-        mdp = _mdp;
-    }
 
+	/**
+	 * Effectue une connexion locale
+	 * @param hub HubGraphique utilisé pour le message d'erreur
+	 * @throws InterruptedException Interruption
+	 */
     public void connexionLocale(HubGraph hub) throws InterruptedException {
 
         System.out.println("Connexion à la base de donnée locale...");
@@ -56,7 +58,12 @@ public class GestionBase {
         }
         System.out.println("Connecté!");
     }
-
+	
+	/**
+	 * Effectue une connexion distante
+	 * @param hub HubGraphique utilisé pour le message d'erreur
+	 * @throws InterruptedException Interruption
+	 */
     public void connexionDistance(HubGraph hub) throws InterruptedException {
         System.out.println("Connexion à la base de donnée distante...");
 
@@ -74,17 +81,21 @@ public class GestionBase {
     }
 
 
-
-    public boolean rechercheInformation(String command) {
+	/**
+	 * Recherche une information
+	 * @param command Requete SQL
+	 */
+    public void rechercheInformation(String command) {
         try {
             array = co.remplirChampsRequete(command);
         } catch (SQLException ex) {
             System.out.println("Erreur rechercheInformation(): " + ex);
-            return false;
         }
-        return true;
     }
-
+	
+	/**
+	 * Affiche les informations de la requête puis les efface (debugging)
+	 */
     public void afficherInformations() {
         for (int i = 0; i < array.size(); i++) {
             System.out.print(array.get(i));
@@ -93,16 +104,24 @@ public class GestionBase {
         array.clear();
     }
 	
+	/**
+	 * Efface les résultats
+	 */
 	public void effacerResultat()
 	{
 		array.clear();
 	}
 	
+	/**
+	 * 
+	 * @return Retourne le tableau des résultats de la requête SQL
+	 */
 	public ArrayList<String> getArray()
 	{
 		return array;
 	}
     
+	
     public String afficherNuméro() {
         String max = null;
         int maxint = 0;
@@ -117,10 +136,19 @@ public class GestionBase {
         return max;
     }
     
+	/**
+	 * 
+	 * @return Retourne l'identifiant
+	 */
     public String getLogin() {
         return login;
     }
     
+	/**
+	 * Execute une requête SQL
+	 * @param requeteMaj
+	 * @throws SQLException 
+	 */
     public void executerRequete(String requeteMaj) throws SQLException
 	{
 		co.executeUpdate(requeteMaj);   

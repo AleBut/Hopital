@@ -12,7 +12,7 @@ import javax.swing.JMenuItem;
 
 /**
  *
- * @author Alex1
+ * @author Alexis Butin
  */
 public class MenuBar extends JMenuBar
 {
@@ -37,6 +37,10 @@ public class MenuBar extends JMenuBar
     
     private JMenuItem deconnexion;
     
+	
+	/**
+	 * Construis le menu graphique et les différentes interactions entre les modules
+	 */
     public MenuBar()
     {   
          maj = new JMenu("Màj des données");
@@ -64,6 +68,9 @@ public class MenuBar extends JMenuBar
          constructionGraphique();
     }
     
+	/**
+	 * Construis le menu graphique
+	 */
      private void constructionGraphique()
     {
 		insertion.add(docteur);
@@ -116,7 +123,6 @@ public class MenuBar extends JMenuBar
      
      public JMenuItem getRechercheService() { return service; }
      
-
      public JMenuItem getStatistique() { return statistique; }
      
      public JMenuItem getDeconnexion() { return deconnexion; }

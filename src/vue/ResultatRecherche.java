@@ -43,8 +43,10 @@ public class ResultatRecherche extends JPanel {
 		// Attribue l'espace de chaque colonne
 		for(int i=0; i<entete.length; i++)
 		{
-			if(entete[i] == "Adresse")
+			if("Adresse".equals(entete[i]))
 				tableau.getColumnModel().getColumn(i).setPreferredWidth(250);
+			else if("Nom du service".equals(entete[i]))
+				tableau.getColumnModel().getColumn(i).setPreferredWidth(180);
 			else
 				tableau.getColumnModel().getColumn(i).setPreferredWidth(100);
 		}
