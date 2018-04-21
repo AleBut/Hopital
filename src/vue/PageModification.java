@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import modele.Docteur;
+import modele.Infirmier;
 
 /**
  *
@@ -343,7 +344,7 @@ public class PageModification extends JPanel implements ActionListener {
 					}
 				} 
 			}
-			/*
+			
 			if (typePersonne.getSelectedItem() == "Infirmier")
 			{
 				if (info.getSelectedItem() == "ID")
@@ -353,9 +354,9 @@ public class PageModification extends JPanel implements ActionListener {
 						JOptionPane.showMessageDialog(this, "Le champ ID est vide.", "Erreur", JOptionPane.WARNING_MESSAGE);
 
 					BDD.rechercheInformation("SELECT numero FROM infirmier WHERE numero = '" + nomID.getText() + "';");
-					String numero_i = BDD.afficherNuméro();
+					String numero = BDD.afficherNuméro();
 
-					if ((numero_i == null))
+					if ((numero == null))
 						JOptionPane.showMessageDialog(this, "La personne n'existe pas.", "Introuvable", JOptionPane.WARNING_MESSAGE);
 					else
 					{
@@ -363,6 +364,30 @@ public class PageModification extends JPanel implements ActionListener {
 						String nom = BDD.afficherNuméro();
 						BDD.rechercheInformation("SELECT prenom_employe FROM employe WHERE numero_e = '" + nomID.getText() + "';");
 						String prenom = BDD.afficherNuméro();
+						BDD.rechercheInformation("SELECT adresse_employe FROM employe WHERE numero_e = '" + nomID.getText() + "';");
+						String adresse = BDD.afficherNuméro();
+						BDD.rechercheInformation("SELECT telephone_employe FROM employe WHERE numero_e = '" + nomID.getText() + "';");
+						String telephone = BDD.afficherNuméro();
+						BDD.rechercheInformation("SELECT code_service FROM infirmier WHERE numero = '" + nomID.getText() + "';");
+						String codeService = BDD.afficherNuméro();
+						BDD.rechercheInformation("SELECT rotation FROM infirmier WHERE numero = '" + nomID.getText() + "';");
+						String rotation = BDD.afficherNuméro();
+						BDD.rechercheInformation("SELECT salaire FROM infirmier WHERE numero = '" + nomID.getText() + "';");
+						String salaire = BDD.afficherNuméro();
+						
+						// Requete
+						hub.launchPageModificationInfirmier(new Infirmier(Integer.parseInt(numero), nom, prenom, adresse, telephone, codeService, rotation, salaire));
+						
+						/*
+						int i_numéro
+						String i_nom
+						String i_prénom
+						String i_adresse
+						String i_telephone
+						String i_codeService
+						String i_rotation
+						String i_salaire
+						*/
 
 						// REQUETE
 						
@@ -391,7 +416,7 @@ public class PageModification extends JPanel implements ActionListener {
 						}
                     }
                 }
-            }*/
+            }
         } 
 	} 
 }

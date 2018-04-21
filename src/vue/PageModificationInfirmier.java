@@ -17,33 +17,33 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
-import modele.Docteur;
+import modele.Infirmier;
 
 /**
  *
  * @author Alex1
  */
-public class PageModificationDocteur extends JPanel implements ActionListener{
-	// Docteur
-	private Docteur doc;
+public class PageModificationInfirmier extends JPanel implements ActionListener {
+	// Infirmier
+	private Infirmier inf;
 	
+    // Lien vers le panneau gérant l'interface graphique
+    private HubGraph hub;
+
     // Connexion vers la base de donnée
     private GestionBase BDD;
 
-	// Lien vers le panneau gérant l'interface graphique
-    private HubGraph hub;
-	
     // container
     private JPanel container;
     
-    private Docteur docteur;
+   //Création objet infirmier
+    private Infirmier infirmier;
     
 
     //JLabel
@@ -52,38 +52,43 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
     private JLabel prén;
     private JLabel adr;
     private JLabel téléphone;
+    private JLabel salaire;
+    //commun à directeur et infirmier
     private JLabel serv;
-    private JLabel spé;
-   
-    //combobox
     private JComboBox service;
-    private JComboBox spécialité;
-   
-   
-    private JCheckBox directeur;
+
+    //infirmier:
+    private JLabel rot;
+    
+   // ButtonGroup utilisé pour gérer les boutons radios
+    private JComboBox rotation;
+    
+
 
     //JTextField
     private JTextField nom;
     private JTextField prénom;
     private JTextField adresse;
     private JFormattedTextField tel;
-    
-    //bouton Modifier l'employé
-    private JButton bouton;
-    
+    private JFormattedTextField sal;
+  
+  
     // Chargement de l'image
     private JLabel image;
-	
-	public PageModificationDocteur(Docteur _doc, GestionBase _BDD, HubGraph _hub) throws ParseException
+
+    //bouton ajouter un employé
+    private JButton bouton;
+
+	public PageModificationInfirmier(Infirmier _inf, GestionBase _BDD, HubGraph _hub) throws ParseException
 	{
-		//nouvel objet docteur
-		doc = _doc;
-		
-		// Base de donnée
-        BDD = _BDD;
+		// Infirmier
+		inf = _inf;
 		
 		// Hub graphique
-		hub = _hub;
+        hub = _hub;
+
+        // Base de donnée
+        BDD = _BDD;
 
         // Container
         container = new JPanel();
@@ -94,68 +99,63 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
         no = new JLabel("Nom :");
         prén = new JLabel("Prénom :");
         téléphone = new JLabel("Numéro de tel. :");
-        spé = new JLabel("Spécialité : ");
-        serv = new JLabel("du service : ");
+        rot = new JLabel("Rotation : ");
+        serv = new JLabel("Service : ");
+        salaire = new JLabel("Salaire : ");
         
-        //checkbox
-       directeur = new JCheckBox("Directeur");
-        
-       //combobox
-        //Création des combobox
+        //combobox
+        //Creéation des combobox
         service = new JComboBox();
-        String tableService[] = {"REA", "CHG", "CAR"};
+        service.addItem(inf.getService());
 		
-		// Si le docteur est directeur d'un service
-		if(doc.getDirecteurService() != "")
+		// On ajoute les services restants dans la combobox
+		String tableService[] = {"REA", "CHG", "CAR"};
+		for(String serviceAssigne : tableService)
 		{
-			directeur.setSelected(true);
-			service.addItem(doc.getDirecteurService());
+			if( serviceAssigne != inf.getService() )
+				service.addItem(serviceAssigne);
 		}
-		// On ajoute les services restants
-		for(String serviceDirige : tableService)
-		{
-			if( serviceDirige != doc.getDirecteurService() )
-				service.addItem(serviceDirige);
-		}
-
         
-        //Creéation des combobox, en affichant la spécialité du docteur actuel
-        spécialité = new JComboBox();
-		spécialité.addItem(doc.getSpécialité());
+        
+        //rotation
+        rotation= new JComboBox();
+		rotation.addItem(inf.getRotation());
 		
-		String tableSpecialite[] = {"Anesthesiste", "Cardiologue", "Generaliste", "Orthopediste", "Pneumologue", "Traumatologue", "Radiologue" };
-		for (String element : tableSpecialite)
-		{
-			if(element != doc.getSpécialité())
-				spécialité.addItem(element);
-		}
+		if(inf.getRotation() == "JOUR")
+			 rotation.addItem("NUIT");
+		else
+			 rotation.addItem("JOUR");
 
-        
-        //texfield
-        nom = new JTextField(doc.getNom());
-        prénom = new JTextField(doc.getPrenom());
-        adresse = new JTextField(doc.getAdresse());
+		
+        nom = new JTextField(inf.getNom());
+        prénom = new JTextField(inf.getPrenom());
+        adresse = new JTextField(inf.getAdresse());
 		
         MaskFormatter format = new MaskFormatter("## ## ## ## ##");
-        tel = new JFormattedTextField(format);
-		tel.setText(doc.getTel());
-        
+		tel = new JFormattedTextField(format);
+		tel.setText(inf.getTel());
+		
+        MaskFormatter format2 = new MaskFormatter("####.##");
+        sal = new JFormattedTextField(format2);
+		sal.setText(inf.getSalaire());
         
         //image
-        image = new JLabel(new ImageIcon("images\\medecin.png"));
+        image = new JLabel(new ImageIcon("images\\infirmier.png"));
         
         //bouton 
           bouton=new JButton("Modifier");
-		  
-		constructionGraphique();
+
+        constructionGraphique();
         
+
         this.setBackground(Color.white); // Définir la couleur de l'arrière plan
+
         this.add(container);
 	}
 	
 	public void constructionGraphique() {
         // Titre de bienvenue
-        JLabel titre = new JLabel("Modification Docteur : ");
+        JLabel titre = new JLabel("Modification Infirmier : ");
 
         titre.setFont(new Font("Arial", Font.BOLD, 24)); // Attribuer la police au titre
         //panel contenant le titre
@@ -164,10 +164,8 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
         this.setLayout(null);
         this.add(t);
         t.setVisible(true);
-        t.setBounds(300, 0, 410, 30);
+        t.setBounds(300, 0, 350, 30);
         t.setBackground(Color.white);
-
-        
 
         //label nom placé dans un panel     
         JPanel pan = new JPanel();
@@ -184,21 +182,20 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
         téléphone.setFont(new Font("Arial", Font.BOLD, 15));
         pan3.add(téléphone);
 
-        //label numéro de adresse placé dans un panel
+        //label adresse placé dans un panel
         JPanel pan4 = new JPanel();
         adr.setFont(new Font("Arial", Font.BOLD, 15));
         pan4.add(adr);
         
-        //label spécialité
+        //label rotation placé dans un panel
         JPanel pan5 = new JPanel();
-        spé.setFont(new Font("Arial", Font.BOLD, 15));
-        pan5.add(spé);
+        rot.setFont(new Font("Arial", Font.BOLD, 15));
+        pan5.add(rot);
         
-
-        //label checkbox directeur
+        //label radiobutton rotation placé dans un panel
         JPanel pan6 = new JPanel();
-        directeur.setBackground(Color.white);
-        pan6.add(directeur);
+        rotation.setBackground(Color.white);
+        pan6.add(rotation);
         
         //label texte service
         JPanel pan7 = new JPanel();
@@ -207,17 +204,18 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
         
         //label contenant la combobox
         JPanel pan8 = new JPanel();
+        service.setBackground(Color.white);
         pan8.add(service);
         
         //label contenant l'image
         JPanel pan9 = new JPanel();
         pan9.add(image);
-
-        //label contenant la combobox
-        JPanel pan10 = new JPanel();
-        spécialité.setBackground(Color.white);
-        pan10.add(spécialité);
         
+        //label adresse placé dans un panel
+        JPanel pan10 = new JPanel();
+        salaire.setFont(new Font("Arial", Font.BOLD, 15));
+        pan10.add(salaire);
+
         //Placer label nom
         this.add(pan);
         pan.setVisible(true);
@@ -239,33 +237,40 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
         //placer label adresse sur la page
         this.add(pan4);
         pan4.setVisible(true);
-        pan4.setBounds(120, 300, 70, 40);
+        pan4.setBounds(120, 300, 70, 30);
         pan4.setBackground(Color.white);
         
-        //placer label spécialité de tel sur la page
+        //placer label rotation texte sur la page
         this.add(pan5);
         pan5.setVisible(true);
-        pan5.setBounds(540, 300, 110, 40);
+        pan5.setBounds(570, 200, 70, 30);
         pan5.setBackground(Color.white);
+        
+        //placer combobox rotation
+        this.add(pan6);
+        pan6.setVisible(true);
+        pan6.setBounds(590, 196, 170, 30);
+        pan6.setBackground(Color.white);
         
         //placer label contenant texte service
         this.add(pan7);
         pan7.setVisible(true);
-        pan7.setBounds(700, 200, 120, 40);
+        pan7.setBounds(570, 300, 70, 40);
         pan7.setBackground(Color.white);
 
-        //placer label contenant checkbox
-        this.add(pan6);
-        pan6.setVisible(true);
-        pan6.setBounds(600, 198, 110, 40);
-        pan6.setBackground(Color.white);
         
-        //placer label contenant combobox service
+        //placer label contenant combobox
         this.add(pan8);
         pan8.setVisible(true);
-        pan8.setBounds(800, 195, 110, 40);
+        pan8.setBounds(620, 295, 110, 40);
         pan8.setBackground(Color.white);
         
+        //placer label contenant texte salaire
+        this.add(pan10);
+        pan10.setVisible(true);
+        pan10.setBounds(570, 400, 70, 40);
+        pan10.setBackground(Color.white);
+
         //placer champ texte nom
         this.add(nom);
         nom.setVisible(true);
@@ -286,25 +291,24 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
         adresse.setVisible(true);
         adresse.setBounds(200, 302, 250, 25);
         
-        //placer combobox spécialité
-        this.add(pan10);
-        pan10.setVisible(true);
-        pan10.setBounds(630, 295, 160, 40);
-        pan10.setBackground(Color.white);
+        //placer champ salaire
+        this.add(sal);
+        sal.setVisible(true);
+        sal.setBounds(660, 402, 100, 25);
         
         //placer label image
         this.add(pan9);
         pan9.setVisible(true);
-        pan9.setBounds(0, 330, 400, 400);
+        pan9.setBounds(0, 340, 400, 400);
         pan9.setBackground(Color.white);
         
-       //placer bouton
+        //placer bouton
         this.add(bouton);
         bouton.setVisible(true);
         bouton.setBounds(440, 450, 120, 80);
         bouton.addActionListener(this);
-
     }
+	
 	
 	@Override
     public void actionPerformed(ActionEvent e) {
@@ -313,55 +317,25 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
 		if (source == bouton)
 		{
 			// Changement dans la table employe
-			if(nom.getText() != doc.getNom() || prénom.getText() != doc.getPrenom() || adresse.getText() != doc.getAdresse() || tel.getText() != doc.getTel())
+			if(nom.getText() != inf.getNom() || prénom.getText() != inf.getPrenom() || adresse.getText() != inf.getAdresse() || tel.getText() != inf.getTel())
 			{
 				try {
-					BDD.executerRequete("UPDATE employe SET nom_employe = '" + nom.getText() + "', prenom_employe = '" + prénom.getText() + "', adresse_employe = '" + adresse.getText() + "', telephone_employe = '" + tel.getText() + "' WHERE numero_e = " + doc.getNum() + ";");
+					BDD.executerRequete("UPDATE employe SET nom_employe = '" + nom.getText() + "', prenom_employe = '" + prénom.getText() + "', adresse_employe = '" + adresse.getText() + "', telephone_employe = '" + tel.getText() + "' WHERE numero_e = " + inf.getNum() + ";");
 				} catch (SQLException ex) {
-					Logger.getLogger(PageModificationDocteur.class.getName()).log(Level.SEVERE, null, ex);
+					Logger.getLogger(PageModificationInfirmier.class.getName()).log(Level.SEVERE, null, ex);
 				}
 			}
 			
-			// Changement dans la table service
-			// Si on supprime le poste de directeur
-			if(!directeur.isSelected() && doc.getDirecteurService() != "")
+			// Changement dans la table infirmier
+			if(service.getSelectedItem() == inf.getService())
 			{
-				try {
-					BDD.executerRequete("UPDATE service SET directeur = '0' WHERE code = '" + doc.getDirecteurService() + "';");
-				} catch (SQLException ex) {
-					Logger.getLogger(PageModificationDocteur.class.getName()).log(Level.SEVERE, null, ex);
-				}
-			}
-			// Si on ajoute un poste de directeur
-			else if(directeur.isSelected() && doc.getDirecteurService() == "")
-			{
-				try {
-					BDD.executerRequete("UPDATE service SET directeur = '" + doc.getNum() + "' WHERE code = '" + service.getSelectedItem() + "';");
-				} catch (SQLException ex) {
-					Logger.getLogger(PageModificationDocteur.class.getName()).log(Level.SEVERE, null, ex);
-				}
-			}
-			// Si on modifie le service qu'il dirige
-			else if( (directeur.isSelected()) && (service.getSelectedItem() != doc.getDirecteurService()) )
-			{
-				try {
-					BDD.executerRequete("UPDATE service SET directeur = '0' WHERE code = '" + doc.getDirecteurService() + "';");
-					BDD.executerRequete("UPDATE service SET directeur = '" + doc.getNum() + "' WHERE code = '" + service.getSelectedItem() + "';");
-				} catch (SQLException ex) {
-					Logger.getLogger(PageModificationDocteur.class.getName()).log(Level.SEVERE, null, ex);
-				}
-			}
-				
-			// Changement dans la table docteur
-			if(doc.getSpécialité() != (String) spécialité.getSelectedItem())
-			{
+				/*
 				try {
 					BDD.executerRequete("UPDATE docteur SET specialite = '" + (String) spécialité.getSelectedItem() + "' WHERE numero = " + doc.getNum() + ";");
 				} catch (SQLException ex) {
 					Logger.getLogger(PageModificationDocteur.class.getName()).log(Level.SEVERE, null, ex);
-				}
+				} */
 			}
-		hub.launchPageMenu(BDD);
 		}
 	}
 }
