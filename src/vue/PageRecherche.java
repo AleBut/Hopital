@@ -118,7 +118,7 @@ public class PageRecherche extends JPanel {
 		miseEnForme.add(titre);
 		miseEnForme.add(new JLabel(" "));
                 
-                miseEnForme.add(all);
+		miseEnForme.add(all);
 		
         for(int i=0; i<tailleTab; i++)
 			miseEnForme.add(personnel[i]);
@@ -142,7 +142,7 @@ public class PageRecherche extends JPanel {
 
 		resultat.setBounds(200, 40, 800, 550); 
         
-        //this.setBackground(Color.white); // Définir la couleur de l'arriére plan
+        this.setBackground(Color.black); // Définir la couleur de l'arriére plan
         this.add(p1);
         this.add(p2);
 		this.add(resultat);   
@@ -150,13 +150,10 @@ public class PageRecherche extends JPanel {
      
     class ValiderRecherche implements ActionListener //Redéfinition de la méthode actionPerformed()
 	{
-        
-    
-        
 		@Override
 		public void actionPerformed(ActionEvent arg0)
 		{
-                    String testAdresse="";
+			String testAdresse="";
 			for(int i=0;i<tailleTab;i++)
 			{
 				if(personnel[i].isSelected())
@@ -168,34 +165,32 @@ public class PageRecherche extends JPanel {
 			if(!rechercheTexte.getText().equals(""))
 			{
 				for(int i=0;i<tailleTab;i++)
-				  {
-					  if(volet.getSelectedItem().toString()==personnel[i].getText())
-                                          {champ=sql[i];
-                                          testAdresse=personnel[i].getText();
-                                          }
-				  }
+				{
+					if(volet.getSelectedItem().toString()==personnel[i].getText())
+					{
+						champ=sql[i];
+						testAdresse=personnel[i].getText();
+					}
+				}
 			}
 
 			if(!champ.equals(""))
 			{   
-                            if(testAdresse=="Adresse")
-                            {
-                                if(where=="")
-					where="WHERE "+champ+" LIKE '%"+ rechercheTexte.getText()+"%'";
+				if(testAdresse=="Adresse")
+				{
+					if(where=="")
+						where="WHERE "+champ+" LIKE '%"+ rechercheTexte.getText()+"%'";
+					else
+						where=where+" AND "+champ+" LIKE '%"+ rechercheTexte.getText()+"%'";
+				}
 				else
-					where=where+" AND "+champ+" LIKE '%"+ rechercheTexte.getText()+"%'";
-                            
-                            }
-                            
-                            else
-                            {
-                            
-				if(where=="")
-					where="WHERE "+champ+" LIKE '"+ rechercheTexte.getText()+"'";
-				else
-					where=where+" AND "+champ+" LIKE '"+ rechercheTexte.getText()+"'";
+				{       
+					if(where=="")
+						where="WHERE "+champ+" LIKE '"+ rechercheTexte.getText()+"'";
+					else
+						where=where+" AND "+champ+" LIKE '"+ rechercheTexte.getText()+"'";
                                 
-                            }
+				}
 			}
 
 			if(select.charAt(select.length()-2)==',')
@@ -203,9 +198,7 @@ public class PageRecherche extends JPanel {
 
 			recherche = select + from + where;
 
-			System.out.println("la requete sql associé est : " + recherche);
-
-
+			//System.out.println("la requete sql associé est : " + recherche);
 
 			BDD.rechercheInformation(recherche);
 			
@@ -246,30 +239,26 @@ public class PageRecherche extends JPanel {
     
     class ToutCocher implements ActionListener
     {
-    @Override
+		@Override
 		public void actionPerformed(ActionEvent arg0)
 		{
-                    if(all.isSelected()==true)
-                    {
-                        for(int i=0;i<tailleTab;i++)
-                            { 
-                                personnel[i].setSelected(true);
-                                
-                            }
-                    
-                    }
-                    
-                    else
-                    {
-                        for(int i=0;i<tailleTab;i++)
-                            { 
-                                personnel[i].setSelected(false);
-                                
-                            }
-                    }
-                
-                
-                }
-    
+			if(all.isSelected()==true)
+			{
+				for(int i=0;i<tailleTab;i++)
+				{ 
+					personnel[i].setSelected(true);
+				}
+
+			}
+
+			else
+			{
+				for(int i=0;i<tailleTab;i++)
+				{ 
+					personnel[i].setSelected(false);
+
+				}
+			}
+		}
     }
 }

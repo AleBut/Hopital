@@ -15,7 +15,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -24,7 +23,6 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 import modele.Docteur;
@@ -308,10 +306,9 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
 
                 JOptionPane.showMessageDialog(this, "Un champ est vide.", "Erreur", JOptionPane.WARNING_MESSAGE);
 
-            } else {
-                
-                  
-                
+            }
+			else
+			{    
                 int numérofinal;
                 
                 String IDmax;
@@ -367,11 +364,6 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
                 }
                 hub.launchPageMenu(BDD);
             }
-
-        
-
-    }
+		}
     }
 }
-
-

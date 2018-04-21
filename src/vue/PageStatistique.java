@@ -8,8 +8,6 @@ package vue;
 import controleur.GestionBase;
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.JPanel;
 
@@ -17,7 +15,7 @@ import javax.swing.JPanel;
  *
  * @author Alex1
  */
-public class PageStatistique extends JPanel implements ActionListener {    
+public class PageStatistique extends JPanel {    
     // Connexion vers la base de donnée
     private GestionBase BDD;
 
@@ -43,9 +41,4 @@ public class PageStatistique extends JPanel implements ActionListener {
         this.add(new Camembert("Origine des patients", BDD));
         this.add(miseEnForme);
     }
-
-	@Override
-	public void actionPerformed(ActionEvent ae) {
-		
-	}
 }
