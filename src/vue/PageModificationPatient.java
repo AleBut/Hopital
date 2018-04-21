@@ -14,9 +14,6 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
-import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
-import net.sourceforge.jdatepicker.impl.UtilDateModel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -24,18 +21,22 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 import modele.Patient;
+import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
+import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
+import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 /**
  *
- * @author solene
+ * @author Alex1
  */
-public class PageAjoutPatient extends JPanel implements ActionListener {
-
+public class PageModificationPatient extends JPanel implements ActionListener {
+	// Patient
+	private Patient pat;
+	
     // Lien vers le panneau gérant l'interface graphique
     private HubGraph hub;
 
@@ -82,10 +83,13 @@ public class PageAjoutPatient extends JPanel implements ActionListener {
     //bouton ajouter patient
     private JButton bouton;
 
-    private String requeteajout;
 
-    public PageAjoutPatient(HubGraph _hub, GestionBase _BDD) throws ParseException {
-        // Hub graphique
+	public PageModificationPatient(Patient _pat, GestionBase _BDD, HubGraph _hub) throws ParseException
+	{
+		// Patient
+		pat = _pat;
+		
+		// Hub graphique
         hub = _hub;
 
         // Base de donnée
@@ -104,36 +108,38 @@ public class PageAjoutPatient extends JPanel implements ActionListener {
         dateArrivée= new JLabel("Date d'arrivée : ");
         
         //date
-        
-       
         UtilDateModel model=new UtilDateModel();
         datePanel=new JDatePanelImpl(model);
         datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		datePicker.getJFormattedTextField().setText(pat.getDate());
 
-        
-        
-        
-        
         //Création des combobox
         maladie = new JComboBox();
-        maladie.addItem("REA");
-        maladie.addItem("CHG");
-        maladie.addItem("CAR");
+		maladie.addItem(pat.getService());
+		
+        // On ajoute les services restants dans la combobox
+		String tableService[] = {"REA", "CHG", "CAR"};
+		for(String serviceAssigne : tableService)
+		{
+			if( !serviceAssigne.equals(pat.getService()) )
+				maladie.addItem(serviceAssigne);
+		}
 
         //création des zones de texte
-        nom = new JTextField("");
-        prénom = new JTextField("");
-        adresse = new JTextField("");
-        mutuelle = new JTextField("");
+        nom = new JTextField(pat.getNom());
+        prénom = new JTextField(pat.getPrenom());
+        adresse = new JTextField(pat.getAdresse());
+        mutuelle = new JTextField(pat.getMutuelle());
+		
         //Format téléphonique
         MaskFormatter format = new MaskFormatter("## ## ## ## ##");
-        
         tel = new JFormattedTextField(format);
+		tel.setText(pat.getTel());
       
         //image
         image = new JLabel(new ImageIcon("images\\form.png"));
         //Creéation du bouton
-        bouton = new JButton("Ajouter");
+        bouton = new JButton("Modifier");
 
         // Construction graphique de la fenetre dans le Jpanel container.
         constructionGraphique();
@@ -143,12 +149,11 @@ public class PageAjoutPatient extends JPanel implements ActionListener {
         this.setBackground(Color.white); // Définir la couleur de l'arrière plan
 
         this.add(container);
-
-    }
-
-    private void constructionGraphique() {
-        // Titre de bienvenue
-        JLabel titre = new JLabel("Formulaire : ");
+	}
+	
+	public void constructionGraphique() {
+		// Titre de bienvenue
+        JLabel titre = new JLabel("Edition du formulaire : ");
         titre.setFont(new Font("Arial", Font.BOLD, 24)); // Attribuer la police au titre
         //panel contenant le titre
         JPanel t = new JPanel();
@@ -157,7 +162,7 @@ public class PageAjoutPatient extends JPanel implements ActionListener {
 
         this.add(t);
         t.setVisible(true);
-        t.setBounds(420, 0, 180, 30);
+        t.setBounds(350, 0, 300, 30);
         t.setBackground(Color.white);
 
         //label nom placé dans un panel     
@@ -293,58 +298,36 @@ public class PageAjoutPatient extends JPanel implements ActionListener {
         bouton.setVisible(true);
         bouton.setBounds(440, 450, 120, 80);
         bouton.addActionListener(this);
-
     }
-    
-    
-
-    @Override
-    public void actionPerformed(ActionEvent ae) {
-        Object source = ae.getSource();
-
-        if (source == bouton) {
-
-            //test pour vérifier que tous les champs sont remplis
-            if (("".equals(nom.getText())) || ("".equals(prénom.getText())) || ("".equals(tel.getText())) || ("".equals(adresse.getText())) || ("".equals(mutuelle.getText()))) {
-
-                JOptionPane.showMessageDialog(this, "Un champ est vide.", "Erreur", JOptionPane.WARNING_MESSAGE);
-
-            } else {
-
-                String blindage;
-                blindage = "SELECT MAX(numero_m) FROM malade;";
-                BDD.rechercheInformation(blindage);
-                //BDD.afficherInformations();
-                String num = BDD.afficherNuméro();
-                num = num.substring(0, num.length() - 1);
-                
-                int numérofinal = Integer.parseInt(num)+1;
-                System.out.println(numérofinal);
-                String dateString = datePicker.getJFormattedTextField().getText();
-              
-                    patient=new Patient(numérofinal,nom.getText(),prénom.getText(),adresse.getText(),tel.getText(),mutuelle.getText(),dateString);
-                    
-                
-                
-                requeteajout = "INSERT INTO malade (numero_m, nom_malade, prenom_malade, adresse_malade, tel_malade, mutuelle, date_arrive) VALUES ('"+patient.getNum()+"', '" + patient.getNom() + "', '" + patient.getPrenom() + "', '" + patient.getAdresse() + "', '" + patient.getTel() + "', '" + patient.getMutuelle() + "','" + patient.getDate() + "');";
-                System.out.println(requeteajout);
-               
-                try {
-                    BDD.executerRequete(requeteajout);
-                    JOptionPane.showMessageDialog(this, "Le patient a bien été ajouté.", "Formulaire valide", JOptionPane.INFORMATION_MESSAGE);
-
-                } catch (SQLException ex) {
-                    Logger.getLogger(PageAjoutPatient.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                hub.launchPageMenu(BDD);
-
-            }
-
-        }
-
-    }
-    
-   
-
+	
+	
+	@Override
+    public void actionPerformed(ActionEvent e)
+	{
+        Object source = e.getSource();
+		
+		if (source == bouton)
+		{
+			// Changement dans la table malade
+			if(!nom.getText().equals(pat.getNom()) || !prénom.getText().equals(pat.getPrenom()) || !adresse.getText().equals(pat.getAdresse()) || !tel.getText().equals(pat.getTel()) || !mutuelle.getText().equals(pat.getMutuelle()) || !datePicker.getJFormattedTextField().getText().equals(pat.getDate()))
+			{
+				try {
+					BDD.executerRequete("UPDATE malade SET nom_malade = '" + nom.getText() + "', prenom_malade = '" + prénom.getText() + "', adresse_malade = '" + adresse.getText() + "', tel_malade = '" + tel.getText() + "', mutuelle = '" + (String) mutuelle.getText() + "', date_arrive = '" + datePicker.getJFormattedTextField().getText() + "' WHERE numero_m = " + pat.getNum() + ";");
+				} catch (SQLException ex) {
+					Logger.getLogger(PageModificationInfirmier.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+			// Changement dans la table hospitalisation
+			if(!((String)maladie.getSelectedItem()).equals(pat.getService()))
+			{
+				try {
+					BDD.executerRequete("UPDATE hospitalisation SET code_service = '" + (String) maladie.getSelectedItem() + "' WHERE no_malade = '" + pat.getNum() + "';");
+				} catch (SQLException ex) {
+					Logger.getLogger(PageModificationDocteur.class.getName()).log(Level.SEVERE, null, ex);
+				} 
+			}
+			hub.launchPageMenu(BDD);
+		}
+	}
 }
 

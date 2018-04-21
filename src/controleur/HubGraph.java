@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import modele.Docteur;
 import modele.Infirmier;
+import modele.Patient;
 
 import vue.*;
 
@@ -111,7 +112,7 @@ public class HubGraph extends JFrame implements ActionListener
          this.setVisible(true);
     }
     
-    public void launchPageRecherchePersonnelInfirmiere()
+    public void launchPageRecherchePersonnelInfirmier()
     {
         String tabArgument [] = {"Nom", "Prenom", "Numéro d'employé", "Téléphone", "Adresse", "Rotation", "Salaire", "Nom du service", "Batiment du service", "Directeur du service"};
         String select [] = {"nom_employe", "prenom_employe", "numero_e", "telephone_employe", "adresse_employe", "rotation", "salaire", "nom_service", "batiment", "directeur"};
@@ -171,7 +172,7 @@ public class HubGraph extends JFrame implements ActionListener
          this.setVisible(true);
     }
     
-     public void launchPageAjoutDoc()
+     public void launchPageAjoutDocteur()
     {
          this.setJMenuBar(menu);
          try {
@@ -184,7 +185,7 @@ public class HubGraph extends JFrame implements ActionListener
          this.setVisible(true);
     }
      
-      public void launchPageAjoutInf()
+      public void launchPageAjoutInfirmier()
     {
          this.setJMenuBar(menu);
          try {
@@ -235,6 +236,19 @@ public class HubGraph extends JFrame implements ActionListener
          this.setLocationRelativeTo(null);
          this.setVisible(true); 
 	  }
+	  
+	  public void launchPageModificationPatient(Patient pat)
+	  {
+		 this.setJMenuBar(menu);
+		try {
+			this.setContentPane(new PageModificationPatient(pat, BDD, this));
+		} catch (ParseException ex) {
+			Logger.getLogger(HubGraph.class.getName()).log(Level.SEVERE, null, ex);
+		}
+         this.setSize(1000, 650);
+         this.setLocationRelativeTo(null);
+         this.setVisible(true); 
+	  }
       
       public void launchPageSuppression()
     {
@@ -264,9 +278,9 @@ public class HubGraph extends JFrame implements ActionListener
         Object  source =e.getSource();
  
         if(source == menu.getInsertionDocteur())
-            launchPageAjoutDoc();
+            launchPageAjoutDocteur();
         if(source == menu.getInsertionInfirmier())
-            launchPageAjoutInf();
+            launchPageAjoutInfirmier();
         if(source == menu.getInsertionPatient())
             launchPageAjoutPatient();
 		
@@ -281,7 +295,7 @@ public class HubGraph extends JFrame implements ActionListener
         if(source == menu.getRecherchePersonnelDocteur())
             launchPageRecherchePersonnelDocteur();
         if(source == menu.getRecherchePersonnelInfirmier())
-            launchPageRecherchePersonnelInfirmiere();
+            launchPageRecherchePersonnelInfirmier();
         if(source == menu.getRecherchePatient())
              launchPageRechercheMalade();
         if(source == menu.getRechercheService())
