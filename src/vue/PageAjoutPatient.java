@@ -131,7 +131,7 @@ public class PageAjoutPatient extends JPanel implements ActionListener {
         tel = new JFormattedTextField(format);
       
         //image
-        image = new JLabel(new ImageIcon("images\\form.png"));
+        image = new JLabel(new ImageIcon("images\\ajouter.jpg"));
         //Creéation du bouton
         bouton = new JButton("Ajouter");
 
@@ -228,7 +228,7 @@ public class PageAjoutPatient extends JPanel implements ActionListener {
         pan4.setBounds(120, 300, 70, 40);
         pan4.setBackground(Color.white);
 
-        //placer label service concernée par la maladie
+        //placer label service 
         this.add(pan5);
         pan5.setVisible(true);
         pan5.setBounds(560, 310, 120, 40);
@@ -272,8 +272,9 @@ public class PageAjoutPatient extends JPanel implements ActionListener {
         adresse.setVisible(true);
         adresse.setBounds(200, 302, 250, 25);
 
-        //Combobox maladie
+        //Combobox service
         this.add(maladie);
+        maladie.setBackground(Color.white);
         maladie.setVisible(true);
         maladie.setBounds(700, 312, 70, 25);
 

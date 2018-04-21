@@ -53,6 +53,7 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
     private JLabel téléphone;
     private JLabel serv;
     private JLabel spé;
+    private JLabel dir;
    
     //combobox
     private JComboBox service;
@@ -96,9 +97,9 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
         téléphone = new JLabel("Numéro de tel. :");
         spé = new JLabel("Spécialité : ");
         serv = new JLabel("du service : ");
-        
+        dir= new JLabel("Directeur");
         //checkbox
-       directeur =new JCheckBox("Directeur");
+       directeur =new JCheckBox("");
         
        //combobox
         //Creéation des combobox
@@ -196,6 +197,7 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
         
         //label contenant la combobox
         JPanel pan8 = new JPanel();
+        service.setBackground(Color.white);
         pan8.add(service);
         
         //label contenant l'image
@@ -206,6 +208,11 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
         JPanel pan10 = new JPanel();
         spécialité.setBackground(Color.white);
         pan10.add(spécialité);
+        
+        //label contenant la combobox
+        JPanel pan11 = new JPanel();
+        dir.setFont(new Font("Arial", Font.BOLD, 15));
+        pan11.add(dir);
         
         //Placer label nom
         this.add(pan);
@@ -240,13 +247,13 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
         //placer label contenant texte service
         this.add(pan7);
         pan7.setVisible(true);
-        pan7.setBounds(700, 200, 120, 40);
+        pan7.setBounds(700, 198, 120, 40);
         pan7.setBackground(Color.white);
 
         //placer label contenant checkbox
         this.add(pan6);
         pan6.setVisible(true);
-        pan6.setBounds(600, 198, 110, 40);
+        pan6.setBounds(570, 198, 20, 40);
         pan6.setBackground(Color.white);
         
         //placer label contenant combobox service
@@ -254,6 +261,12 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
         pan8.setVisible(true);
         pan8.setBounds(800, 195, 110, 40);
         pan8.setBackground(Color.white);
+        
+        //placer label contenant directeur
+        this.add(pan11);
+        pan11.setVisible(true);
+        pan11.setBounds(600, 198, 110, 40);
+        pan11.setBackground(Color.white);
         
         //placer champ texte nom
         this.add(nom);
