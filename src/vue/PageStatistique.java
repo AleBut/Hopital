@@ -30,15 +30,21 @@ public class PageStatistique extends JPanel {
     
      private void constructionGraphique()
     {
-        this.setBackground(Color.white); // Définir la couleur de l'arrière plan
-        this.setLayout(new GridLayout(1,2));
+        //this.setBackground(Color.gray); // Définir la couleur de l'arrière plan
+        this.setLayout(null);
 		
-		// Box de mise en forme
-        Box miseEnForme = Box.createVerticalBox();
-		miseEnForme.add(new GraphiqueLineaire("Arrivée des malades en fonction du temps", BDD));
-		miseEnForme.add(new DiagrammeBaton("Répartition des ressources par service", BDD));
+		JPanel camembert = new Camembert("Origine des patients", BDD);
+		JPanel graphique = new GraphiqueLineaire("Arrivée des malades en fonction du temps", BDD);
+		JPanel diagramme = new DiagrammeBaton("Répartition des ressources par service", BDD);
+		
+		camembert.setBounds(0, 0, 490, 590);
+		graphique.setBounds(494, 0, 492, 295);
+		diagramme.setBounds(494, 295, 492, 295);
+		
+		this.add(camembert);
+		this.add(graphique);
+		this.add(diagramme);
+		
         
-        this.add(new Camembert("Origine des patients", BDD));
-        this.add(miseEnForme);
     }
 }

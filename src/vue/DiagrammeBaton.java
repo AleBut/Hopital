@@ -41,7 +41,7 @@ public class DiagrammeBaton extends JPanel {
         
         ChartPanel pan = new ChartPanel(barChart);
         pan.setMouseWheelEnabled(false); // Permet de faire tourner le diagramme
-        pan.setPreferredSize(new Dimension(500, 295)); // Dimension
+        pan.setPreferredSize(new Dimension(490, 295)); // Dimension
         this.add(pan);
     }
 
