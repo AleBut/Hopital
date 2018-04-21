@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+import modele.Docteur;
 
 import vue.*;
 
@@ -213,6 +214,19 @@ public class HubGraph extends JFrame implements ActionListener
 		 this.setJMenuBar(menu);
          try {
 			this.setContentPane(new PageModification(this,BDD));
+		 } catch (ParseException ex) {
+           Logger.getLogger(HubGraph.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         this.setSize(1000, 650);
+         this.setLocationRelativeTo(null);
+         this.setVisible(true); 
+	  }
+	  
+	  public void launchPageModificationDocteur(Docteur doc)
+	  {
+		 this.setJMenuBar(menu);
+         try {
+			this.setContentPane(new PageModificationDocteur(doc, BDD, this));
 		 } catch (ParseException ex) {
            Logger.getLogger(HubGraph.class.getName()).log(Level.SEVERE, null, ex);
         }

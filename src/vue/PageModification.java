@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import modele.Docteur;
 
 /**
  *
@@ -221,7 +222,7 @@ public class PageModification extends JPanel implements ActionListener {
 		Object source = e.getSource();
 
         if (source == bouton) {
-
+			/*
             if (typePersonne.getSelectedItem() == "Malade")
 			{
                 if (info.getSelectedItem() == "ID") {
@@ -239,17 +240,7 @@ public class PageModification extends JPanel implements ActionListener {
 					else
 					{
 						// REQUETE
-						String SuppressionMalade;
-						SuppressionMalade = "DELETE FROM malade WHERE numero_m = '" + nomID.getText() + "';";
 
-						try {
-							BDD.executerRequete(SuppressionMalade);
-							JOptionPane.showMessageDialog(this, "Le patient a bien été supprimé.", "Formulaire valide", JOptionPane.INFORMATION_MESSAGE);
-
-						} catch (SQLException ex) {
-							Logger.getLogger(PageSuppression.class.getName()).log(Level.SEVERE, null, ex);
-						}
-						hub.launchPageMenu(BDD);
                     }
 
                 }
@@ -268,21 +259,11 @@ public class PageModification extends JPanel implements ActionListener {
                         else
 						{
 							// Requete
-							String SuppressionMalade;
-							SuppressionMalade = "DELETE FROM malade WHERE nom_malade = '" + nomID.getText() + "' AND prenom_malade = '" + prénom.getText() + "';";
 
-							try {
-								BDD.executerRequete(SuppressionMalade);
-								JOptionPane.showMessageDialog(this, "Le patient a bien été supprimé.", "Formulaire valide", JOptionPane.INFORMATION_MESSAGE);
-
-							} catch (SQLException ex) {
-								Logger.getLogger(PageSuppression.class.getName()).log(Level.SEVERE, null, ex);
-							}
-							hub.launchPageMenu(BDD);
 						}	
                     }
                 }
-            }
+            } */
 
 			if (typePersonne.getSelectedItem() == "Docteur")
 			{
@@ -304,24 +285,23 @@ public class PageModification extends JPanel implements ActionListener {
 						String nom = BDD.afficherNuméro();
 						BDD.rechercheInformation("SELECT prenom_employe FROM employe WHERE numero_e = '" + nomID.getText() + "';");
 						String prenom = BDD.afficherNuméro();
-
+						BDD.rechercheInformation("SELECT adresse_employe FROM employe WHERE numero_e = '" + nomID.getText() + "';");
+						String adresse = BDD.afficherNuméro();
+						BDD.rechercheInformation("SELECT telephone_employe FROM employe WHERE numero_e = '" + nomID.getText() + "';");
+						String telephone = BDD.afficherNuméro();
+						BDD.rechercheInformation("SELECT specialite FROM docteur WHERE numero = '" + nomID.getText() + "';");
+						String specialite = BDD.afficherNuméro();
+						
+						
+						BDD.rechercheInformation("SELECT code FROM service WHERE directeur = '" + nomID.getText() + "';");
+						String directeurService = BDD.afficherNuméro();
+						if(directeurService == null) directeurService = ""; // Nécessaire car null != ""
+						
 						// Requete
-						String SuppressionDocteur;
-						SuppressionDocteur = "DELETE FROM docteur WHERE numero = '" + nomID.getText() + "';";
-						String SuppressionEmploye;
-						SuppressionEmploye = "DELETE FROM employe WHERE numero_e = '" + nomID.getText() + "';";
-
-						try {
-							BDD.executerRequete(SuppressionDocteur);
-							BDD.executerRequete(SuppressionEmploye);
-							JOptionPane.showMessageDialog(this, "Le docteur a bien été supprimé.", "Formulaire valide", JOptionPane.INFORMATION_MESSAGE);
-
-						} catch (SQLException ex) {
-							Logger.getLogger(PageSuppression.class.getName()).log(Level.SEVERE, null, ex);
-						}
-						hub.launchPageMenu(BDD);
+						hub.launchPageModificationDocteur(new Docteur(Integer.parseInt(numero), nom,  prenom, adresse, telephone, specialite, directeurService));
 					}
 				}
+				
 				if (info.getSelectedItem() == "Nom Prénom")
 				{
 					//test pour vérifier que tous les champs sont remplis
@@ -341,25 +321,29 @@ public class PageModification extends JPanel implements ActionListener {
 						else
 						{
 							// Requete
-							String SuppressionDocteur;
-							SuppressionDocteur = "DELETE FROM docteur WHERE numero = '" + numero + "';";
+							BDD.rechercheInformation("SELECT nom_employe FROM employe WHERE numero_e = '" + numero + "';");
+							String nom = BDD.afficherNuméro();
+							BDD.rechercheInformation("SELECT prenom_employe FROM employe WHERE numero_e = '" + numero + "';");
+							String prenom = BDD.afficherNuméro();
+							BDD.rechercheInformation("SELECT adresse_employe FROM employe WHERE numero_e = '" + numero + "';");
+							String adresse = BDD.afficherNuméro();
+							BDD.rechercheInformation("SELECT telephone_employe FROM employe WHERE numero_e = '" + numero + "';");
+							String telephone = BDD.afficherNuméro();
+							BDD.rechercheInformation("SELECT specialite FROM docteur WHERE numero = '" + numero + "';");
+							String specialite = BDD.afficherNuméro();
 
-							String SuppressionEmploye;
-							SuppressionEmploye = "DELETE FROM employe WHERE nom_employe = '" + nomID.getText() + "' AND prenom_employe = '" + prénom.getText() + "';";
 
-							try {
-								BDD.executerRequete(SuppressionDocteur);
-								BDD.executerRequete(SuppressionEmploye);
-								JOptionPane.showMessageDialog(this, "Le docteur a bien été supprimé.", "Formulaire valide", JOptionPane.INFORMATION_MESSAGE);
+							BDD.rechercheInformation("SELECT code FROM service WHERE directeur = '" + numero + "';");
+							String directeurService = BDD.afficherNuméro();
+							if(directeurService == null) directeurService = ""; // Nécessaire car null != ""
 
-							} catch (SQLException ex) {
-								Logger.getLogger(PageSuppression.class.getName()).log(Level.SEVERE, null, ex);
-							}
-							hub.launchPageMenu(BDD);
+							// Requete
+							hub.launchPageModificationDocteur(new Docteur(Integer.parseInt(numero), nom,  prenom, adresse, telephone, specialite, directeurService));
 						}
 					}
-				}
+				} 
 			}
+			/*
 			if (typePersonne.getSelectedItem() == "Infirmier")
 			{
 				if (info.getSelectedItem() == "ID")
@@ -381,20 +365,7 @@ public class PageModification extends JPanel implements ActionListener {
 						String prenom = BDD.afficherNuméro();
 
 						// REQUETE
-						String SuppressionInfirmier;
-						SuppressionInfirmier = "DELETE FROM infirmier WHERE numero = '" + nomID.getText() + "';";
-						String SuppressionEmploye;
-						SuppressionEmploye = "DELETE FROM employe WHERE numero_e = '" + nomID.getText() + "';";
-
-						try {
-							BDD.executerRequete(SuppressionInfirmier);
-							BDD.executerRequete(SuppressionEmploye);
-							JOptionPane.showMessageDialog(this, "L'infirmier a bien été supprimé.", "Formulaire valide", JOptionPane.INFORMATION_MESSAGE);
-
-						} catch (SQLException ex) {
-							Logger.getLogger(PageSuppression.class.getName()).log(Level.SEVERE, null, ex);
-						}
-						hub.launchPageMenu(BDD);
+						
 					}
 				}
 
@@ -416,25 +387,11 @@ public class PageModification extends JPanel implements ActionListener {
 						else
 						{
 							// REQUETE
-							String SuppressionInfirmier;
-							SuppressionInfirmier = "DELETE FROM infirmier WHERE numero = '" + numero + "';";
-
-							String SuppressionEmploye;
-							SuppressionEmploye = "DELETE FROM employe WHERE nom_employe = '" + nomID.getText() + "' AND prenom_employe = '" + prénom.getText() + "';";
-
-							try {
-								BDD.executerRequete(SuppressionInfirmier);
-								BDD.executerRequete(SuppressionEmploye);
-								JOptionPane.showMessageDialog(this, "L'infirmier a bien été supprimé.", "Formulaire valide", JOptionPane.INFORMATION_MESSAGE);
-
-							} catch (SQLException ex) {
-								Logger.getLogger(PageSuppression.class.getName()).log(Level.SEVERE, null, ex);
-							}
-							hub.launchPageMenu(BDD);
+							
 						}
                     }
                 }
-            }
-        }
-	}
+            }*/
+        } 
+	} 
 }
