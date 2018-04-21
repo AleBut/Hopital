@@ -6,15 +6,17 @@
 package vue;
 
 import controleur.GestionBase;
-import controleur.Connexion;
 import controleur.HubGraph;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
+import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
+import net.sourceforge.jdatepicker.impl.UtilDateModel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -53,7 +55,8 @@ public class PageAjout extends JPanel implements ActionListener {
     private JLabel adr;
     private JLabel mal;
     private JLabel mut;
-    private JLabel nume;
+    private JLabel dateArrivée;
+   
 
     //combobox sur le type de maladie du patient pour l'affecter à un service
     private JComboBox maladie;
@@ -64,6 +67,14 @@ public class PageAjout extends JPanel implements ActionListener {
     private JTextField adresse;
     private JFormattedTextField tel;
     private JTextField mutuelle;
+    
+    //date
+    private String datePattern = "yyyy-MM-dd";
+    private SimpleDateFormat dateFormatter;
+    private JDatePickerImpl datePicker;
+    private JDatePanelImpl datePanel;
+     
+    
 
     // Chargement de l'image
     private JLabel image;
@@ -92,9 +103,20 @@ public class PageAjout extends JPanel implements ActionListener {
         numérotel = new JLabel("Numéro de tel. :");
         mal = new JLabel("Service affecté : ");
         mut = new JLabel("Mutuelle : ");
-        nume = new JLabel("Numéro dossier : ");
+        dateArrivée= new JLabel("Date d'arrivée : ");
+        
+        //date
+        
+       
+        UtilDateModel model=new UtilDateModel();
+        datePanel=new JDatePanelImpl(model);
+        datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
 
-        //Creéation des combobox
+        
+        
+        
+        
+        //Création des combobox
         maladie = new JComboBox();
         maladie.addItem("REA");
         maladie.addItem("CHG");
@@ -162,6 +184,7 @@ public class PageAjout extends JPanel implements ActionListener {
 
         //label service placé dans un planel
         JPanel pan5 = new JPanel();
+        mal.setBackground(Color.white);
         mal.setFont(new Font("Arial", Font.BOLD, 15));
         pan5.add(mal);
 
@@ -173,6 +196,15 @@ public class PageAjout extends JPanel implements ActionListener {
         //label mutuelle placé dans un planel
         JPanel pan7 = new JPanel();
         pan7.add(image);
+        
+        //label mutuelle placé dans un planel
+        JPanel pan8 = new JPanel();
+        pan8.add(datePicker);
+        
+        //texte date d arrivée
+        JPanel pan9 = new JPanel();
+        dateArrivée.setFont(new Font("Arial", Font.BOLD, 15));
+        pan9.add(dateArrivée);
 
         //Placer label nom
         this.add(pan);
@@ -192,7 +224,7 @@ public class PageAjout extends JPanel implements ActionListener {
         pan3.setBounds(120, 200, 110, 40);
         pan3.setBackground(Color.white);
 
-        //placer label adresse de tel sur la page
+        //placer label adresse  sur la page
         this.add(pan4);
         pan4.setVisible(true);
         pan4.setBounds(120, 300, 70, 40);
@@ -209,6 +241,12 @@ public class PageAjout extends JPanel implements ActionListener {
         pan6.setVisible(true);
         pan6.setBounds(560, 200, 80, 40);
         pan6.setBackground(Color.white);
+        
+        //placer label mutuelle 
+        this.add(pan9);
+        pan9.setVisible(true);
+        pan9.setBounds(550, 400, 130, 40);
+        pan9.setBackground(Color.white);
 
         //placer label image
         this.add(pan7);
@@ -245,6 +283,12 @@ public class PageAjout extends JPanel implements ActionListener {
         this.add(mutuelle);
         mutuelle.setVisible(true);
         mutuelle.setBounds(650, 202, 80, 25);
+        
+        //calendrier
+        this.add(pan8);
+        pan8.setVisible(true);
+        pan8.setBounds(670, 396, 230, 50);
+        pan8.setBackground(Color.white);
 
         //placer bouton
         this.add(bouton);
@@ -253,6 +297,8 @@ public class PageAjout extends JPanel implements ActionListener {
         bouton.addActionListener(this);
 
     }
+    
+    
 
     @Override
     public void actionPerformed(ActionEvent ae) {
@@ -267,17 +313,22 @@ public class PageAjout extends JPanel implements ActionListener {
 
             } else {
 
-              String blindage;
+                String blindage;
                 blindage = "SELECT MAX(numero_m) FROM malade;";
                 BDD.rechercheInformation(blindage);
                 //BDD.afficherInformations();
                 String num = BDD.afficherNuméro();
                 num = num.substring(0, num.length() - 1);
                 
-                int numérofinal = strToInt(num)+1;
+                int numérofinal = Integer.parseInt(num)+1;
                 System.out.println(numérofinal);
-                patient=new Malade(numérofinal,nom.getText(),prénom.getText(),adresse.getText(),tel.getText(),mutuelle.getText());
-                requeteajout = "INSERT INTO malade (numero_m, nom_malade, prenom_malade, adresse_malade, tel_malade, mutuelle) VALUES ('"+patient.getNum()+"', '" + patient.getNom() + "', '" + patient.getPrenom() + "', '" + patient.getAdresse() + "', '" + patient.getTel() + "', '" + patient.getMutuelle() + "');";
+                String dateString = datePicker.getJFormattedTextField().getText();
+              
+                    patient=new Malade(numérofinal,nom.getText(),prénom.getText(),adresse.getText(),tel.getText(),mutuelle.getText(),dateString);
+                    
+                
+                
+                requeteajout = "INSERT INTO malade (numero_m, nom_malade, prenom_malade, adresse_malade, tel_malade, mutuelle, date_arrive) VALUES ('"+patient.getNum()+"', '" + patient.getNom() + "', '" + patient.getPrenom() + "', '" + patient.getAdresse() + "', '" + patient.getTel() + "', '" + patient.getMutuelle() + "','" + patient.getDate() + "');";
                 System.out.println(requeteajout);
                
                 try {
@@ -295,27 +346,7 @@ public class PageAjout extends JPanel implements ActionListener {
 
     }
     
-    public static int strToInt( String str ){
-    int i = 0;
-    int num = 0;
-    boolean isNeg = false;
-
-    //Check for negative sign; if it's there, set the isNeg flag
-    if (str.charAt(0) == '-') {
-        isNeg = true;
-        i = 1;
-    }
-
-    //Process each character of the string;
-    while( i < str.length()) {
-        num *= 10;
-        num += str.charAt(i++) - '0'; //Minus the ASCII code of '0' to get the value of the charAt(i++).
-    }
-
-    if (isNeg)
-        num = -num;
-    return num;
-}
+   
 
 }
 

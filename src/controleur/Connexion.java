@@ -65,36 +65,29 @@ public class Connexion {
     }
 
     /**
-     * Constructeur avec 4 paramètres : username et password ECE, login et
-     * password de la BDD à distance sur le serveur de l'ECE
-     * @param usernameECE
-     * @param passwordECE
+     * 
      * @param loginDatabase
      * @param passwordDatabase
      * @throws java.sql.SQLException
      * @throws java.lang.ClassNotFoundException
      */
-    public Connexion(String usernameECE, String passwordECE, String loginDatabase, String passwordDatabase) throws SQLException, ClassNotFoundException {
-        // chargement driver "com.mysql.jdbc.Driver"
-        Class.forName("com.mysql.jdbc.Driver");
+    public Connexion(String loginDatabase, String passwordDatabase) throws SQLException, ClassNotFoundException {		
+		String serverName = "sql7.freemysqlhosting.net"; 
+		String databaseName = "sql7233639";
+		
+		if(loginDatabase.length() == 0)		loginDatabase = "sql7233639";
+		
+		if(passwordDatabase.length() == 0)	passwordDatabase = "zjXNmh5Tz9";
 
-        // Connexion via le tunnel SSH avec le username et le password ECE
-        SSHTunnel ssh = new SSHTunnel(usernameECE, passwordECE);
-
-        if (ssh.connect()) {
-            System.out.println("Connexion reussie");
-
-            // url de connexion "jdbc:mysql://localhost:3305/usernameECE"
-            String urlDatabase = "jdbc:mysql://localhost:3305/" + usernameECE;
-
-            //création d'une connexion JDBC à la base
-            conn = DriverManager.getConnection(urlDatabase, loginDatabase, passwordDatabase);
-
-            // création d'un ordre SQL (statement)
-            stmt = conn.createStatement();
-
-        }
-    }
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+			conn=DriverManager.getConnection("jdbc:mysql://" + serverName + ":3306/" + databaseName, loginDatabase, passwordDatabase);
+		}catch (ClassNotFoundException | SQLException e) {
+			throw new SQLException("Erreur Connection A Distance" + e);
+		} 
+		
+		 stmt = conn.createStatement();
+	}
 
     /**
      * Méthode qui ajoute la table en parametre dans son ArrayList
