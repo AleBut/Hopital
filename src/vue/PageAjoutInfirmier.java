@@ -15,16 +15,13 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 import modele.Infirmier;
@@ -112,10 +109,8 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
         rotation= new JComboBox();
         rotation.addItem("JOUR");
         rotation.addItem("NUIT");
-        
-        
-        
 
+		
         nom = new JTextField("");
         prénom = new JTextField("");
         adresse = new JTextField("");
@@ -301,12 +296,13 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         Object source = ae.getSource();
         
-        if (source == bouton) {
-
+        if (source == bouton)
+		{
             //test pour vérifier que tous les champs sont remplis
             if (("".equals(nom.getText())) || ("".equals(prénom.getText())) || ("".equals(tel.getText())) || ("".equals(adresse.getText()))||("".equals(salaire.getText()))) {
 
                 JOptionPane.showMessageDialog(this, "Un champ est vide.", "Erreur", JOptionPane.WARNING_MESSAGE);
+
 
             } else {
                 
@@ -319,6 +315,7 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
                 
                 if ((Information1==null)&&(Information2==null)||(((null)!=Information1)&&((null)==Information2))||(((null)!=Information2)&&((null)==Information1)))
                 {
+
                 int numérofinal;
                 
                 String IDmax;
@@ -355,6 +352,7 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
                     Logger.getLogger(PageAjout.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 hub.launchPageMenu(BDD);
+
                 }
                 
                 
@@ -368,6 +366,7 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
             }
 
        
+
 
     }
  }

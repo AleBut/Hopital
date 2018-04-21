@@ -15,7 +15,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -24,7 +23,6 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 import modele.Docteur;
@@ -308,6 +306,7 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
 
                 JOptionPane.showMessageDialog(this, "Un champ est vide.", "Erreur", JOptionPane.WARNING_MESSAGE);
 
+
             } else {
                 
                   String blindageNom = "SELECT (nom_employe) FROM employe WHERE nom_employe= '"+nom.getText()+"';";
@@ -320,6 +319,7 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
                 if ((Information1==null)&&(Information2==null)||(((null)!=Information1)&&((null)==Information2))||(((null)!=Information2)&&((null)==Information1)))
                 {
                 
+
                 int numérofinal;
                 
                 String IDmax;
@@ -375,6 +375,7 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
                 }
                 hub.launchPageMenu(BDD);
             }
+
                 else if ((((null)!=Information1)&&(((null)!=Information2)))){
                     JOptionPane.showMessageDialog(this, "Un employé possède déjà ce nom de famille et prénom.", "Formulaire non valide", JOptionPane.ERROR_MESSAGE);
                 }
@@ -383,7 +384,6 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
         
 
     }
+
     }
 }
-
-
