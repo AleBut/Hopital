@@ -306,9 +306,20 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
 
                 JOptionPane.showMessageDialog(this, "Un champ est vide.", "Erreur", JOptionPane.WARNING_MESSAGE);
 
-            }
-			else
-			{    
+
+            } else {
+                
+                  String blindageNom = "SELECT (nom_employe) FROM employe WHERE nom_employe= '"+nom.getText()+"';";
+                BDD.rechercheInformation(blindageNom);
+                String Information1 = BDD.afficherNuméro();
+                String blindagePrenom = "SELECT (prenom_employe) FROM employe WHERE prenom_employe = '"+prénom.getText()+"';";
+                BDD.rechercheInformation(blindagePrenom);
+                String Information2 = BDD.afficherNuméro();
+                
+                if ((Information1==null)&&(Information2==null)||(((null)!=Information1)&&((null)==Information2))||(((null)!=Information2)&&((null)==Information1)))
+                {
+                
+
                 int numérofinal;
                 
                 String IDmax;
@@ -364,6 +375,15 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
                 }
                 hub.launchPageMenu(BDD);
             }
-		}
+
+                else if ((((null)!=Information1)&&(((null)!=Information2)))){
+                    JOptionPane.showMessageDialog(this, "Un employé possède déjà ce nom de famille et prénom.", "Formulaire non valide", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+
+        
+
+    }
+
     }
 }

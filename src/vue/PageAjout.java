@@ -56,7 +56,6 @@ public class PageAjout extends JPanel implements ActionListener {
     private JLabel mal;
     private JLabel mut;
     private JLabel dateArrivée;
-   
 
     //combobox sur le type de maladie du patient pour l'affecter à un service
     private JComboBox maladie;
@@ -67,14 +66,12 @@ public class PageAjout extends JPanel implements ActionListener {
     private JTextField adresse;
     private JFormattedTextField tel;
     private JTextField mutuelle;
-    
+
     //date
     private String datePattern = "yyyy-MM-dd";
     private SimpleDateFormat dateFormatter;
     private JDatePickerImpl datePicker;
     private JDatePanelImpl datePanel;
-     
-    
 
     // Chargement de l'image
     private JLabel image;
@@ -103,19 +100,13 @@ public class PageAjout extends JPanel implements ActionListener {
         numérotel = new JLabel("Numéro de tel. :");
         mal = new JLabel("Service affecté : ");
         mut = new JLabel("Mutuelle : ");
-        dateArrivée= new JLabel("Date d'arrivée : ");
-        
+        dateArrivée = new JLabel("Date d'arrivée : ");
+
         //date
-        
-       
-        UtilDateModel model=new UtilDateModel();
-        datePanel=new JDatePanelImpl(model);
+        UtilDateModel model = new UtilDateModel();
+        datePanel = new JDatePanelImpl(model);
         datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
 
-        
-        
-        
-        
         //Création des combobox
         maladie = new JComboBox();
         maladie.addItem("REA");
@@ -129,9 +120,9 @@ public class PageAjout extends JPanel implements ActionListener {
         mutuelle = new JTextField("");
         //Format téléphonique
         MaskFormatter format = new MaskFormatter("## ## ## ## ##");
-        
+
         tel = new JFormattedTextField(format);
-      
+
         //image
         image = new JLabel(new ImageIcon("images\\form.png"));
         //Creéation du bouton
@@ -140,8 +131,6 @@ public class PageAjout extends JPanel implements ActionListener {
         // Construction graphique de la fenetre dans le Jpanel container.
         constructionGraphique();
 
-        
-         
         this.setBackground(Color.white); // Définir la couleur de l'arrière plan
 
         this.add(container);
@@ -196,11 +185,11 @@ public class PageAjout extends JPanel implements ActionListener {
         //label mutuelle placé dans un planel
         JPanel pan7 = new JPanel();
         pan7.add(image);
-        
+
         //label mutuelle placé dans un planel
         JPanel pan8 = new JPanel();
         pan8.add(datePicker);
-        
+
         //texte date d arrivée
         JPanel pan9 = new JPanel();
         dateArrivée.setFont(new Font("Arial", Font.BOLD, 15));
@@ -241,7 +230,7 @@ public class PageAjout extends JPanel implements ActionListener {
         pan6.setVisible(true);
         pan6.setBounds(560, 200, 80, 40);
         pan6.setBackground(Color.white);
-        
+
         //placer label mutuelle 
         this.add(pan9);
         pan9.setVisible(true);
@@ -283,7 +272,7 @@ public class PageAjout extends JPanel implements ActionListener {
         this.add(mutuelle);
         mutuelle.setVisible(true);
         mutuelle.setBounds(650, 202, 80, 25);
-        
+
         //calendrier
         this.add(pan8);
         pan8.setVisible(true);
@@ -297,8 +286,6 @@ public class PageAjout extends JPanel implements ActionListener {
         bouton.addActionListener(this);
 
     }
-    
-    
 
     @Override
     public void actionPerformed(ActionEvent ae) {
@@ -313,40 +300,50 @@ public class PageAjout extends JPanel implements ActionListener {
 
             } else {
 
-                String blindage;
-                blindage = "SELECT MAX(numero_m) FROM malade;";
-                BDD.rechercheInformation(blindage);
-                //BDD.afficherInformations();
-                String num = BDD.afficherNuméro();
-                num = num.substring(0, num.length() - 1);
-                
-                int numérofinal = Integer.parseInt(num)+1;
-                System.out.println(numérofinal);
-                String dateString = datePicker.getJFormattedTextField().getText();
-              
-                    patient=new Malade(numérofinal,nom.getText(),prénom.getText(),adresse.getText(),tel.getText(),mutuelle.getText(),dateString);
-                    
-                
-                
-                requeteajout = "INSERT INTO malade (numero_m, nom_malade, prenom_malade, adresse_malade, tel_malade, mutuelle, date_arrive) VALUES ('"+patient.getNum()+"', '" + patient.getNom() + "', '" + patient.getPrenom() + "', '" + patient.getAdresse() + "', '" + patient.getTel() + "', '" + patient.getMutuelle() + "','" + patient.getDate() + "');";
-                System.out.println(requeteajout);
-               
-                try {
-                    BDD.executerRequete(requeteajout);
-                    JOptionPane.showMessageDialog(this, "Le patient a bien été ajouté.", "Formulaire valide", JOptionPane.INFORMATION_MESSAGE);
+                if (mutuelle.getText().length() > 5) {
+                    JOptionPane.showMessageDialog(this, "Le nom de la mutuelle est trop long.", "Erreur", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    String blindageNom = "SELECT (nom_malade) FROM malade WHERE nom_malade= '" + nom.getText() + "';";
+                    BDD.rechercheInformation(blindageNom);
+                    String Information1 = BDD.afficherNuméro();
+                    String blindagePrenom = "SELECT (prenom_malade) FROM malade WHERE prenom_malade = '" + prénom.getText() + "';";
+                    BDD.rechercheInformation(blindagePrenom);
+                    String Information2 = BDD.afficherNuméro();
 
-                } catch (SQLException ex) {
-                    Logger.getLogger(PageAjout.class.getName()).log(Level.SEVERE, null, ex);
+                    if ((Information1 == null) && (Information2 == null) || (((null) != Information1) && ((null) == Information2)) || (((null) != Information2) && ((null) == Information1))) {
+
+                        String blindage;
+                        blindage = "SELECT MAX(numero_m) FROM malade;";
+                        BDD.rechercheInformation(blindage);
+                        //BDD.afficherInformations();
+                        String num = BDD.afficherNuméro();
+                        num = num.substring(0, num.length() - 1);
+
+                        int numérofinal = Integer.parseInt(num) + 1;
+                        System.out.println(numérofinal);
+                        String dateString = datePicker.getJFormattedTextField().getText();
+
+                        patient = new Malade(numérofinal, nom.getText(), prénom.getText(), adresse.getText(), tel.getText(), mutuelle.getText(), dateString);
+
+                        requeteajout = "INSERT INTO malade (numero_m, nom_malade, prenom_malade, adresse_malade, tel_malade, mutuelle, date_arrive) VALUES ('" + patient.getNum() + "', '" + patient.getNom() + "', '" + patient.getPrenom() + "', '" + patient.getAdresse() + "', '" + patient.getTel() + "', '" + patient.getMutuelle() + "','" + patient.getDate() + "');";
+                        System.out.println(requeteajout);
+
+                        try {
+                            BDD.executerRequete(requeteajout);
+                            JOptionPane.showMessageDialog(this, "Le patient a bien été ajouté.", "Formulaire valide", JOptionPane.INFORMATION_MESSAGE);
+
+                        } catch (SQLException ex) {
+                            Logger.getLogger(PageAjout.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        hub.launchPageMenu(BDD);
+
+                    } else if ((((null) != Information1) && (((null) != Information2)))) {
+                        JOptionPane.showMessageDialog(this, "Un malade possède déjà ce nom de famille et prénom.", "Formulaire non valide", JOptionPane.ERROR_MESSAGE);
+                    }
+
                 }
-                hub.launchPageMenu(BDD);
-
             }
-
         }
-
     }
-    
-   
 
 }
-
