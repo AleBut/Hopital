@@ -22,6 +22,10 @@ public class ResultatRecherche extends JPanel {
 	
 	private JTable tableau;
 	
+        /**
+	 * Construis le resultat de la recherche
+         * @param _BDD La base de donnée BDD
+	 */
 
 	public ResultatRecherche(GestionBase _BDD)
 	{
@@ -29,6 +33,12 @@ public class ResultatRecherche extends JPanel {
 		
 		this.setBackground(Color.white);
 	}
+        
+        /**
+	 * Met à jour l'interface graphique
+         * @param entete correspond au nom des éléments de la requete à afficher
+         * ex : nom, prenom, adresse, etc
+	 */
 	
 	public void raffraichir(String entete[])
 	{
@@ -59,6 +69,12 @@ public class ResultatRecherche extends JPanel {
 		this.add(resultat, BorderLayout.NORTH);
 		this.setVisible(true);
 	}
+        
+        /**
+	 * Traduit le resultat de la requete sql en objet à afficher
+         * @param entete correspond au nom des éléments de la requete à afficher
+         * @param _BDD La base de donnée BDD
+	 */
 	
 	private Object[][] getDonnees(GestionBase BDD, String entete[])
 	{
@@ -81,6 +97,12 @@ public class ResultatRecherche extends JPanel {
 		
 		return donnees;
 	}
+        
+        /**
+	 * On convertit la chaine resultat en tableau de string des différents éléments
+         * @param machaine correspond à la chaine à convertir
+         * @param nbreElement est le nombre d'élément de la chaine
+	 */
 	
 	public String[] conversion(String machaine, int nbreElement)
 	{
@@ -90,6 +112,7 @@ public class ResultatRecherche extends JPanel {
         int x=0;
         
         /// On connait la taille d'avance car ça correspond au nombre d'element selectionné 
+        ///Cad entete.length
         int indice=0;
         
         

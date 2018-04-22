@@ -24,6 +24,12 @@ import javax.swing.JTextField;
  * @author Alex1
  */
 public class PageRecherche extends JPanel {
+    
+    
+         /**
+	 * Déclaration des variables
+	 */
+    
     // Connexion vers la base de donnée
     private GestionBase BDD;
     
@@ -54,6 +60,15 @@ public class PageRecherche extends JPanel {
     private String whereInit;
     
     private String recherche;
+    
+    /**
+	 * On construit la page recherche
+         * @param _BDD La base de donnée BDD
+         * @param tabArgument est la liste des attributs concernant la recherche
+         * @param s est le string de SELECT par défaut
+         * @param f est le string de FROM par défaut
+         * @param w est le string de WHERE par défaut
+	 */
     
 
     public PageRecherche(GestionBase _BDD, String tabArgument [], String s [], String f, String w) {
@@ -103,6 +118,11 @@ public class PageRecherche extends JPanel {
         
     }
     
+    /**
+	 * On affiche sur le pannel les différents éléments de la page recherche
+         
+	 */
+    
      private void constructionGraphique()
     {
 		// Layout null car on veut disposer les éléments comme on veut
@@ -150,6 +170,11 @@ public class PageRecherche extends JPanel {
      
     class ValiderRecherche implements ActionListener //Redéfinition de la méthode actionPerformed()
 	{
+        
+          /**
+	 * Lance la recherche correspondante
+	 * @param e L'action event si l'utilisateur clique sur le bouton de recherche
+	 */
 		@Override
 		public void actionPerformed(ActionEvent arg0)
 		{
@@ -237,8 +262,13 @@ public class PageRecherche extends JPanel {
 		}
 	}
     
-    class ToutCocher implements ActionListener
+    class ToutCocher implements ActionListener //Redéfinition de la méthode actionPerformed()
     {
+        
+        /**
+	 * Coche ou décoche tous les éléments de la liste
+	 * @param e L'action event si l'utilisateur clique sur le bouton de recherche
+	 */
 		@Override
 		public void actionPerformed(ActionEvent arg0)
 		{
