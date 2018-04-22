@@ -55,7 +55,7 @@ public class MenuBar extends JMenuBar
             personnel = new JMenu("Personnel");
                 employe = new JMenuItem("Employée");
                 docteur2 = new JMenuItem("Docteur");
-                infirmier2 = new JMenuItem("Infirmière");
+                infirmier2 = new JMenuItem("Infirmier");
             patient2 = new JMenuItem("Patient");
             service = new JMenuItem("Service");
             

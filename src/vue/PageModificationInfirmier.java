@@ -22,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
@@ -347,6 +348,7 @@ public class PageModificationInfirmier extends JPanel implements ActionListener 
 					Logger.getLogger(PageModificationDocteur.class.getName()).log(Level.SEVERE, null, ex);
 				} 
 			}
+			JOptionPane.showMessageDialog(this, "L'infirmier a bien été modifié.", "Infirmier modifié", JOptionPane.INFORMATION_MESSAGE);
 			hub.launchPageMenu(BDD); // On lance le menu
 		}
 	}

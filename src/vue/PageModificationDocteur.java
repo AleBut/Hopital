@@ -23,6 +23,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
@@ -101,10 +102,10 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
         prén = new JLabel("Prénom :");
         téléphone = new JLabel("Numéro de tel. :");
         spé = new JLabel("Spécialité : ");
-        serv = new JLabel("du service : ");
+        serv = new JLabel("Directeur du service : ");
         
         //checkbox
-       directeur = new JCheckBox("Directeur");
+       directeur = new JCheckBox("");
         
        //combobox
         //Création des combobox
@@ -163,8 +164,8 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
 	 * Construis graphiquement la page
 	 */
 	public void constructionGraphique() {
-        // Titre de bienvenue
-        JLabel titre = new JLabel("Modification Docteur : ");
+         // Titre de bienvenue
+        JLabel titre = new JLabel("Recrutement Docteur : ");
 
         titre.setFont(new Font("Arial", Font.BOLD, 24)); // Attribuer la police au titre
         //panel contenant le titre
@@ -216,6 +217,7 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
         
         //label contenant la combobox
         JPanel pan8 = new JPanel();
+        service.setBackground(Color.white);
         pan8.add(service);
         
         //label contenant l'image
@@ -260,19 +262,19 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
         //placer label contenant texte service
         this.add(pan7);
         pan7.setVisible(true);
-        pan7.setBounds(700, 200, 120, 40);
+        pan7.setBounds(590, 198, 160, 40);
         pan7.setBackground(Color.white);
 
         //placer label contenant checkbox
         this.add(pan6);
         pan6.setVisible(true);
-        pan6.setBounds(600, 198, 110, 40);
+        pan6.setBounds(570, 198, 20, 40);
         pan6.setBackground(Color.white);
         
         //placer label contenant combobox service
         this.add(pan8);
         pan8.setVisible(true);
-        pan8.setBounds(800, 195, 110, 40);
+        pan8.setBounds(750, 195, 80, 40);
         pan8.setBackground(Color.white);
         
         //placer champ texte nom
@@ -312,7 +314,6 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
         bouton.setVisible(true);
         bouton.setBounds(440, 450, 120, 80);
         bouton.addActionListener(this);
-
     }
 	
 	/**
@@ -375,6 +376,7 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
 					Logger.getLogger(PageModificationDocteur.class.getName()).log(Level.SEVERE, null, ex);
 				}
 			}
+		JOptionPane.showMessageDialog(this, "Le docteur a bien été modifié.", "Docteur modifié", JOptionPane.INFORMATION_MESSAGE);
 		hub.launchPageMenu(BDD); // On lance le menu
 		}
 	}

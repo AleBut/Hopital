@@ -23,6 +23,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
@@ -53,13 +54,8 @@ public class PageModificationPatient extends JPanel implements ActionListener {
     private JLabel pre;
     private JLabel numérotel;
     private JLabel adr;
-    private JLabel mal;
     private JLabel mut;
     private JLabel dateArrivée;
-   
-
-    //combobox sur le type de maladie du patient pour l'affecter à un service
-    private JComboBox maladie;
 
     //Zones de texte: nom, prénom, adresse, numero de tel
     private JTextField nom;
@@ -108,7 +104,6 @@ public class PageModificationPatient extends JPanel implements ActionListener {
         no = new JLabel("Nom :");
         pre = new JLabel("Prénom :");
         numérotel = new JLabel("Numéro de tel. :");
-        mal = new JLabel("Service affecté : ");
         mut = new JLabel("Mutuelle : ");
         dateArrivée= new JLabel("Date d'arrivée : ");
         
@@ -118,17 +113,6 @@ public class PageModificationPatient extends JPanel implements ActionListener {
         datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
 		datePicker.getJFormattedTextField().setText(pat.getDate());
 
-        //Création des combobox
-        maladie = new JComboBox();
-		maladie.addItem(pat.getService());
-		
-        // On ajoute les services restants dans la combobox
-		String tableService[] = {"REA", "CHG", "CAR"};
-		for(String serviceAssigne : tableService)
-		{
-			if( !serviceAssigne.equals(pat.getService()) )
-				maladie.addItem(serviceAssigne);
-		}
 
         //création des zones de texte
         nom = new JTextField(pat.getNom());
@@ -193,12 +177,6 @@ public class PageModificationPatient extends JPanel implements ActionListener {
         adr.setFont(new Font("Arial", Font.BOLD, 15));
         pan4.add(adr);
 
-        //label service placé dans un planel
-        JPanel pan5 = new JPanel();
-        mal.setBackground(Color.white);
-        mal.setFont(new Font("Arial", Font.BOLD, 15));
-        pan5.add(mal);
-
         //label mutuelle placé dans un planel
         JPanel pan6 = new JPanel();
         mut.setFont(new Font("Arial", Font.BOLD, 15));
@@ -241,22 +219,16 @@ public class PageModificationPatient extends JPanel implements ActionListener {
         pan4.setBounds(120, 300, 70, 40);
         pan4.setBackground(Color.white);
 
-        //placer label service concernée par la maladie
-        this.add(pan5);
-        pan5.setVisible(true);
-        pan5.setBounds(560, 310, 120, 40);
-        pan5.setBackground(Color.white);
-
         //placer label mutuelle 
         this.add(pan6);
         pan6.setVisible(true);
         pan6.setBounds(560, 200, 80, 40);
         pan6.setBackground(Color.white);
         
-        //placer label mutuelle 
+        //placer label date arrivee
         this.add(pan9);
         pan9.setVisible(true);
-        pan9.setBounds(550, 400, 130, 40);
+        pan9.setBounds(560, 310, 120, 40);
         pan9.setBackground(Color.white);
 
         //placer label image
@@ -285,11 +257,6 @@ public class PageModificationPatient extends JPanel implements ActionListener {
         adresse.setVisible(true);
         adresse.setBounds(200, 302, 250, 25);
 
-        //Combobox maladie
-        this.add(maladie);
-        maladie.setVisible(true);
-        maladie.setBounds(700, 312, 70, 25);
-
         //Combobox mutuelle
         this.add(mutuelle);
         mutuelle.setVisible(true);
@@ -298,7 +265,7 @@ public class PageModificationPatient extends JPanel implements ActionListener {
         //calendrier
         this.add(pan8);
         pan8.setVisible(true);
-        pan8.setBounds(670, 396, 230, 50);
+        pan8.setBounds(670, 305, 230, 50);
         pan8.setBackground(Color.white);
 
         //placer bouton
@@ -329,15 +296,7 @@ public class PageModificationPatient extends JPanel implements ActionListener {
 					Logger.getLogger(PageModificationInfirmier.class.getName()).log(Level.SEVERE, null, ex);
 				}
 			}
-			// Changement dans la table hospitalisation
-			if(!((String)maladie.getSelectedItem()).equals(pat.getService()))
-			{
-				try {
-					BDD.executerRequete("UPDATE hospitalisation SET code_service = '" + (String) maladie.getSelectedItem() + "' WHERE no_malade = '" + pat.getNum() + "';");
-				} catch (SQLException ex) {
-					Logger.getLogger(PageModificationDocteur.class.getName()).log(Level.SEVERE, null, ex);
-				} 
-			}
+			JOptionPane.showMessageDialog(this, "Le patient a bien été modifié.", "Patient modifié", JOptionPane.INFORMATION_MESSAGE);
 			hub.launchPageMenu(BDD);
 		}
 	}

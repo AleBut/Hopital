@@ -55,7 +55,6 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
     private JLabel téléphone;
     private JLabel serv;
     private JLabel spé;
-    private JLabel dir;
    
     //combobox
     private JComboBox service;
@@ -104,8 +103,8 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
         prén = new JLabel("Prénom :");
         téléphone = new JLabel("Numéro de tel. :");
         spé = new JLabel("Spécialité : ");
-        serv = new JLabel("du service : ");
-        dir= new JLabel("Directeur");
+        serv = new JLabel("Directeur du service : ");
+		
         //checkbox
        directeur =new JCheckBox("");
         
@@ -220,11 +219,6 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
         spécialité.setBackground(Color.white);
         pan10.add(spécialité);
         
-        //label contenant la combobox
-        JPanel pan11 = new JPanel();
-        dir.setFont(new Font("Arial", Font.BOLD, 15));
-        pan11.add(dir);
-        
         //Placer label nom
         this.add(pan);
         pan.setVisible(true);
@@ -258,7 +252,7 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
         //placer label contenant texte service
         this.add(pan7);
         pan7.setVisible(true);
-        pan7.setBounds(700, 198, 120, 40);
+        pan7.setBounds(590, 198, 160, 40);
         pan7.setBackground(Color.white);
 
         //placer label contenant checkbox
@@ -270,14 +264,8 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
         //placer label contenant combobox service
         this.add(pan8);
         pan8.setVisible(true);
-        pan8.setBounds(800, 195, 110, 40);
+        pan8.setBounds(750, 195, 80, 40);
         pan8.setBackground(Color.white);
-        
-        //placer label contenant directeur
-        this.add(pan11);
-        pan11.setVisible(true);
-        pan11.setBounds(600, 198, 110, 40);
-        pan11.setBackground(Color.white);
         
         //placer champ texte nom
         this.add(nom);

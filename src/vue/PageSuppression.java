@@ -264,7 +264,7 @@ public class PageSuppression extends JPanel implements ActionListener {
                         JOptionPane.showMessageDialog(this, "La personne n'existe pas.", "Introuvable", JOptionPane.WARNING_MESSAGE);
                     } else {
                         //sinon, si malade trouvé, demande de confirmation avec les infos du patient
-                        int choix = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment supprimmer le patient " + Information1 + " " + Information2 + " ID n°" + nomID.getText(), "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                        int choix = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment supprimmer le patient " + Information1 + " " + Information2 + " ID n°" + nomID.getText() + " ?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                         
                         //si bouton no cliqué, retour au menu
                         if (choix == JOptionPane.NO_OPTION) {
@@ -314,7 +314,7 @@ public class PageSuppression extends JPanel implements ActionListener {
                             JOptionPane.showMessageDialog(this, "La personne n'existe pas.", "Introuvable", JOptionPane.WARNING_MESSAGE);
                         } else {
                             //s'il existe, demande de confirmation à l'utilisateur de supprimer ce patient précis
-                            int choix = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment supprimmer le patient " + nomID.getText() + " " + prénom.getText() + " ID n°" + Information1, "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                            int choix = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment supprimmer le patient " + nomID.getText() + " " + prénom.getText() + " ID n°" + Information1 + " ?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                             
                             //si bouton no cliqué
                             if (choix == JOptionPane.NO_OPTION) {
@@ -380,7 +380,7 @@ public class PageSuppression extends JPanel implements ActionListener {
                     Information3 = BDD.afficherNuméro();
                     
                     //message demandant confirmation pour supprimer ce docteur précis
-                    int choix = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment supprimmer le docteur " + Information2 + " " + Information3 + " ID n°" + nomID.getText(), "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    int choix = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment supprimmer le docteur " + Information2 + " " + Information3 + " ID n°" + nomID.getText() + " ?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     
                     //si bouton non cliqué
                     if (choix == JOptionPane.NO_OPTION) {
@@ -510,7 +510,7 @@ public class PageSuppression extends JPanel implements ActionListener {
                     Information3 = BDD.afficherNuméro();
                     
                     //demande de confirmation d'effacer cet infirmier précis
-                    int choix = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment supprimmer l'infirmier " + Information2 + " " + Information3 + " ID n°" + nomID.getText(), "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    int choix = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment supprimmer l'infirmier " + Information2 + " " + Information3 + " ID n°" + nomID.getText() + " ?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     
                     //i clique sur non
                     if (choix == JOptionPane.NO_OPTION) {
