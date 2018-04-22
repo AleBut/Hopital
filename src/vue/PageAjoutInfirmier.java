@@ -338,8 +338,6 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
                 IDmax = "SELECT MAX(numero_e) FROM employe;";
                 BDD.rechercheInformation(IDmax);
                 String IDnew = BDD.afficherNuméro();
-                IDnew = IDnew.substring(0, IDnew.length() - 1);
-                
                 numérofinal = Integer.parseInt(IDnew)+1;
                 
                 String requeteAjoutInfirmier;
@@ -350,10 +348,6 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
                 //requete ajout d'un employe dans la table employe
                 String requeteAjoutEmploye;
                 requeteAjoutEmploye = "INSERT INTO employe (numero_e, nom_employe, prenom_employe, adresse_employe, telephone_employe) VALUES ('"+infirmier.getNum()+"', '" + infirmier.getNom() + "', '" + infirmier.getPrenom() + "', '" + infirmier.getAdresse() + "', '" + infirmier.getTel() + "');";
-                
-                
-                System.out.println(requeteAjoutInfirmier);
-                System.out.println(requeteAjoutEmploye);
                
                 try {
                     //on execute les requetes pour ajouter cette nouvelle personne dans les 2 tables

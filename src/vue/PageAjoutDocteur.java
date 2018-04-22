@@ -342,10 +342,8 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
                 IDmax = "SELECT MAX(numero_e) FROM employe;";
                 BDD.rechercheInformation(IDmax);
                 String IDnew = BDD.afficherNuméro();
-                IDnew = IDnew.substring(0, IDnew.length() - 1);
                 
                 numérofinal = Integer.parseInt(IDnew)+1;
-                
                
                 //requete d'ajout du docteur dans la tablea docteur
                 String requeteAjoutDocteur;
@@ -355,10 +353,6 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
                 //requete ajout employe dans la table employe
                 String requeteAjoutEmploye;
                 requeteAjoutEmploye = "INSERT INTO employe (numero_e, nom_employe, prenom_employe, adresse_employe, telephone_employe) VALUES ('"+docteur.getNum()+"', '" + docteur.getNom() + "', '" + docteur.getPrenom() + "', '" + docteur.getAdresse() + "', '" + docteur.getTel() + "');";
-                
-                
-                System.out.println(requeteAjoutDocteur);
-                System.out.println(requeteAjoutEmploye);
                 
                 try {
                     //execution des 2 requetes
@@ -375,12 +369,10 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
                         String nbdirecteur;
                         nbdirecteur = "SELECT directeur FROM service WHERE code = '"+service.getSelectedItem()+"';";
                         BDD.rechercheInformation(nbdirecteur);
-                        System.out.println(service.getSelectedItem());
                         String nbnew = BDD.afficherNuméro();
                         nbnew = nbnew.substring(0, nbnew.length() - 1);
                         int nbfinal;
                         nbfinal = Integer.parseInt(nbnew)+1;
-                        System.out.println(nbfinal);
                         //requete
                         requeteAjoutDirecteur="UPDATE service SET directeur = '"+nbfinal+"' WHERE code = '"+service.getSelectedItem()+"';";
                         //execution

@@ -264,7 +264,7 @@ public class PageSuppression extends JPanel implements ActionListener {
                         JOptionPane.showMessageDialog(this, "La personne n'existe pas.", "Introuvable", JOptionPane.WARNING_MESSAGE);
                     } else {
                         //sinon, si malade trouvé, demande de confirmation avec les infos du patient
-                        int choix = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment supprimmer le patient " + Information1 + " " + Information2 + " ID n°" + nomID.getText() + " ?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                        int choix = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment supprimer le patient " + Information1 + " " + Information2 + " ID n°" + nomID.getText() + " ?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                         
                         //si bouton no cliqué, retour au menu
                         if (choix == JOptionPane.NO_OPTION) {
@@ -307,14 +307,13 @@ public class PageSuppression extends JPanel implements ActionListener {
                         lecture1 = "SELECT (numero_m) FROM malade WHERE nom_malade = '" + nomID.getText() + "' AND prenom_malade = '" + prénom.getText() + "';";
                         BDD.rechercheInformation(lecture1);
                         Information1 = BDD.afficherNuméro();
-                        System.out.println(Information1);
                         //s'il n existe pas
                         if (Information1 == null) {
                             //message 
                             JOptionPane.showMessageDialog(this, "La personne n'existe pas.", "Introuvable", JOptionPane.WARNING_MESSAGE);
                         } else {
                             //s'il existe, demande de confirmation à l'utilisateur de supprimer ce patient précis
-                            int choix = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment supprimmer le patient " + nomID.getText() + " " + prénom.getText() + " ID n°" + Information1 + " ?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                            int choix = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment supprimer le patient " + nomID.getText() + " " + prénom.getText() + " ID n°" + Information1 + " ?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                             
                             //si bouton no cliqué
                             if (choix == JOptionPane.NO_OPTION) {
@@ -380,7 +379,7 @@ public class PageSuppression extends JPanel implements ActionListener {
                     Information3 = BDD.afficherNuméro();
                     
                     //message demandant confirmation pour supprimer ce docteur précis
-                    int choix = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment supprimmer le docteur " + Information2 + " " + Information3 + " ID n°" + nomID.getText() + " ?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    int choix = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment supprimer le docteur " + Information2 + " " + Information3 + " ID n°" + nomID.getText() + " ?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     
                     //si bouton non cliqué
                     if (choix == JOptionPane.NO_OPTION) {
@@ -427,12 +426,10 @@ public class PageSuppression extends JPanel implements ActionListener {
                     lecture1 = "SELECT (numero_e) FROM employe WHERE nom_employe = '" + nomID.getText() + "' AND prenom_employe = '" + prénom.getText() + "';";
                     BDD.rechercheInformation(lecture1);
                     Information1 = BDD.afficherNuméro();
-                    System.out.println(Information1);
                     
                     lecture2 = "SELECT (numero) FROM docteur WHERE  numero = '" +Information1 + "' ;";
                     BDD.rechercheInformation(lecture2);
                     Information2 = BDD.afficherNuméro();
-                    System.out.println(Information2);
                     
                     //si aucun employe n'a ce nom et prenom ou que le numéro d'identification correspondant n est pas dans la table docteur
                     if ((Information1 == null) || (Information2 == null)) {
@@ -440,7 +437,7 @@ public class PageSuppression extends JPanel implements ActionListener {
                         JOptionPane.showMessageDialog(this, "La personne n'existe pas ou n'est pas docteur.", "Introuvable", JOptionPane.WARNING_MESSAGE);
                     } else {
                         //sinon message de deamnde de confirmation
-                        int choix = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment supprimmer le docteur " + nomID.getText() + " " + prénom.getText() + " ID n°" + Information1, "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                        int choix = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment supprimer le docteur " + nomID.getText() + " " + prénom.getText() + " ID n°" + Information1 + " ?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                         
                         //si clique sur non
                         if (choix == JOptionPane.NO_OPTION) {
@@ -510,7 +507,7 @@ public class PageSuppression extends JPanel implements ActionListener {
                     Information3 = BDD.afficherNuméro();
                     
                     //demande de confirmation d'effacer cet infirmier précis
-                    int choix = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment supprimmer l'infirmier " + Information2 + " " + Information3 + " ID n°" + nomID.getText() + " ?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    int choix = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment supprimer l'infirmier " + Information2 + " " + Information3 + " ID n°" + nomID.getText() + " ?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     
                     //i clique sur non
                     if (choix == JOptionPane.NO_OPTION) {
@@ -558,18 +555,16 @@ public class PageSuppression extends JPanel implements ActionListener {
                     lecture1 = "SELECT (numero_e) FROM employe WHERE nom_employe = '" + nomID.getText() + "' AND prenom_employe = '" + prénom.getText() + "';";
                     BDD.rechercheInformation(lecture1);
                     Information1 = BDD.afficherNuméro();
-                    System.out.println(Information1);
                     
                     lecture2 = "SELECT (numero) FROM infirmier WHERE  numero = '" +Information1 + "' ;";
                     BDD.rechercheInformation(lecture2);
                     Information2 = BDD.afficherNuméro();
-                    System.out.println(Information2);
                     //si on ne trouve pas le nom et prenom ou si on ne trouve pas le numero
                     if ((Information1 == null) || (Information2 == null)) {
                         JOptionPane.showMessageDialog(this, "La personne n'existe pas ou n'est pas infirmier.", "Introuvable", JOptionPane.WARNING_MESSAGE);
                     } else {
                         //sinon on demande confirmation
-                        int choix = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment supprimmer l'infirmier " + nomID.getText() + " " + prénom.getText() + " ID n°" + Information1, "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                        int choix = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment supprimer l'infirmier " + nomID.getText() + " " + prénom.getText() + " ID n°" + Information1 + " ?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                         //si on clique sur non
                         if (choix == JOptionPane.NO_OPTION) {
                             //retour menu

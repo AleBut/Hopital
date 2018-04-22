@@ -327,10 +327,8 @@ public class PageAjoutPatient extends JPanel implements ActionListener {
                 BDD.rechercheInformation(blindage);
                 //BDD.afficherInformations();
                 String num = BDD.afficherNuméro();
-                num = num.substring(0, num.length() - 1);
                 
                 int numérofinal = Integer.parseInt(num)+1;
-                System.out.println(numérofinal);
                 String dateString = datePicker.getJFormattedTextField().getText();
                     
                     patient=new Patient(numérofinal,nom.getText(),prénom.getText(),adresse.getText(),tel.getText(),mutuelle.getText(),dateString);
@@ -338,7 +336,6 @@ public class PageAjoutPatient extends JPanel implements ActionListener {
                 
                 //requete pour ajouter un nouveau malade avec les informations saisies
                 requeteajout = "INSERT INTO malade (numero_m, nom_malade, prenom_malade, adresse_malade, tel_malade, mutuelle, date_arrive) VALUES ('"+patient.getNum()+"', '" + patient.getNom() + "', '" + patient.getPrenom() + "', '" + patient.getAdresse() + "', '" + patient.getTel() + "', '" + patient.getMutuelle() + "','" + patient.getDate() + "');";
-                System.out.println(requeteajout);
                
                 try {
                     //ajout du patient
