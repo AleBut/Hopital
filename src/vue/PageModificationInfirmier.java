@@ -43,9 +43,6 @@ public class PageModificationInfirmier extends JPanel implements ActionListener 
     // container
     private JPanel container;
     
-   //Création objet infirmier
-    private Infirmier infirmier;
-    
 
     //JLabel
     //communs aux 2 types

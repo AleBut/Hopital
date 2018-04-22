@@ -44,8 +44,6 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
     // container
     private JPanel container;
     
-    private Docteur docteur;
-    
 
     //JLabel
     //communs aux 2 types

@@ -20,7 +20,6 @@ public class GestionBase {
     
     // Objets utilisés pour la connexion locale et distante
     private Connexion co;
-    private static SSHTunnel ssh;
     
     // Variables sur la connexion
     private String login;

@@ -45,9 +45,6 @@ public class PageModificationPatient extends JPanel implements ActionListener {
     // Connexion vers la base de donnée
     private GestionBase BDD;
 
-    //nouvel objet malade
-    private Patient patient;
-
     // container
     private JPanel container;
 
