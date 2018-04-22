@@ -38,6 +38,11 @@ public class PageConnexion extends JPanel implements ActionListener {
     
     // Bouton de connexion
     private JButton bouton;
+    
+    /**
+	 * Crée un Jpanel pour la Connexion
+	 * @param _hub Hub graphique lançant les différentes pages
+	 */
 
     public PageConnexion(HubGraph _hub) { // constructeur
         // Hub graphique
@@ -60,7 +65,9 @@ public class PageConnexion extends JPanel implements ActionListener {
         // Construction graphique de la fenetre dans le Jpanel container.
         constructionGraphique();   
     }
-    
+     /**
+	 * Construis graphiquement la page 
+     */
     private void constructionGraphique()
     {
         // Titre de bienvenue
@@ -118,7 +125,11 @@ public class PageConnexion extends JPanel implements ActionListener {
         this.setBackground(Color.white); // Définir la couleur de l'arrière plan
         this.add(container);
     }
-
+    
+    /**
+	 * @param e L'action event si l'utilisateur clique sur le bouton de validation
+         * si informations correctes, lancement du menu
+	 */
     @Override
     public void actionPerformed(ActionEvent e)
     {

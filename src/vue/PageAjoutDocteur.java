@@ -76,6 +76,12 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
     // Chargement de l'image
     private JLabel image;
 
+    /**
+	 * Crée un JPanel pour ajouter un docteur
+	 * @param _BDD Base de donnée 
+	 * @param _hub Hub graphique lançant les différentes pages
+	 * @throws ParseException Exceptions
+	 */
     public PageAjoutDocteur(HubGraph _hub, GestionBase _BDD) throws ParseException {
         // Hub graphique
         hub = _hub;
@@ -142,7 +148,10 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
         this.add(container);
 
     }
-
+    
+    /**
+	 * Construis graphiquement la page
+    */
     public void constructionGraphique() {
         // Titre de bienvenue
         JLabel titre = new JLabel("Recrutement Docteur : ");
@@ -307,7 +316,11 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
         bouton.addActionListener(this);
 
     }
-
+    
+    /**
+	 * Vérifie que les arguments entrés par l'utilisateur sont valides
+	 * @param ae L'action event si l'utilisateur clique sur le bouton de validation
+	 */
     @Override
     public void actionPerformed(ActionEvent ae) {
         Object source = ae.getSource();

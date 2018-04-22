@@ -76,7 +76,13 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
 
     //bouton ajouter un employé
     private JButton bouton;
-
+    
+    /**
+	 * Crée un JPanel pour ajouter un infirmier
+	 * @param _BDD Base de donnée 
+	 * @param _hub Hub graphique lançant les différentes pages
+	 * @throws ParseException Exceptions
+	 */
     public PageAjoutInfirmier(HubGraph _hub, GestionBase _BDD) throws ParseException {
         // Hub graphique
         hub = _hub;
@@ -133,7 +139,10 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
         this.add(container);
 
     }
-
+    
+     /**
+	 * Construis graphiquement la page
+    */
     public void constructionGraphique() {
         // Titre de bienvenue
         JLabel titre = new JLabel("Recrutement Infirmier : ");
@@ -291,7 +300,11 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
         bouton.setBounds(440, 450, 120, 80);
         bouton.addActionListener(this);
     }
-
+    
+    /**
+	 * Vérifie que les arguments entrés par l'utilisateur sont valides
+	 * @param ae L'action event si l'utilisateur clique sur le bouton de validation
+	 */
     @Override
     public void actionPerformed(ActionEvent ae) {
         Object source = ae.getSource();

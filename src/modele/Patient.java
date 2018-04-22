@@ -22,7 +22,7 @@ public class Patient {
     private String date;
 	private String service;
     
-    /**constructeur de Malade*/
+    /**constructeur de Patient*/
     public Patient(int m_numéro, String m_nom, String m_prénom, String m_adresse, String m_telephone, String m_mutuelle, String m_date, String m_service){
         numero=m_numéro;
         nom=m_nom;

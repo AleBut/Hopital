@@ -58,6 +58,13 @@ public class PageSuppression extends JPanel implements ActionListener {
 
     // Chargement de l'image
     private JLabel image;
+    
+    /**
+	 * Crée un JPanel pour supprimer une personne de la BDD
+	 * @param _BDD Base de donnée 
+	 * @param _hub Hub graphique lançant les différentes pages
+	 * @throws ParseException Exceptions
+	 */
 
     public PageSuppression(HubGraph _hub, GestionBase _BDD) throws ParseException {
         // Hub graphique
@@ -106,6 +113,9 @@ public class PageSuppression extends JPanel implements ActionListener {
 
     }
 
+    /**
+	 * Construis graphiquement la page 
+     */
     private void constructionGraphique() {
         // Titre de bienvenue
         JLabel titre = new JLabel("Gestionnaire de suppression : ");
@@ -214,7 +224,11 @@ public class PageSuppression extends JPanel implements ActionListener {
         bouton.addActionListener(this);
 
     }
-
+    
+    /**
+	 * Vérifie que les arguments entrés par l'utilisateur sont valides
+	 * @param ae L'action event si l'utilisateur clique sur le bouton de validation
+	 */
     @Override
     public void actionPerformed(ActionEvent ae)
 	{

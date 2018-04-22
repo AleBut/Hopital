@@ -83,7 +83,13 @@ public class PageAjoutPatient extends JPanel implements ActionListener {
     private JButton bouton;
 
     private String requeteajout;
-
+    
+    /**
+	 * Crée un JPanel pour ajouter un patient
+	 * @param _BDD Base de donnée 
+	 * @param _hub Hub graphique lançant les différentes pages
+	 * @throws ParseException Exceptions
+	 */
     public PageAjoutPatient(HubGraph _hub, GestionBase _BDD) throws ParseException {
         // Hub graphique
         hub = _hub;
@@ -145,7 +151,10 @@ public class PageAjoutPatient extends JPanel implements ActionListener {
         this.add(container);
 
     }
-
+    
+    /**
+	 * Construis graphiquement la page
+    */
     private void constructionGraphique() {
         // Titre de bienvenue
         JLabel titre = new JLabel("Formulaire : ");
@@ -298,7 +307,11 @@ public class PageAjoutPatient extends JPanel implements ActionListener {
     }
     
     
-
+    
+    /**
+	 * Vérifie que les arguments entrés par l'utilisateur sont valides
+	 * @param ae L'action event si l'utilisateur clique sur le bouton de validation
+	 */
     @Override
     public void actionPerformed(ActionEvent ae) {
         Object source = ae.getSource();
