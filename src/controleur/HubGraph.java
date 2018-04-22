@@ -5,17 +5,30 @@
  */
 package controleur;
 
+import modele.Docteur;
+import modele.Infirmier;
+import modele.Patient;
+
+import vue.MenuBar;
+import vue.PageAjoutDocteur;
+import vue.PageAjoutInfirmier;
+import vue.PageAjoutPatient;
+import vue.PageConnexion;
+import vue.PageMenu;
+import vue.PageModification;
+import vue.PageModificationDocteur;
+import vue.PageModificationInfirmier;
+import vue.PageModificationPatient;
+import vue.PageRecherche;
+import vue.PageStatistique;
+import vue.PageSuppression;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.*;
-import modele.Docteur;
-import modele.Infirmier;
-import modele.Patient;
-
-import vue.*;
+import javax.swing.JFrame;
 
 /**
  *

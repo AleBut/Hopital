@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Valentin
+ * @author Valentin Giot
  */
 public class PageStatistique extends JPanel {    
     // Connexion vers la base de donnée
@@ -37,14 +37,17 @@ public class PageStatistique extends JPanel {
     {
         this.setLayout(null);
 		
+		// On crée sur des JPanel les graphiques
 		JPanel camembert = new Camembert("Origine des patients", BDD);
 		JPanel graphique = new GraphiqueLineaire("Arrivée des malades en fonction du temps", BDD);
 		JPanel diagramme = new DiagrammeBaton("Répartition des ressources par service", BDD);
 		
+		// On définit leur position
 		camembert.setBounds(0, 0, 490, 590);
 		graphique.setBounds(494, 0, 492, 295);
 		diagramme.setBounds(494, 295, 492, 295);
 		
+		// On les ajoute à la fenêtre
 		this.add(camembert);
 		this.add(graphique);
 		this.add(diagramme);

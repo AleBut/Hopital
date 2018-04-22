@@ -5,8 +5,11 @@
  */
 package vue;
 
+import modele.Infirmier;
+
 import controleur.GestionBase;
 import controleur.HubGraph;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -24,7 +27,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
-import modele.Infirmier;
 /**
  *
  * @author solene
@@ -116,7 +118,7 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
         rotation.addItem("JOUR");
         rotation.addItem("NUIT");
 
-	//Textfield	
+		//Textfield	
         nom = new JTextField("");
         prénom = new JTextField("");
         adresse = new JTextField("");

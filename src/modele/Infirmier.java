@@ -7,13 +7,24 @@ package modele;
 
 /**
  *
- * @author Alex1
+ * @author Alexis Butin et Solene Consten
  */
 public class Infirmier extends Employe {
     private String codeService;
     private String rotation;
     private String salaire;
     
+	/**
+	 * Constructeur infirmier
+	 * @param i_numéro Numéro ID
+	 * @param i_nom Nom
+	 * @param i_prénom Prénom
+	 * @param i_adresse Adresse
+	 * @param i_telephone Téléphone
+	 * @param i_codeService Code du service affecté
+	 * @param i_rotation Rotation
+	 * @param i_salaire Salaire
+	 */
     public Infirmier(int i_numéro, String i_nom, String i_prénom, String i_adresse, String i_telephone, String i_codeService, String i_rotation, String i_salaire){
         super(i_numéro, i_nom, i_prénom, i_adresse, i_telephone);
         codeService=i_codeService;

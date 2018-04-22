@@ -7,18 +7,37 @@ package modele;
 
 /**
  *
- * @author Alex1
+ * @author Alexis Butin et Solene Consten
  */
 public class Docteur extends Employe {
     private String specialite;
 	private String directeurService;
 	
+	/**
+	 * Premier constructeur
+	 * @param d_numéro Numéro idendifiant
+	 * @param d_nom Nom
+	 * @param d_prénom Prenom
+	 * @param d_adresse Adresse
+	 * @param d_telephone Telephone
+	 * @param d_specialite Spécialité
+	 */
 	public Docteur(int d_numéro, String d_nom, String d_prénom, String d_adresse, String d_telephone, String d_specialite){
         super(d_numéro, d_nom, d_prénom, d_adresse, d_telephone);
         specialite=d_specialite;
 		directeurService = "";
     }
     
+	/**
+	 * Deuxième constructeur
+	 * @param d_numéro Numéro idendifiant
+	 * @param d_nom Nom
+	 * @param d_prénom Prenom
+	 * @param d_adresse Adresse
+	 * @param d_telephone Telephone
+	 * @param d_specialite Spécialité
+	 * @param d_directeurService Service dirigé
+	 */
     public Docteur(int d_numéro, String d_nom, String d_prénom, String d_adresse, String d_telephone, String d_specialite, String d_directeurService){
         super(d_numéro, d_nom, d_prénom, d_adresse, d_telephone);
         specialite=d_specialite;

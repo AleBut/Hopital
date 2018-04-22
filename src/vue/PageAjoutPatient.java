@@ -5,8 +5,11 @@
  */
 package vue;
 
+import modele.Patient;
+
 import controleur.GestionBase;
 import controleur.HubGraph;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -28,7 +31,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
-import modele.Patient;
 
 /**
  *

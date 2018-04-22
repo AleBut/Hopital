@@ -18,7 +18,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
- * @author Valentin
+ * @author Valentin Giot et Alexis Butin
  */
 public class DiagrammeBaton extends JPanel {
 	

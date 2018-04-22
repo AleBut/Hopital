@@ -6,8 +6,12 @@
 package vue;
 
 import controleur.GestionBase;
-import javax.swing.*;
-import java.awt.*;
+
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *

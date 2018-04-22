@@ -9,7 +9,7 @@ package modele;
 
 /**
  *
- * @author Alex1
+ * @author Alexis Butin et Solene Consten
  */
 public class Patient {
     /**attributs*/
@@ -22,7 +22,17 @@ public class Patient {
     private String date;
 	private String service;
     
-    /**constructeur de Patient*/
+    /**
+	 * Premier constructeur du patient
+	 * @param m_numéro Numéro ID
+	 * @param m_nom Nom
+	 * @param m_prénom Prénom
+	 * @param m_adresse Adresse
+	 * @param m_telephone Téléphone
+	 * @param m_mutuelle Mutuelle
+	 * @param m_date Date
+	 * @param m_service Service
+	 */
     public Patient(int m_numéro, String m_nom, String m_prénom, String m_adresse, String m_telephone, String m_mutuelle, String m_date, String m_service){
         numero=m_numéro;
         nom=m_nom;
@@ -34,6 +44,16 @@ public class Patient {
         service = m_service;
     }
 	
+	/**
+	 * Deuxième constructeur du patient
+	 * @param m_numéro Numéro ID
+	 * @param m_nom Nom
+	 * @param m_prénom Prénom
+	 * @param m_adresse Adresse
+	 * @param m_telephone Téléphone
+	 * @param m_mutuelle Mutuelle
+	 * @param m_date Date
+	 */
 	public Patient(int m_numéro, String m_nom, String m_prénom, String m_adresse, String m_telephone, String m_mutuelle, String m_date){
         numero=m_numéro;
         nom=m_nom;

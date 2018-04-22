@@ -14,7 +14,7 @@ import javax.swing.*;
 
 /**
  *
- * @author Alex1
+ * @author Alexis Butin et Benoit Prat
  */
 public class ResultatRecherche extends JPanel {
 	// Connexion vers la base de donnée

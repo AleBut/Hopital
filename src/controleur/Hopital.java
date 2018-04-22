@@ -9,18 +9,18 @@ import java.sql.SQLException;
 
 /**
  *
- * @author Alex1
+ * @author Alexis Butin, Benoit Prat, Solene Consten, Valentin Giot
  *
  */
 public class Hopital {
-
-    /**
-     * @param args the command line arguments
-     * @throws java.sql.SQLException
-     * @throws java.lang.ClassNotFoundException
-     */
     private static HubGraph hub;
-
+	
+	/**
+	 * Execute le programme de démonstration
+	* @param args the command line arguments
+	* @throws java.sql.SQLException
+	* @throws java.lang.ClassNotFoundException
+	*/
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
 
         hub = new HubGraph();

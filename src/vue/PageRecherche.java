@@ -6,6 +6,7 @@
 package vue;
 
 import controleur.GestionBase;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -21,14 +22,9 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author Alex1
+ * @author Alexis Butin et Benoit Prat
  */
 public class PageRecherche extends JPanel {
-    
-    
-         /**
-	 * Déclaration des variables
-	 */
     
     // Connexion vers la base de donnée
     private GestionBase BDD;
@@ -69,8 +65,6 @@ public class PageRecherche extends JPanel {
          * @param f est le string de FROM par défaut
          * @param w est le string de WHERE par défaut
 	 */
-    
-
     public PageRecherche(GestionBase _BDD, String tabArgument [], String s [], String f, String w) {
         
 		// Base de donnée
@@ -171,7 +165,7 @@ public class PageRecherche extends JPanel {
     class ValiderRecherche implements ActionListener //Redéfinition de la méthode actionPerformed()
 	{
         
-          /**
+	/**
 	 * Lance la recherche correspondante
 	 * @param e L'action event si l'utilisateur clique sur le bouton de recherche
 	 */
@@ -265,7 +259,7 @@ public class PageRecherche extends JPanel {
     class ToutCocher implements ActionListener //Redéfinition de la méthode actionPerformed()
     {
         
-        /**
+	/**
 	 * Coche ou décoche tous les éléments de la liste
 	 * @param e L'action event si l'utilisateur clique sur le bouton de recherche
 	 */

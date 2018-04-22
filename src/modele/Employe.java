@@ -7,7 +7,7 @@ package modele;
 
 /**
  *
- * @author Alex1
+ * @author Alexis Butin et Solene Consten
  */
 public class Employe {
     // Attributs
@@ -17,41 +17,19 @@ public class Employe {
     protected String adresse;
     protected String telephone;
     
-    /**constructeur de employe*/
+    /**
+	 * Constructeur objet emp)ployé
+	 * @param e_numéro Numéro ID
+	 * @param e_nom Nom
+	 * @param e_prénom Prenom
+	 * @param e_adresse Adresse
+	 * @param e_telephone Téléphone
+	 */
     public Employe(int e_numéro, String e_nom, String e_prénom, String e_adresse, String e_telephone){
         numero=e_numéro;
         nom=e_nom;
         prenom=e_prénom;
         adresse=e_adresse;
-        telephone=e_telephone;
-        
-        
-        
+        telephone=e_telephone;    
     }
-    
-    /**getter de num employe*/
-    /*public int getNum(){
-        return numero;
-    }*/
-    
-    /**getter de nom employe*/
-   /* public String getNom(){
-        return nom;
-    }*/
-    
-    /**getter de prenom employe*/
-    /*public String getPrenom(){
-        return prenom;
-    }*/
-    
-    /**getter de adresse employe*/
-    /*public String getAdresse(){
-        return adresse;
-    }*/
-    
-    /**getter du tel employe*/
-    /*public String getTel(){
-        return telephone;
-    }*/
-  
 }
