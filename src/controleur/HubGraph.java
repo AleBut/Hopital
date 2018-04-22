@@ -306,7 +306,7 @@ public class HubGraph extends JFrame implements ActionListener
 	 */
     public void launchPageRechercheService()
     {
-        String tabArgument [] = {"Code", "Nom du ervice", "Batiment", "Directeur"};
+        String tabArgument [] = {"Code", "Nom du service", "Batiment", "Directeur"};
         String select [] = {"code", "nom_service", "batiment", "directeur"};
 		
         String f="FROM service "; 

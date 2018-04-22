@@ -35,7 +35,7 @@ public class PageMenu extends JPanel {
         titre.setFont(new Font("Arial", Font.BOLD, 24)); // Attribuer la police au titre
         
          // Image
-        JLabel image = new JLabel(new ImageIcon("images\\hopitalAnime.gif"));
+        JLabel image = new JLabel(new ImageIcon(ClassLoader.getSystemResource("images/hopitalAnime.gif")));
 		
 		// Panel contenant le titre
 		JPanel p1 = new JPanel();

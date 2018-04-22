@@ -145,7 +145,7 @@ public class PageModificationInfirmier extends JPanel implements ActionListener 
 		sal.setText(inf.getSalaire());
         
         //image
-        image = new JLabel(new ImageIcon("images\\infirmier.png"));
+        image = new JLabel(new ImageIcon(ClassLoader.getSystemResource("images/infirmier.png")));
         
         //bouton 
           bouton=new JButton("Modifier");

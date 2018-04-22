@@ -142,7 +142,7 @@ public class PageModificationPatient extends JPanel implements ActionListener {
 		tel.setText(pat.getTel());
       
         //image
-        image = new JLabel(new ImageIcon("images\\form.png"));
+        image = new JLabel(new ImageIcon(ClassLoader.getSystemResource("images/form.png")));
         //Creéation du bouton
         bouton = new JButton("Modifier");
 

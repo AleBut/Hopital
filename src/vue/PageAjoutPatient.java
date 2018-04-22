@@ -137,7 +137,7 @@ public class PageAjoutPatient extends JPanel implements ActionListener {
         tel = new JFormattedTextField(format);
       
         //image
-        image = new JLabel(new ImageIcon("images\\ajouter.jpg"));
+        image = new JLabel(new ImageIcon(ClassLoader.getSystemResource("images/ajouter.jpg")));
         //Creéation du bouton
         bouton = new JButton("Ajouter");
 

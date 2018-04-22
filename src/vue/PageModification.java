@@ -103,7 +103,7 @@ public class PageModification extends JPanel implements ActionListener {
         prénom = new JTextField("");
 
         //image
-        image = new JLabel(new ImageIcon("images\\modification.png"));
+        image = new JLabel(new ImageIcon(ClassLoader.getSystemResource("images/modification.png")));
 
         // Construction graphique de la fenetre dans le Jpanel container.
         constructionGraphique();

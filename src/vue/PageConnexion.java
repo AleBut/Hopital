@@ -104,7 +104,7 @@ public class PageConnexion extends JPanel implements ActionListener {
         bouton.addActionListener(this);
         
         // Chargement de l'image
-        JLabel image = new JLabel(new ImageIcon("images\\Cad.png"));
+        JLabel image = new JLabel(new ImageIcon(ClassLoader.getSystemResource("images/Cad.png")));
         
         // Box de mise en forme
         Box miseEnForme = Box.createVerticalBox();

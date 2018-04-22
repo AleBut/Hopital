@@ -102,7 +102,7 @@ public class PageSuppression extends JPanel implements ActionListener {
         prénom = new JTextField("");
 
         //image
-        image = new JLabel(new ImageIcon("images\\suppression.png"));
+        image = new JLabel(new ImageIcon(ClassLoader.getSystemResource("images/suppression.png")));
 
         // Construction graphique de la fenetre dans le Jpanel container.
         constructionGraphique();

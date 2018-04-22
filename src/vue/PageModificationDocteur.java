@@ -148,7 +148,7 @@ public class PageModificationDocteur extends JPanel implements ActionListener{
         
         
         //image
-        image = new JLabel(new ImageIcon("images\\medecin.png"));
+        image = new JLabel(new ImageIcon(ClassLoader.getSystemResource("images/medecin.png")));
         
         //bouton 
           bouton=new JButton("Modifier");
