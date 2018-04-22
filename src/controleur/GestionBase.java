@@ -120,7 +120,10 @@ public class GestionBase {
 		return array;
 	}
     
-	
+	/**
+	 * 
+	 * @return une information de la table
+	 */
     public String afficherNuméro() {
         String max = null;
         int maxint = 0;

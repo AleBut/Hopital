@@ -116,7 +116,7 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
         rotation.addItem("JOUR");
         rotation.addItem("NUIT");
 
-		
+	//Textfield	
         nom = new JTextField("");
         prénom = new JTextField("");
         adresse = new JTextField("");
@@ -308,17 +308,17 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ae) {
         Object source = ae.getSource();
-        
+        //si on appuie sur le bouton
         if (source == bouton)
 		{
             //test pour vérifier que tous les champs sont remplis
             if (("".equals(nom.getText())) || ("".equals(prénom.getText())) || ("".equals(tel.getText())) || ("".equals(adresse.getText()))||("".equals(salaire.getText()))) {
-
+                // si vide on affiche message
                 JOptionPane.showMessageDialog(this, "Un champ est vide.", "Erreur", JOptionPane.WARNING_MESSAGE);
 
-
+            //sinon processus d'ajout
             } else {
-                
+                //on blinde l'ajout d'infirmier en vérifiant qu'aucun autre employé possède même nom de famille + prénom
                 String blindageNom = "SELECT (nom_employe) FROM employe WHERE nom_employe= '"+nom.getText()+"';";
                 BDD.rechercheInformation(blindageNom);
                 String Information1 = BDD.afficherNuméro();
@@ -326,13 +326,13 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
                 BDD.rechercheInformation(blindagePrenom);
                 String Information2 = BDD.afficherNuméro();
                 
+                //si aucun nom de famille ou prénom en commun OU nom de famille en commun mais pas prénom OU prénom en commun mais pas nom de famille = valide
                 if ((Information1==null)&&(Information2==null)||(((null)!=Information1)&&((null)==Information2))||(((null)!=Information2)&&((null)==Information1)))
                 {
-
+                
+                    //attribution d'un numero d'identification unique parmis les employés (on prend num max +1)
                 int numérofinal;
-                
                 String IDmax;
-                
                 IDmax = "SELECT MAX(numero_e) FROM employe;";
                 BDD.rechercheInformation(IDmax);
                 String IDnew = BDD.afficherNuméro();
@@ -343,9 +343,9 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
                 String requeteAjoutInfirmier;
                 
                 infirmier=new Infirmier(numérofinal,nom.getText(),prénom.getText(),adresse.getText(),tel.getText(), (String) service.getSelectedItem(), (String) rotation.getSelectedItem(), sal.getText());
-                
+                //requete de l'ajout d'un infirmier dans la table infirmier
                 requeteAjoutInfirmier = "INSERT INTO infirmier (numero, code_service, rotation, salaire) VALUES ('"+infirmier.getNum()+"', '" + infirmier.getService() + "', '" + infirmier.getRotation() + "','" + infirmier.getSalaire() + "');";
-                
+                //requete ajout d'un employe dans la table employe
                 String requeteAjoutEmploye;
                 requeteAjoutEmploye = "INSERT INTO employe (numero_e, nom_employe, prenom_employe, adresse_employe, telephone_employe) VALUES ('"+infirmier.getNum()+"', '" + infirmier.getNom() + "', '" + infirmier.getPrenom() + "', '" + infirmier.getAdresse() + "', '" + infirmier.getTel() + "');";
                 
@@ -354,8 +354,10 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
                 System.out.println(requeteAjoutEmploye);
                
                 try {
+                    //on execute les requetes pour ajouter cette nouvelle personne dans les 2 tables
                     BDD.executerRequete(requeteAjoutInfirmier);
                     BDD.executerRequete(requeteAjoutEmploye);
+                    //message de confirmation
                     JOptionPane.showMessageDialog(this, "L'infirmier a bien été ajouté.", "Formulaire valide", JOptionPane.INFORMATION_MESSAGE);
                     
                     
@@ -368,7 +370,7 @@ public class PageAjoutInfirmier extends JPanel implements ActionListener {
 
                 }
                 
-                
+                //sinon si un employe possède le meme nom de famille et prenom, formulaire non valide
                 else if ((((null)!=Information1)&&(((null)!=Information2)))){
                     JOptionPane.showMessageDialog(this, "Un employé possède déjà ce nom de famille et prénom.", "Formulaire non valide", JOptionPane.ERROR_MESSAGE);
                 }

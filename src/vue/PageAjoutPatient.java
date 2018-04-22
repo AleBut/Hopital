@@ -110,16 +110,10 @@ public class PageAjoutPatient extends JPanel implements ActionListener {
         dateArrivée= new JLabel("Date d'arrivée : ");
         
         //date
-        
-       
         UtilDateModel model=new UtilDateModel();
         datePanel=new JDatePanelImpl(model);
         datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
 
-        
-        
-        
-        
         //Création des combobox
         maladie = new JComboBox();
         maladie.addItem("REA");
@@ -320,11 +314,12 @@ public class PageAjoutPatient extends JPanel implements ActionListener {
 
             //test pour vérifier que tous les champs sont remplis
             if (("".equals(nom.getText())) || ("".equals(prénom.getText())) || ("".equals(tel.getText())) || ("".equals(adresse.getText())) || ("".equals(mutuelle.getText()))) {
-
+                 //si vide un message s'affiche
                 JOptionPane.showMessageDialog(this, "Un champ est vide.", "Erreur", JOptionPane.WARNING_MESSAGE);
-
+            //sinon processus d'ajout
             } else {
-
+                
+                //attribuer un numéro unique pour chaque patient (on prend la max+1)
                 String blindage;
                 blindage = "SELECT MAX(numero_m) FROM malade;";
                 BDD.rechercheInformation(blindage);
@@ -335,21 +330,24 @@ public class PageAjoutPatient extends JPanel implements ActionListener {
                 int numérofinal = Integer.parseInt(num)+1;
                 System.out.println(numérofinal);
                 String dateString = datePicker.getJFormattedTextField().getText();
-              
+                    
                     patient=new Patient(numérofinal,nom.getText(),prénom.getText(),adresse.getText(),tel.getText(),mutuelle.getText(),dateString);
                     
                 
-                
+                //requete pour ajouter un nouveau malade avec les informations saisies
                 requeteajout = "INSERT INTO malade (numero_m, nom_malade, prenom_malade, adresse_malade, tel_malade, mutuelle, date_arrive) VALUES ('"+patient.getNum()+"', '" + patient.getNom() + "', '" + patient.getPrenom() + "', '" + patient.getAdresse() + "', '" + patient.getTel() + "', '" + patient.getMutuelle() + "','" + patient.getDate() + "');";
                 System.out.println(requeteajout);
                
                 try {
+                    //ajout du patient
                     BDD.executerRequete(requeteajout);
+                    //message informant l'utilisateur que le patient est ajouté
                     JOptionPane.showMessageDialog(this, "Le patient a bien été ajouté.", "Formulaire valide", JOptionPane.INFORMATION_MESSAGE);
 
                 } catch (SQLException ex) {
                     Logger.getLogger(PageAjoutPatient.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                //retour au menu
                 hub.launchPageMenu(BDD);
 
             }

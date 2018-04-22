@@ -233,17 +233,18 @@ public class PageSuppression extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent ae)
 	{
         Object source = ae.getSource();
-
+         //si on appuie sur le bouton...
         if (source == bouton) {
-
+            //si la personne sélectionnée est de type patient...
             if (typePersonne.getSelectedItem() == "Patient") {
+                //si on le cherche par numéro d'identification...
                 if (info.getSelectedItem() == "ID") {
                     //test pour vérifier que tous les champs sont remplis
                     if (("".equals(nomID.getText())))
 					{
                         JOptionPane.showMessageDialog(this, "Le champ ID est vide.", "Erreur", JOptionPane.WARNING_MESSAGE);
                     }
-
+                    //recherche du patient dans la table malade
                     String lecture1;
                     String lecture2;
                     String Information1;
@@ -255,38 +256,48 @@ public class PageSuppression extends JPanel implements ActionListener {
                     lecture2 = "SELECT (prenom_malade) FROM malade WHERE numero_m = '" + nomID.getText() + "';";
                     BDD.rechercheInformation(lecture2);
                     Information2 = BDD.afficherNuméro();
-
+                    
+                    //si information non présente dans la table
                     if ((Information1 == null) || (Information2 == null)) {
+                        //message 
                         JOptionPane.showMessageDialog(this, "La personne n'existe pas.", "Introuvable", JOptionPane.WARNING_MESSAGE);
                     } else {
+                        //sinon, si malade trouvé, demande de confirmation avec les infos du patient
                         int choix = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment supprimmer le patient " + Information1 + " " + Information2 + " ID n°" + nomID.getText(), "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
+                        
+                        //si bouton no cliqué, retour au menu
                         if (choix == JOptionPane.NO_OPTION) {
                             hub.launchPageMenu(BDD);
+                            //sinon si oui cliqué, suppression puis retour au menu
                         } else if (choix == JOptionPane.YES_OPTION) {
+                            //requete de suppression
                             String SuppressionMalade;
                             SuppressionMalade = "DELETE FROM malade WHERE numero_m = '" + nomID.getText() + "';";
 
                             try {
+                                //execution requete
                                 BDD.executerRequete(SuppressionMalade);
+                                //message de fin
                                 JOptionPane.showMessageDialog(this, "Le patient a bien été supprimé.", "Formulaire valide", JOptionPane.INFORMATION_MESSAGE);
 
                             } catch (SQLException ex) {
                                 Logger.getLogger(PageSuppression.class.getName()).log(Level.SEVERE, null, ex);
                             }
+                            //retour au menu
                             hub.launchPageMenu(BDD);
                         }
                     }
 
                 }
-
+                //si on a choisi de chercher le patient par son nom et prénom...
                 if (info.getSelectedItem() == "Nom Prénom") {
                     //test pour vérifier que tous les champs sont remplis
                     if (("".equals(nomID.getText())) || ("".equals(prénom.getText()))) {
-
+                        //message
                         JOptionPane.showMessageDialog(this, "Un champ est vide.", "Erreur", JOptionPane.WARNING_MESSAGE);
 
                     } else {
+                        //on cherche si le patient existe
                         String lecture1;
                         String lecture2;
                         String Information1;
@@ -296,24 +307,33 @@ public class PageSuppression extends JPanel implements ActionListener {
                         BDD.rechercheInformation(lecture1);
                         Information1 = BDD.afficherNuméro();
                         System.out.println(Information1);
+                        //s'il n existe pas
                         if (Information1 == null) {
+                            //message 
                             JOptionPane.showMessageDialog(this, "La personne n'existe pas.", "Introuvable", JOptionPane.WARNING_MESSAGE);
                         } else {
+                            //s'il existe, demande de confirmation à l'utilisateur de supprimer ce patient précis
                             int choix = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment supprimmer le patient " + nomID.getText() + " " + prénom.getText() + " ID n°" + Information1, "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
+                            
+                            //si bouton no cliqué
                             if (choix == JOptionPane.NO_OPTION) {
+                                //lancer menu
                                 hub.launchPageMenu(BDD);
+                                //sinon si bouton oui cliqué
                             } else if (choix == JOptionPane.YES_OPTION) {
+                                //requête de suppresion
                                 String SuppressionMalade;
                                 SuppressionMalade = "DELETE FROM malade WHERE nom_malade = '" + nomID.getText() + "' AND prenom_malade = '" + prénom.getText() + "';";
 
                                 try {
+                                    //execution requête
                                     BDD.executerRequete(SuppressionMalade);
                                     JOptionPane.showMessageDialog(this, "Le patient a bien été supprimé.", "Formulaire valide", JOptionPane.INFORMATION_MESSAGE);
 
                                 } catch (SQLException ex) {
                                     Logger.getLogger(PageSuppression.class.getName()).log(Level.SEVERE, null, ex);
                                 }
+                                //lancer menu
                                 hub.launchPageMenu(BDD);
                             }
                         }
@@ -323,8 +343,9 @@ public class PageSuppression extends JPanel implements ActionListener {
             }
 
         }
-
+        //si personne à supprimer est un docteur
         if (typePersonne.getSelectedItem() == "Docteur") {
+            //si on choisit de le supprimer par son numéro d'identification
             if (info.getSelectedItem() == "ID") {
                 //test pour vérifier que tous les champs sont remplis
                 if (("".equals(nomID.getText()))) {
@@ -332,7 +353,7 @@ public class PageSuppression extends JPanel implements ActionListener {
                     JOptionPane.showMessageDialog(this, "Le champ ID est vide.", "Erreur", JOptionPane.WARNING_MESSAGE);
 
                 }
-
+                //on cherche les infos (nom prenom) du docteur correspondan au numéro si elles existent
                 String lecture1;
                 String lecture2;
                 String lecture3;
@@ -343,41 +364,52 @@ public class PageSuppression extends JPanel implements ActionListener {
                 lecture1 = "SELECT (numero) FROM docteur WHERE numero = '" + nomID.getText() + "';";
                 BDD.rechercheInformation(lecture1);
                 Information1 = BDD.afficherNuméro();
-
+                
+                //si le docteur n'est pas trouvable
                 if ((Information1 == null)) {
-                    JOptionPane.showMessageDialog(this, "La personne n'existe pas.", "Introuvable", JOptionPane.WARNING_MESSAGE);
+                    //message informant que celui-ci n'existe pas
+                    JOptionPane.showMessageDialog(this, "La personne n'existe pas ou n'est pas docteur.", "Introuvable", JOptionPane.WARNING_MESSAGE);
                 } else {
+                    //si le docteur existe on cherches son nom et prenom
                     lecture2 = "SELECT (nom_employe) FROM employe WHERE numero_e = '" + nomID.getText() + "';";
                     BDD.rechercheInformation(lecture2);
                     Information2 = BDD.afficherNuméro();
                     lecture3 = "SELECT (prenom_employe) FROM employe WHERE numero_e = '" + nomID.getText() + "';";
                     BDD.rechercheInformation(lecture3);
                     Information3 = BDD.afficherNuméro();
-
+                    
+                    //message demandant confirmation pour supprimer ce docteur précis
                     int choix = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment supprimmer le docteur " + Information2 + " " + Information3 + " ID n°" + nomID.getText(), "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
+                    
+                    //si bouton non cliqué
                     if (choix == JOptionPane.NO_OPTION) {
+                        //retour au menu
                         hub.launchPageMenu(BDD);
+                        //sinon si bouton oui cliqué
                     } else if (choix == JOptionPane.YES_OPTION) {
+                        //requetes de suppresions dans les tables employés et docteurs
                         String SuppressionDocteur;
                         SuppressionDocteur = "DELETE FROM docteur WHERE numero = '" + nomID.getText() + "';";
                         String SuppressionEmploye;
                         SuppressionEmploye = "DELETE FROM employe WHERE numero_e = '" + nomID.getText() + "';";
 
                         try {
+                            //execution des requets
                             BDD.executerRequete(SuppressionDocteur);
                             BDD.executerRequete(SuppressionEmploye);
+                            //message confirmation finale
                             JOptionPane.showMessageDialog(this, "Le docteur a bien été supprimé.", "Formulaire valide", JOptionPane.INFORMATION_MESSAGE);
 
                         } catch (SQLException ex) {
                             Logger.getLogger(PageSuppression.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                        //retour menu
                         hub.launchPageMenu(BDD);
                     }
                 }
 
             }
-
+            //si on choisit de chercher le docteur par son nom et prénom
             if (info.getSelectedItem() == "Nom Prénom") {
                 //test pour vérifier que tous les champs sont remplis
                 if (("".equals(nomID.getText())) || ("".equals(prénom.getText()))) {
@@ -385,6 +417,7 @@ public class PageSuppression extends JPanel implements ActionListener {
                     JOptionPane.showMessageDialog(this, "Un champ est vide.", "Erreur", JOptionPane.WARNING_MESSAGE);
 
                 } else {
+                    //on cherche si le docteur existe et n'est pas infirmier
                     String lecture1;
                     String lecture2;
                     String Information1;
@@ -399,15 +432,22 @@ public class PageSuppression extends JPanel implements ActionListener {
                     BDD.rechercheInformation(lecture2);
                     Information2 = BDD.afficherNuméro();
                     System.out.println(Information2);
+                    
+                    //si aucun employe n'a ce nom et prenom ou que le numéro d'identification correspondant n est pas dans la table docteur
                     if ((Information1 == null) || (Information2 == null)) {
+                        //message
                         JOptionPane.showMessageDialog(this, "La personne n'existe pas ou n'est pas docteur.", "Introuvable", JOptionPane.WARNING_MESSAGE);
                     } else {
-
+                        //sinon message de deamnde de confirmation
                         int choix = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment supprimmer le docteur " + nomID.getText() + " " + prénom.getText() + " ID n°" + Information1, "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
+                        
+                        //si clique sur non
                         if (choix == JOptionPane.NO_OPTION) {
+                            //retour au menu
                             hub.launchPageMenu(BDD);
+                         //si clique sur oui
                         } else if (choix == JOptionPane.YES_OPTION) {
+                            //requete de suppression sur les 2 tables
                             String SuppressionDocteur;
                             SuppressionDocteur = "DELETE FROM docteur WHERE numero = '" + Information1 + "';";
 
@@ -415,13 +455,16 @@ public class PageSuppression extends JPanel implements ActionListener {
                             SuppressionEmploye = "DELETE FROM employe WHERE nom_employe = '" + nomID.getText() + "' AND prenom_employe = '" + prénom.getText() + "';";
 
                             try {
+                                //executions des requetes
                                 BDD.executerRequete(SuppressionDocteur);
                                 BDD.executerRequete(SuppressionEmploye);
+                                //message de confirmation
                                 JOptionPane.showMessageDialog(this, "Le docteur a bien été supprimé.", "Formulaire valide", JOptionPane.INFORMATION_MESSAGE);
 
                             } catch (SQLException ex) {
                                 Logger.getLogger(PageSuppression.class.getName()).log(Level.SEVERE, null, ex);
                             }
+                            //retour menu
                             hub.launchPageMenu(BDD);
                         }
                     }
@@ -429,7 +472,10 @@ public class PageSuppression extends JPanel implements ActionListener {
             }
 
         }
+        
+        //si la personne choisie à supprimer est infirmier
         if (typePersonne.getSelectedItem() == "Infirmier") {
+            //si on le cherche par le numero d'identification
             if (info.getSelectedItem() == "ID") {
                 //test pour vérifier que tous les champs sont remplis
                 if (("".equals(nomID.getText()))) {
@@ -437,7 +483,7 @@ public class PageSuppression extends JPanel implements ActionListener {
                     JOptionPane.showMessageDialog(this, "Le champ ID est vide.", "Erreur", JOptionPane.WARNING_MESSAGE);
 
                 }
-
+                //verification que le numero saisi est dans la table infirmier
                 String lecture1;
                 String lecture2;
                 String lecture3;
@@ -448,41 +494,53 @@ public class PageSuppression extends JPanel implements ActionListener {
                 lecture1 = "SELECT (numero) FROM infirmier WHERE numero = '" + nomID.getText() + "';";
                 BDD.rechercheInformation(lecture1);
                 Information1 = BDD.afficherNuméro();
-
+                
+                //si le numero n est pas la
                 if ((Information1 == null)) {
-                    JOptionPane.showMessageDialog(this, "La personne n'existe pas.", "Introuvable", JOptionPane.WARNING_MESSAGE);
+                    //message
+                    JOptionPane.showMessageDialog(this, "La personne n'existe pas ou n'est pas infirmier.", "Introuvable", JOptionPane.WARNING_MESSAGE);
                 } else {
+                    //sinon si le numero est present on recupere nom et prenom de cet infirmier
                     lecture2 = "SELECT (nom_employe) FROM employe WHERE numero_e = '" + nomID.getText() + "';";
                     BDD.rechercheInformation(lecture2);
                     Information2 = BDD.afficherNuméro();
                     lecture3 = "SELECT (prenom_employe) FROM employe WHERE numero_e = '" + nomID.getText() + "';";
                     BDD.rechercheInformation(lecture3);
                     Information3 = BDD.afficherNuméro();
-
+                    
+                    //demande de confirmation d'effacer cet infirmier précis
                     int choix = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment supprimmer l'infirmier " + Information2 + " " + Information3 + " ID n°" + nomID.getText(), "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
+                    
+                    //i clique sur non
                     if (choix == JOptionPane.NO_OPTION) {
+                        //retour menu
                         hub.launchPageMenu(BDD);
+                      //si clique sur oui
                     } else if (choix == JOptionPane.YES_OPTION) {
+                        //requetes de suppression dans les tables infirmier et employe
                         String SuppressionInfirmier;
                         SuppressionInfirmier = "DELETE FROM infirmier WHERE numero = '" + nomID.getText() + "';";
                         String SuppressionEmploye;
                         SuppressionEmploye = "DELETE FROM employe WHERE numero_e = '" + nomID.getText() + "';";
 
                         try {
+                            //executions des requetes
                             BDD.executerRequete(SuppressionInfirmier);
                             BDD.executerRequete(SuppressionEmploye);
+                            //message de confirmation
                             JOptionPane.showMessageDialog(this, "L'infirmier a bien été supprimé.", "Formulaire valide", JOptionPane.INFORMATION_MESSAGE);
 
                         } catch (SQLException ex) {
                             Logger.getLogger(PageSuppression.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                        //retour au menu
                         hub.launchPageMenu(BDD);
                     }
                 }
 
             }
-
+            
+            //si on cherche l'infirmier par son nom et prénom
             if (info.getSelectedItem() == "Nom Prénom") {
                 //test pour vérifier que tous les champs sont remplis
                 if (("".equals(nomID.getText())) || ("".equals(prénom.getText()))) {
@@ -490,6 +548,7 @@ public class PageSuppression extends JPanel implements ActionListener {
                     JOptionPane.showMessageDialog(this, "Un champ est vide.", "Erreur", JOptionPane.WARNING_MESSAGE);
 
                 } else {
+                    //on vérifie que cet employe existe et si c'est bien un infirmier en cherchant son numero dans la table infirmier
                     String lecture1;
                     String lecture2;
                     String Information1;
@@ -504,15 +563,19 @@ public class PageSuppression extends JPanel implements ActionListener {
                     BDD.rechercheInformation(lecture2);
                     Information2 = BDD.afficherNuméro();
                     System.out.println(Information2);
+                    //si on ne trouve pas le nom et prenom ou si on ne trouve pas le numero
                     if ((Information1 == null) || (Information2 == null)) {
                         JOptionPane.showMessageDialog(this, "La personne n'existe pas ou n'est pas infirmier.", "Introuvable", JOptionPane.WARNING_MESSAGE);
                     } else {
-
+                        //sinon on demande confirmation
                         int choix = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment supprimmer l'infirmier " + nomID.getText() + " " + prénom.getText() + " ID n°" + Information1, "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
+                        //si on clique sur non
                         if (choix == JOptionPane.NO_OPTION) {
+                            //retour menu
                             hub.launchPageMenu(BDD);
+                            //si on clique sur oui
                         } else if (choix == JOptionPane.YES_OPTION) {
+                            //requetes de suppression
                             String SuppressionInfirmier;
                             SuppressionInfirmier = "DELETE FROM infirmier WHERE numero = '" + Information1 + "';";
 
@@ -520,6 +583,7 @@ public class PageSuppression extends JPanel implements ActionListener {
                             SuppressionEmploye = "DELETE FROM employe WHERE nom_employe = '" + nomID.getText() + "' AND prenom_employe = '" + prénom.getText() + "';";
 
                             try {
+                                //executions des requetes
                                 BDD.executerRequete(SuppressionInfirmier);
                                 BDD.executerRequete(SuppressionEmploye);
                                 JOptionPane.showMessageDialog(this, "L'infirmier a bien été supprimé.", "Formulaire valide", JOptionPane.INFORMATION_MESSAGE);
@@ -527,6 +591,7 @@ public class PageSuppression extends JPanel implements ActionListener {
                             } catch (SQLException ex) {
                                 Logger.getLogger(PageSuppression.class.getName()).log(Level.SEVERE, null, ex);
                             }
+                            //retour menu
                             hub.launchPageMenu(BDD);
                         }
                     }

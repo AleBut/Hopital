@@ -138,7 +138,7 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
         //bouton 
           bouton=new JButton("Ajouter");
         
-
+        //appel méthode pour afficher les composants
         constructionGraphique();
         
         
@@ -324,17 +324,17 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ae) {
         Object source = ae.getSource();
-        
+        //si on appuie sur le bouton...
         if (source == bouton) {
 
             //test pour vérifier que tous les champs sont remplis
             if (("".equals(nom.getText())) || ("".equals(prénom.getText())) || ("".equals(tel.getText())) || ("".equals(adresse.getText()))) {
-
+                //message si non valide
                 JOptionPane.showMessageDialog(this, "Un champ est vide.", "Erreur", JOptionPane.WARNING_MESSAGE);
 
 
             } else {
-                
+                //blinder nom et prénom de l 'employé car 2 personnes ne peuvent avoir ces 2 informations en communs
                   String blindageNom = "SELECT (nom_employe) FROM employe WHERE nom_employe= '"+nom.getText()+"';";
                 BDD.rechercheInformation(blindageNom);
                 String Information1 = BDD.afficherNuméro();
@@ -342,14 +342,13 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
                 BDD.rechercheInformation(blindagePrenom);
                 String Information2 = BDD.afficherNuméro();
                 
+                //si aucun nom de famille ou prénom en commun OU nom de famille en commun mais pas prénom OU prénom en commun mais pas nom de famille = valide
                 if ((Information1==null)&&(Information2==null)||(((null)!=Information1)&&((null)==Information2))||(((null)!=Information2)&&((null)==Information1)))
                 {
                 
-
+                //on trouve le numero max d'identification de la tble employe et on affecte le num max + 1 à notre nouvel employe
                 int numérofinal;
-                
                 String IDmax;
-                
                 IDmax = "SELECT MAX(numero_e) FROM employe;";
                 BDD.rechercheInformation(IDmax);
                 String IDnew = BDD.afficherNuméro();
@@ -358,12 +357,12 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
                 numérofinal = Integer.parseInt(IDnew)+1;
                 
                
-                
+                //requete d'ajout du docteur dans la tablea docteur
                 String requeteAjoutDocteur;
                 
                 docteur = new Docteur(numérofinal,nom.getText(),prénom.getText(),adresse.getText(),tel.getText(), (String) spécialité.getSelectedItem());
                 requeteAjoutDocteur = "INSERT INTO docteur (numero, specialite) VALUES ('"+docteur.getNum()+"', '" + docteur.getSpécialité() + "');";
-                
+                //requete ajout employe dans la table employe
                 String requeteAjoutEmploye;
                 requeteAjoutEmploye = "INSERT INTO employe (numero_e, nom_employe, prenom_employe, adresse_employe, telephone_employe) VALUES ('"+docteur.getNum()+"', '" + docteur.getNom() + "', '" + docteur.getPrenom() + "', '" + docteur.getAdresse() + "', '" + docteur.getTel() + "');";
                 
@@ -372,14 +371,16 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
                 System.out.println(requeteAjoutEmploye);
                 
                 try {
+                    //execution des 2 requetes
                     BDD.executerRequete(requeteAjoutDocteur);
                     BDD.executerRequete(requeteAjoutEmploye);
                     JOptionPane.showMessageDialog(this, "Le docteur a bien été ajouté.", "Formulaire valide", JOptionPane.INFORMATION_MESSAGE);
                     
-                    
+                      //si le docteur est directeur d'un service
                        if (directeur.isSelected()==true)
                     
                        {
+                           //on ajoute +1 au nombre de directeur du service correspondant
                         String requeteAjoutDirecteur;
                         String nbdirecteur;
                         nbdirecteur = "SELECT directeur FROM service WHERE code = '"+service.getSelectedItem()+"';";
@@ -390,8 +391,9 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
                         int nbfinal;
                         nbfinal = Integer.parseInt(nbnew)+1;
                         System.out.println(nbfinal);
-                        
+                        //requete
                         requeteAjoutDirecteur="UPDATE service SET directeur = '"+nbfinal+"' WHERE code = '"+service.getSelectedItem()+"';";
+                        //execution
                         BDD.executerRequete(requeteAjoutDirecteur);
                         
                     }
@@ -399,9 +401,10 @@ public class PageAjoutDocteur extends JPanel implements ActionListener {
                 } catch (SQLException ex) {
                     Logger.getLogger(PageAjoutDocteur.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                //lancement du menu
                 hub.launchPageMenu(BDD);
             }
-
+                //sinon si un employe possède le meme nom de famille et prenom, formulaire non valide
                 else if ((((null)!=Information1)&&(((null)!=Information2)))){
                     JOptionPane.showMessageDialog(this, "Un employé possède déjà ce nom de famille et prénom.", "Formulaire non valide", JOptionPane.ERROR_MESSAGE);
                 }

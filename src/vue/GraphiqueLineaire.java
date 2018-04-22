@@ -27,7 +27,7 @@ import org.jfree.data.xy.XYDataset;
 
 /**
  *
- * @author Alexis Butin
+ * @author Valentin et Alexis
  */
 public class GraphiqueLineaire extends JPanel {
 		

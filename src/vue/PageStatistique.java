@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Alexis Butin
+ * @author Valentin
  */
 public class PageStatistique extends JPanel {    
     // Connexion vers la base de donnée

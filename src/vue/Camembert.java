@@ -27,7 +27,7 @@ import org.jfree.data.general.PieDataset;
 
 /**
  *
- * @author Alexs Butin
+ * @author Valentin et Alexis
  */
 public class Camembert extends JPanel {
 	
