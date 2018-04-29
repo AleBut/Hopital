@@ -5,6 +5,7 @@
  */
 package controleur;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 /**
@@ -21,7 +22,7 @@ public class Hopital {
 	* @throws java.sql.SQLException
 	* @throws java.lang.ClassNotFoundException
 	*/
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+    public static void main(String[] args) throws SQLException, ClassNotFoundException, IOException {
 
         hub = new HubGraph();
 

@@ -5,6 +5,9 @@
  */
 package controleur;
 
+import java.awt.Image;
+import static java.awt.SystemColor.window;
+import java.awt.Toolkit;
 import modele.Docteur;
 import modele.Infirmier;
 import modele.Patient;
@@ -25,9 +28,13 @@ import vue.PageSuppression;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 /**
@@ -45,10 +52,17 @@ public class HubGraph extends JFrame implements ActionListener
 	/**
 	 * Construis le hub graphique
 	 */
-	public HubGraph()
+	public HubGraph() throws IOException
     {         
          this.setTitle("Hopital");
          this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Ferme la fenetre automatiquement
+		 
+		 
+		 InputStream imageInputStream = window.getClass().getResourceAsStream("/images/hopitalLogo.png");
+		  BufferedImage logo = ImageIO.read(imageInputStream);
+			
+		 //Image logo = Toolkit.getDefaultToolkit().getImage("/images/hopitalLogo.png");
+		 this.setIconImage(logo);
          
          menu = new MenuBar();
          
